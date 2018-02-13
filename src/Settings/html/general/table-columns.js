@@ -12,6 +12,10 @@ export default function () {
 					${input('checkbox', { id: 'blockColumn', name: 'tableColumn', checked: user.blockColumn })}
 				</p>
 				<p>
+					${label('Requester', 'requesterColumn')}
+					${input('checkbox', { id: 'requesterColumn', name: 'tableColumn', checked: user.requesterColumn })}
+				</p>
+				<p>
 					${label('# Avail', 'availableColumn')}
 					${input('checkbox', { id: 'availableColumn', name: 'tableColumn', checked: user.availableColumn })}
 				</p>
@@ -36,6 +40,10 @@ export default function () {
 				<section>
 					${descriptionTitle('Block')}
 					Buttons to block HIT by Requester, Title, ID
+				</section>
+				<section>
+					${descriptionTitle('Requester')}
+					Name of the HIT's requester
 				</section>
 				<section>
 					${descriptionTitle('# Avail')}

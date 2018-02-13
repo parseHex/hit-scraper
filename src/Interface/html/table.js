@@ -10,13 +10,13 @@ export default function () {
 				<thead>
 					<tr style="font-weight:800;font-size:0.87em;text-align:center">
 						<td class="block-tc ${hidden('block')}" style="width:52px">Block</td>
-						<td>
+						<td class="requester-tc ${hidden('requester')}">
 							Requester
 						</td>
-						<td>
+						<td class="title-tc">
 							Title
 						</td>
-						<td style="width:70px">
+						<td class="rewardpanda-tc" style="width:70px">
 							Reward &amp; PandA
 						</td>
 						<td class="available-tc ${hidden('available')}" style="width:35px">

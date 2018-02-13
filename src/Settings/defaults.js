@@ -23,6 +23,7 @@ export default {
 	shineOffset: 1,
 
 	blockColumn: true,
+	requesterColumn: true,
 	availableColumn: true,
 	durationColumn: false,
 	topayColumn: true,

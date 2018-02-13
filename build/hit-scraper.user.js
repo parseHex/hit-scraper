@@ -271,6 +271,7 @@ var defaults$1 = {
 	shineOffset: 1,
 
 	blockColumn: true,
+	requesterColumn: true,
 	availableColumn: true,
 	durationColumn: false,
 	topayColumn: true,
@@ -486,6 +487,10 @@ function tableColumns () {
 					${input('checkbox', { id: 'blockColumn', name: 'tableColumn', checked: user.blockColumn })}
 				</p>
 				<p>
+					${label('Requester', 'requesterColumn')}
+					${input('checkbox', { id: 'requesterColumn', name: 'tableColumn', checked: user.requesterColumn })}
+				</p>
+				<p>
 					${label('# Avail', 'availableColumn')}
 					${input('checkbox', { id: 'availableColumn', name: 'tableColumn', checked: user.availableColumn })}
 				</p>
@@ -510,6 +515,10 @@ function tableColumns () {
 				<section>
 					${descriptionTitle('Block')}
 					Buttons to block HIT by Requester, Title, ID
+				</section>
+				<section>
+					${descriptionTitle('Requester')}
+					Name of the HIT's requester
 				</section>
 				<section>
 					${descriptionTitle('# Avail')}
@@ -2028,13 +2037,13 @@ function table$1 () {
 				<thead>
 					<tr style="font-weight:800;font-size:0.87em;text-align:center">
 						<td class="block-tc ${hidden('block')}" style="width:52px">Block</td>
-						<td>
+						<td class="requester-tc ${hidden('requester')}">
 							Requester
 						</td>
-						<td>
+						<td class="title-tc">
 							Title
 						</td>
-						<td style="width:70px">
+						<td class="rewardpanda-tc" style="width:70px">
 							Reward &amp; PandA
 						</td>
 						<td class="available-tc ${hidden('available')}" style="width:35px">
@@ -3123,12 +3132,14 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 					ID
 				</button>
 			</td>
-			<td>
+			<td class="requester-tc ${hidden('requester')}">
 				<div>
-					<a class="static" target="_blank" href="${hitRow.requester.link}">${hitRow.requester.name}</a>
+					<a class="static" target="_blank" href="${hitRow.requester.link}">
+						${hitRow.requester.name}
+					</a>
 				</div>
 			</td>
-			<td>
+			<td class="title-tc">
 				<div>
 					${makeButton('Vb', 'vB', 'vBulletin', expData)}
 					${makeButton('Irc', 'IRC', 'IRC', expData)}
@@ -3142,7 +3153,7 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 					</a>
 				</div>
 			</td>
-			<td style="${center}">
+			<td class="rewardpanda-tc" style="${center}">
 				<a target="_blank" ${pandaHref}>
 					${hitRow.pay}
 				</a>

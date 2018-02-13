@@ -40,12 +40,14 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 					ID
 				</button>
 			</td>
-			<td>
+			<td class="requester-tc ${hidden('requester')}">
 				<div>
-					<a class="static" target="_blank" href="${hitRow.requester.link}">${hitRow.requester.name}</a>
+					<a class="static" target="_blank" href="${hitRow.requester.link}">
+						${hitRow.requester.name}
+					</a>
 				</div>
 			</td>
-			<td>
+			<td class="title-tc">
 				<div>
 					${makeButton('Vb', 'vB', 'vBulletin', expData)}
 					${makeButton('Irc', 'IRC', 'IRC', expData)}
@@ -59,7 +61,7 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 					</a>
 				</div>
 			</td>
-			<td style="${center}">
+			<td class="rewardpanda-tc" style="${center}">
 				<a target="_blank" ${pandaHref}>
 					${hitRow.pay}
 				</a>
