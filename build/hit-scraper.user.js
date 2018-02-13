@@ -654,225 +654,215 @@ function appearance () {
 	`);
 }
 
-function to () {
+function sectionTitle(text) {
+	return `<span><b>${text}</b></span>`;
+}
+
+function label(text, htmlFor) {
+	if (htmlFor) htmlFor = `for="${htmlFor}"`;
+
+	return `<label ${htmlFor}>${text}</label>`;
+}
+
+function radio(opts) {
+	return cleanTemplate(`
+		<input &nbsp;
+			type="radio"
+			${parseAttr(opts)}
+		/>
+	`);
+}
+function checkbox(opts) {
+	return cleanTemplate(`
+		<input &nbsp;
+			type="checkbox"
+			${parseAttr(opts)}
+		/>
+	`);
+}
+function number(opts) {
+	return cleanTemplate(`
+		<input &nbsp;
+			type="number"
+			${parseAttr(opts)}
+		/>
+	`);
+}
+
+function descriptionTitle(text) {
+	return `<span class="dsc-title">${text}</span>`;
+}
+
+
+function parseAttr(attrs) {
+	let returnAttr = '';
+	Object.keys(attrs).forEach(function (key) {
+		if (attrs[key] === false) return;
+
+		let val = '';
+		if (attrs[key] !== true) val = `="${attrs[key]}"`;
+
+		returnAttr += ` ${key}${val}`;
+	});
+	return returnAttr;
+}
+
+function colorType () {
+	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
 
-	const colorTypeDesc = desc([
-		{
-			title: 'Simple',
-			content: `HIT Scraper will use a simple weighted average to &nbsp;
-				determine the overall TO rating and colorize results using that value. &nbsp;
-				Use this setting to make coloring consistent between HIT Scraper and &nbsp;
-				<a style="color:black" href="${_ccs}" target="_blank">
-					Color Coded Search
-				</a>.`,
-		},
-		{
-			title: 'Adjusted',
-			content: `HIT Scraper will calculate a Bayesian adjusted average based on confidence &nbsp;
-				of the TO rating to colorize results. &nbsp;
-				Confidence is proportional to the number of reviews.`,
-		},
-	]);
-	const sortTypeDesc = desc([
-		{
-			title: 'Simple',
-			content: `HIT Scraper will sort results based simply on value regardless of the number of reviews.`,
-		},
-		{
-			title: 'Adjusted',
-			content: `HIT Scraper will use a Bayesian adjusted rating based on reliability &nbsp;
-				(i.e. confidence) of the data. &nbsp;
-				It factors in the number of reviews such that, for example, &nbsp;
-				a requester with 100 reviews rated at 4.6 will rightfully be ranked higher &nbsp;
-				than a requester with 3 reviews rated at 5. &nbsp;
-				This gives a more accurate representation of the data.`,
-		},
-	]);
-	const toWeightsDesc = desc([
-		{
-			content: `
-				Specify weights for TO attributes to place greater importance on certain attributes over others.
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Color Type')}
 				<p>
-					The default values, [1, 3, 3, 1], ensure consistency between HIT Scraper and &nbsp;
+					${label('Simple', 'ctSim')}
+					${radio({ id: 'ctSim', name: 'colorType', value: 'sim', checked: user.colorType === 'sim' })}
+				</p>
+				<p>
+					${label('Adjusted', 'ctAdj')}
+					${radio({ id: 'ctAdj', name: 'colorType', value: 'adj', checked: user.colorType === 'adj' })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Simple')}
+					HIT Scraper will use a simple weighted average to &nbsp;
+					determine the overall TO rating and colorize results using that value. &nbsp;
+					Use this setting to make coloring consistent between HIT Scraper and &nbsp;
 					<a style="color:black" href="${_ccs}" target="_blank">
 						Color Coded Search
-					</a> &nbsp;
-					recommended values for adjusted coloring are [1, 6, 3.5, 1].
-				</p>`,
-		}
-	]);
-	const experimentalDesc = desc([
-		{
-			title: 'Async TO (experimental)',
-			content: `
-				When this option is enabled, Turkopticon reviews will be loaded in the background &nbsp;
-				and won't delay searches.
-				<br />
-				Probably not a good idea to use this with short auto-refresh delay.`,
-		},
-		{
-			title: 'Cache TO Reviews (experimental)',
-			content: `When this option is enabled, Turkopticon reviews will be re-used when possible. &nbsp;
-				For example, when a HIT shows up in the results more than once, its TO review &nbsp;
-				data won't be refreshed and the old data will be used.`,
-		},
-	]);
+					</a>.
+				</section>
+				<section>
+					${descriptionTitle('Adjusted')}
+					HIT Scraper will calculate a Bayesian adjusted average based on confidence &nbsp;
+					of the TO rating to colorize results. &nbsp;
+					Confidence is proportional to the number of reviews.
+				</section>
+			</div>
+		</div>
+	`;
+}
 
-	return cleanTemplate(`
+function sortType () {
+	const { user } = this;
+
+	return `
 		<div class="row">
 			<div class="column opts">
-				${secTitle('Color Type')}
+				${sectionTitle('Sort Type')}
 				<p>
-					<label for="ctSim">
-						Simple
-					</label>
-					<input &nbsp;
-						id="ctSim"
-						type="radio"
-						name="colorType"
-						value="sim"
-						${this.user.colorType === 'sim' ? 'checked' : ''}
-					/>
+					${label('Simple', 'stSim')}
+					${radio({ id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
 				</p>
 				<p>
-					<label for="ctAdj">
-						Adjusted
-					</label>
-					<input &nbsp;
-						id="ctAdj"
-						type="radio"
-						name="colorType"
-						value="adj"
-						${this.user.colorType === 'adj' ? 'checked' : ''}
-					/>
+					${label('Adjusted', 'stAdj')}
+					${radio({ id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
 				</p>
 			</div>
-			${colorTypeDesc}
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Simple')}
+					HIT Scraper will sort results based simply on value regardless of the number of reviews.
+				</section>
+				<section>
+					${descriptionTitle('Adjusted')}
+					HIT Scraper will use a Bayesian adjusted rating based on reliability &nbsp;
+					(i.e. confidence) of the data. &nbsp;
+					It factors in the number of reviews such that, for example, &nbsp;
+					a requester with 100 reviews rated at 4.6 will rightfully be ranked higher &nbsp;
+					than a requester with 3 reviews rated at 5. &nbsp;
+					This gives a more accurate representation of the data.
+				</section>
+			</div>
 		</div>
+	`;
+}
+
+function toWeights () {
+	const { user } = this;
+	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
+
+	return `
 		<div class="row">
 			<div class="column opts">
-				${secTitle('Sort Type')}
+				${sectionTitle('TO Weighting')}
 				<p>
-					<label for="stSim">
-						Simple
-					</label>
-					<input &nbsp;
-						id="stSim"
-						type="radio"
-						name="sortType"
-						value="sim"
-						${this.user.sortType === 'sim' ? 'checked' : ''}
-					/>
+					${label('comm', 'comm')}
+					${number({ id: 'comm', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.comm })}
 				</p>
 				<p>
-					<label for="stAdj">
-						Adjusted
-					</label>
-					<input &nbsp;
-						id="stAdj"
-						type="radio"
-						name="sortType"
-						value="adj"
-						${this.user.sortType === 'adj' ? 'checked' : ''}
-					/>
+					${label('pay', 'pay')}
+					${number({ id: 'pay', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.pay })}
+				</p>
+				<p>
+					${label('fair', 'fair')}
+					${number({ id: 'fair', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fair })}
+				</p>
+				<p>
+					${label('fast', 'fast')}
+					${number({ id: 'fast', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fast })}
 				</p>
 			</div>
-			${sortTypeDesc}
+			<div class="column opts-dsc">
+				<section>
+					Specify weights for TO attributes to place greater importance on certain attributes over others.
+					<p>
+						The default values, [1, 3, 3, 1], ensure consistency between HIT Scraper and &nbsp;
+						<a style="color:black" href="${_ccs}" target="_blank">
+							Color Coded Search
+						</a> &nbsp;
+						recommended values for adjusted coloring are [1, 6, 3.5, 1].
+					</p>
+				</section>
+			</div>
 		</div>
+	`;
+}
+
+function experimental () {
+	const { user } = this;
+
+	return `
 		<div class="row">
 			<div class="column opts">
-				${secTitle('TO Weighting')}
+				${sectionTitle('Experimental')}
 				<p>
-					<label for="comm">
-						comm
-					</label>
-					<input &nbsp;
-						id="comm"
-						type="number"
-						name="TOW"
-						min="1"
-						max="10"
-						step="0.5"
-						value="${this.user.toWeights.comm}"
-						style="width:40px"
-					/>
+					${label('Async', 'asyncTO')}
+					${checkbox({ id: 'asyncTO', checked: user.asyncTO })}
 				</p>
 				<p>
-					<label for="pay">
-						pay
-					</label>
-					<input &nbsp;
-						id="pay"
-						type="number"
-						name="TOW"
-						min="1"
-						max="10"
-						step="0.5"
-						value="${this.user.toWeights.pay}"
-						style="width:40px"
-					/>
-				</p>
-				<p>
-					<label for="fair">
-						fair
-					</label>
-					<input &nbsp;
-						id="fair"
-						type="number"
-						name="TOW"
-						min="1"
-						max="10"
-						step="0.5"
-						value="${this.user.toWeights.fair}"
-						style="width:40px"
-					/>
-				</p>
-				<p>
-					<label for="fast">
-						fast
-					</label>
-					<input &nbsp;
-						id="fast"
-						type="number"
-						name="TOW"
-						min="1"
-						max="10"
-						step="0.5"
-						value="${this.user.toWeights.fast}"
-						style="width:40px"
-					/>
+					${label('Cache Reviews', 'cacheTO')}
+					${checkbox({ id: 'cacheTO', checked: user.cacheTO })}
 				</p>
 			</div>
-			${toWeightsDesc}
-		</div>
-		<div class="row">
-			<div class="column opts">
-				${secTitle('Experimental Options')}
-				<p>
-					<label for="asyncTO">
-						Async TO
-					</label>
-					<input &nbsp;
-						id="asyncTO"
-						type="checkbox"
-						${this.user.asyncTO ? 'checked' : ''}
-					/>
-				</p>
-				<p>
-					<label for="cacheTO">
-						Cache TO Reviews
-					</label>
-					<input &nbsp;
-						id="cacheTO"
-						type="checkbox"
-						${this.user.cacheTO ? 'checked' : ''}
-					/>
-				</p>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Async')}
+					When this option is enabled, Turkopticon reviews will be loaded in the background &nbsp;
+					and won't delay searches.
+					<br />
+					Probably not a good idea to use this with short auto-refresh delay.
+				</section>
+				<section>
+					${descriptionTitle('Cache Reviews')}
+					When this option is enabled, Turkopticon reviews will be re-used when possible. &nbsp;
+					For example, when a HIT shows up in the results more than once, its TO review &nbsp;
+					data won't be refreshed and the old data will be used.
+				</section>
 			</div>
-			${experimentalDesc}
 		</div>
-	`);
+	`
+}
+
+function to () {
+	return `
+		${colorType.apply(this)}
+		${sortType.apply(this)}
+		${toWeights.apply(this)}
+		${experimental.apply(this)}
+	`;
 }
 
 function blocks () {
@@ -1149,13 +1139,6 @@ function utils () {
 }
 
 function main () {
-	const _general = general.apply(this);
-	const _to = to.apply(this);
-	const _appearance = appearance.apply(this);
-	const _blocks = blocks.apply(this);
-	const _notify = notify.apply(this);
-	const _utils = utils.apply(this);
-
 	return cleanTemplate(`
 		<div style="top:0;left:0;margin:0;text-align:right;padding:0px;border:none;width:100%">
 			<label id="settingsClose" class="close" title="Close">
@@ -1184,55 +1167,25 @@ function main () {
 		</div>
 		<div id="panelContainer" style="margin-left:10px;border:none;overflow:auto;width:auto;height:92%">
 			<div id="General" class="settingsPanel">
-				${_general}
+				${general.apply(this)}
 			</div>
 			<div id="Turkopticon" class="settingsPanel">
-				${_to}
+				${to.apply(this)}
 			</div>
 			<div id="Appearance" class="settingsPanel">
-				${_appearance}
+				${appearance.apply(this)}
 			</div>
 			<div id="Blocklist" class="settingsPanel">
-				${_blocks}
+				${blocks.apply(this)}
 			</div>
 			<div id="Notifications" class="settingsPanel">
-				${_notify}
+				${notify.apply(this)}
 			</div>
 			<div id="Utilities" class="settingsPanel">
-				${_utils}
+				${utils.apply(this)}
 			</div>
 		</div>
 	`);
-}
-
-function secTitle(text) {
-	return `<span><b>${text}</b></span>`;
-}
-
-function desc(descriptions) {
-	let html = '<div class="column opts-dsc">';
-
-	descriptions.forEach(function (d) {
-		let title = '';
-		if (d.title) {
-			title = `
-				<span class="dsc-title">
-					${d.title}
-				</span>
-			`;
-		}
-
-		html += cleanTemplate(`
-			<section>
-				${title}
-				${d.content}
-			</section>
-		`);
-	});
-
-	html += '</div>';
-
-	return html;
 }
 
 function draw () {
