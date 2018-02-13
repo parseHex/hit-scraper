@@ -94,4 +94,21 @@ export default `
 	.blocklisted td {
 		border:2px solid #cc0000;
 	}
+
+	#resultsTable thead td:first-of-type {
+		border-left: 1px solid;
+	}
+	#resultsTable thead td:not(:last-of-type) {
+		border-right: 1px solid;
+	}
+	#resultsTable td { padding: 0 3px; }
+	.block-tc { min-width: 52px; }
+	.requester-tc { min-width: 130px; }
+	.title-tc { min-width: 200px; }
+	.rewardpanda-tc { min-width: 70px; }
+	.available-tc { min-width: 35px; }
+	.duration-tc { min-width: 47px; }
+	.topay-tc { min-width: 30px; }
+	.master-tc { min-width: 15px; }
+	.notqualified-tc { min-width: 15px; }
 `;

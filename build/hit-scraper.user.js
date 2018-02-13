@@ -218,7 +218,7 @@ var defaults$1 = {
 	themes: { name: 'classic', colors: defaults.themes },
 	colorType: 'sim',
 	sortType: 'adj',
-	toWeights: { comm: '1', pay: '3', fair: '3', fast: '1' },
+	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
 	asyncTO: false,
 	cacheTO: false,
 	exportVb: true,
@@ -244,10 +244,10 @@ var defaults$1 = {
 	mastersColumn: true,
 	notqualifiedColumn: true,
 
-	refresh: '0',
-	pages: '1',
+	refresh: 0,
+	pages: 1,
 	skips: false,
-	resultsPerPage: '50',
+	resultsPerPage: 50,
 	batch: '',
 	pay: '',
 	qual: true,
@@ -255,7 +255,7 @@ var defaults$1 = {
 	mhide: false,
 	searchBy: 0,
 	invert: false,
-	shine: '300',
+	shine: 300,
 	minTOPay: '',
 	hideNoTO: false,
 	onlyViable: false,
@@ -1840,6 +1840,23 @@ var resultsTable = `
 	.blocklisted td {
 		border:2px solid #cc0000;
 	}
+
+	#resultsTable thead td:first-of-type {
+		border-left: 1px solid;
+	}
+	#resultsTable thead td:not(:last-of-type) {
+		border-right: 1px solid;
+	}
+	#resultsTable td { padding: 0 3px; }
+	.block-tc { min-width: 52px; }
+	.requester-tc { min-width: 130px; }
+	.title-tc { min-width: 200px; }
+	.rewardpanda-tc { min-width: 70px; }
+	.available-tc { min-width: 35px; }
+	.duration-tc { min-width: 47px; }
+	.topay-tc { min-width: 30px; }
+	.master-tc { min-width: 15px; }
+	.notqualified-tc { min-width: 15px; }
 `;
 
 var status = `
@@ -2016,29 +2033,29 @@ function table$1 () {
 				</caption>
 				<thead>
 					<tr style="font-weight:800;font-size:0.87em;text-align:center">
-						<td class="block-tc ${hidden('block')}" style="width:52px">Block</td>
+						<td class="block-tc ${hidden('block')}">Block</td>
 						<td class="requester-tc ${hidden('requester')}">
 							Requester
 						</td>
 						<td class="title-tc">
 							Title
 						</td>
-						<td class="rewardpanda-tc" style="width:70px">
+						<td class="rewardpanda-tc">
 							Reward &amp; PandA
 						</td>
-						<td class="available-tc ${hidden('available')}" style="width:35px">
+						<td class="available-tc ${hidden('available')}">
 							# Avail
 						</td>
-						<td class="duration-tc ${hidden('duration')}" style="width:47px">
+						<td class="duration-tc ${hidden('duration')}">
 							Time
 						</td>
-						<td class="topay-tc ${hidden('topay')}" style="width:30px">
+						<td class="topay-tc ${hidden('topay')}">
 							TO Pay
 						</td>
-						<td class="masters-tc ${hidden('masters')}" style="width:15px">
+						<td class="masters-tc ${hidden('masters')}">
 							M
 						</td>
-						<td class="notqualified-tc ${hidden('notqualified')}" style="width:15px"></td>
+						<td class="notqualified-tc ${hidden('notqualified')}"></td>
 					</tr>
 				</thead>
 				<tbody></tbody>
