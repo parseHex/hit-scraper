@@ -64,8 +64,7 @@ export default `
 	}
 	#resultsTable button {
 		border-radius: 3px;
-		height: 14px;
-		font-size: 8px;
+		font-size: 0.75em;
 		border: 1px solid;
 		padding: 0;
 		background: transparent;
