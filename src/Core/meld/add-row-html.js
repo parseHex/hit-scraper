@@ -2,27 +2,11 @@ import Settings from '../../Settings/index';
 import { TO_REPORTS } from '../../lib/constants';
 import { cleanTemplate } from '../../lib/util';
 import createTooltip from '../../lib/create-tooltip';
+import { hidden } from '../../Interface/html/table';
 
 import makeButton from './make-button';
 
 export default function addRowHTML(hitRow, shouldHide, reviewsError) {
-	let _rt = '';
-	if (!hitRow.blocked) {
-		_rt = cleanTemplate(`
-			<div>
-				<button name="block" value="${hitRow.requester.name}" class="block" title="Block this requester">
-					R
-				</button>
-				<button name="block" value="${hitRow.title.replace(/"/g, '&quot;')}" class="block" title="Block this title">
-					T
-				</button>
-				<button name="block" value="${hitRow.groupId}" class="block" title="Block this Group ID">
-					ID
-				</button>
-			</div>
-		`);
-	}
-
 	const center = 'text-align:center;';
 
 	let trClass = hitRow.rowColor;
@@ -39,43 +23,24 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 	let requesterHref = '';
 	if (hitRow.requester.id) requesterHref = `href="${TO_REPORTS}${hitRow.requester.id}"`;
 
-	let dbTd = '';
-	if (false) { // HIT DB is no longer with us (RIP)
-		dbTd = cleanTemplate(`
-			<td &nbsp;
-				style="${center} cursor:default;"
-				class="db nohitDB"
-				data-index="requester${hitRow.requester.id ? 'Id' : 'Name'}"
-				data-value="${hitRow.requester[hitRow.requester.id ? 'id' : 'name']}"
-				data-cmp-value="${hitRow.title}"
-				data-cmp-index="title"
-			>
-				R
-			</td>
-			<td &nbsp;
-				style="${center} cursor:default;"
-				class="db nohitDB"
-				data-index="title"
-				data-value="${hitRow.title}"
-				data-cmp-value="${hitRow.requester.name}"
-				data-cmp-index="requesterName"
-			>
-				T
-			</td>
-		`);
-	}
-
-	let qualTd = '';
-	if (!hitRow.qualified) qualTd = '<td class="tooweak" title="Not qualified to work on this HIT">NQ</td>';
-
 	const expData = {
 		gid: hitRow.groupId,
 	};
 
 	return cleanTemplate(`
 		<tr class="${trClass}">
+			<td class="block-tc ${hidden('block', hitRow.blocked)}">
+				<button name="block" value="${hitRow.requester.name}" class="block" title="Block this requester">
+					R
+				</button>
+				<button name="block" value="${hitRow.title.replace(/"/g, '&quot;')}" class="block" title="Block this title">
+					T
+				</button>
+				<button name="block" value="${hitRow.groupId}" class="block" title="Block this Group ID">
+					ID
+				</button>
+			</td>
 			<td>
-				${_rt}
 				<div>
 					<a class="static" target="_blank" href="${hitRow.requester.link}">${hitRow.requester.name}</a>
 				</div>
@@ -99,19 +64,23 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 					${hitRow.pay}
 				</a>
 			</td>
-			<td style="${center}">
+			<td class="available-tc ${hidden('available')}" style="${center}">
 				${hitRow.numHits}
 			</td>
-			<td style="${center}">
+			<td class="duration-tc ${hidden('duration')}" style="${center}">
+				${hitRow.timeStr}
+			</td>
+			<td class="topay-tc ${hidden('topay')}" style="${center}">
 				<a class="static toLink" target="_blank" data-rid="${hitRow.requester.id || 'null'}" ${requesterHref}>
 					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', reviewsError ? false : hitRow.TO)}
 				</a>
 			</td>
-			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'}">
+			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">
 				${hitRow.masters ? 'Y' : 'N'}
 			</td>
-			${dbTd}
-			${qualTd}
+			<td class="tooweak notqualified-tc ${hidden('notqualified', hitRow.qualified)}" title="Not qualified to work on this HIT">
+				NQ
+			</td>
 		</tr>
 	`);
 }

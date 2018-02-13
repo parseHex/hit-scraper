@@ -1,3 +1,5 @@
+import Settings from '../../Settings/index';
+
 export default function () {
 	return `
 		<div id="results">
@@ -7,30 +9,40 @@ export default function () {
 				</caption>
 				<thead>
 					<tr style="font-weight:800;font-size:0.87em;text-align:center">
-						<td id="requester-column">
+						<td class="block-tc ${hidden('block')}" style="width:52px">Block</td>
+						<td>
 							Requester
 						</td>
-						<td id="title-column">
+						<td>
 							Title
 						</td>
-						<td id="rewardpanda-column" style="width:70px">
+						<td style="width:70px">
 							Reward &amp; PandA
 						</td>
-						<td id="available-column" style="width:35px">
+						<td class="available-tc ${hidden('available')}" style="width:35px">
 							# Avail
 						</td>
-						<td id="topay-column" style="width:30px">
+						<td class="duration-tc ${hidden('duration')}" style="width:47px">
+							Time
+						</td>
+						<td class="topay-tc ${hidden('topay')}" style="width:30px">
 							TO Pay
 						</td>
-						<td id="masters-column" style="width:15px">
+						<td class="masters-tc ${hidden('masters')}" style="width:15px">
 							M
 						</td>
-						<td id="notqualified-column" style="width:15px"></td>
-						<td id="hitdb-column" style="width:15px"></td>
+						<td class="notqualified-tc ${hidden('notqualified')}" style="width:15px"></td>
 					</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
 		</div>
 	`;
+}
+
+export function hidden(settingName, force) {
+	if (force) return 'hidden';
+
+	if (Settings.user[settingName + 'Column']) return '';
+	return 'hidden';
 }

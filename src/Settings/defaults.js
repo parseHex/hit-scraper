@@ -22,6 +22,13 @@ export default {
 	fontSize: 11,
 	shineOffset: 1,
 
+	blockColumn: true,
+	availableColumn: true,
+	durationColumn: false,
+	topayColumn: true,
+	mastersColumn: true,
+	notqualifiedColumn: true,
+
 	refresh: '0',
 	pages: '1',
 	skips: false,

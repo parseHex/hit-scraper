@@ -270,6 +270,13 @@ var defaults$1 = {
 	fontSize: 11,
 	shineOffset: 1,
 
+	blockColumn: true,
+	availableColumn: true,
+	durationColumn: false,
+	topayColumn: true,
+	mastersColumn: true,
+	notqualifiedColumn: true,
+
 	refresh: '0',
 	pages: '1',
 	skips: false,
@@ -467,11 +474,74 @@ function alertVolume () {
 	`;
 }
 
+function tableColumns () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Results Table Columns')}
+				<p>
+					${label('Block', 'blockColumn')}
+					${input('checkbox', { id: 'blockColumn', name: 'tableColumn', checked: user.blockColumn })}
+				</p>
+				<p>
+					${label('# Avail', 'availableColumn')}
+					${input('checkbox', { id: 'availableColumn', name: 'tableColumn', checked: user.availableColumn })}
+				</p>
+				<p>
+					${label('Time', 'durationColumn')}
+					${input('checkbox', { id: 'durationColumn', name: 'tableColumn', checked: user.durationColumn })}
+				</p>
+				<p>
+					${label('TO Pay', 'topayColumn')}
+					${input('checkbox', { id: 'topayColumn', name: 'tableColumn', checked: user.topayColumn })}
+				</p>
+				<p>
+					${label('M', 'mastersColumn')}
+					${input('checkbox', { id: 'mastersColumn', name: 'tableColumn', checked: user.mastersColumn })}
+				</p>
+				<p>
+					${label('NQ', 'notqualifiedColumn')}
+					${input('checkbox', { id: 'notqualifiedColumn', name: 'tableColumn', checked: user.notqualifiedColumn })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Block')}
+					Buttons to block HIT by Requester, Title, ID
+				</section>
+				<section>
+					${descriptionTitle('# Avail')}
+					Number of available HITs in the group
+				</section>
+				<section>
+					${descriptionTitle('Time')}
+					The time allotted to complete the HIT
+				</section>
+				<section>
+					${descriptionTitle('TO Pay')}
+					The "pay" rating of the HIT's requester
+				</section>
+				<section>
+					${descriptionTitle('M')}
+					HIT requires Masters
+				</section>
+				<section>
+					${descriptionTitle('NQ')}
+					Not qualified for the HIT
+				</section>
+			</div>
+		</div>
+	`;
+}
+
 function general () {
 	return `
 		${exportButtons.apply(this)}
 		${bubbleNewHITs.apply(this)}
 		${alertVolume.apply(this)}
+		${tableColumns.apply(this)}
 	`;
 }
 
@@ -1437,14 +1507,15 @@ function init () {
 				isChecked = e.target.checked, name = e.target.name, value = e.target.value;
 
 			switch (tag) {
-				case 'SELECT':
+				case 'SELECT': {
 					//get('#thedit').textContent = value === 'random' ? 'Re-roll!' : 'Edit Current Theme';
 					this.user.themes.name = value;
 					Themes$1.apply(value, this.user.hitColor);
 					break;
-				case 'INPUT':
+				}
+				case 'INPUT': {
 					switch (type) {
-						case 'radio':
+						case 'radio': {
 							if (name === 'checkbox') {
 								this.user.showCheckboxes = (value === 'true');
 								Array.from(document.querySelectorAll('#controlpanel input[type=checkbox],#controlpanel input[type=radio]'))
@@ -1453,7 +1524,8 @@ function init () {
 							else this.user[name] = value;
 							if (name === 'hitColor') Themes$1.apply(this.user.themes.name, value);
 							break;
-						case 'checkbox':
+						}
+						case 'checkbox': {
 							this.user[id] = isChecked;
 							if (name === 'export') {
 								Array.from(document.querySelectorAll(`button.${value}`))
@@ -1462,23 +1534,39 @@ function init () {
 							if (id === 'notifyTaskbar' && isChecked && Notification.permission === 'default') {
 								Notification.requestPermission();
 							}
+							if (name === 'tableColumn') {
+								const columnName = id.replace('Column', '');
+								const display = isChecked ? 'table-cell' : 'none';
+
+								Array.from(document.querySelectorAll(`.${columnName}-tc`))
+									.forEach((el) => el.style.display = display);
+							}
 							break;
-						case 'number':
-							if (name === 'fontSize')
+						}
+						case 'number': {
+							if (name === 'fontSize') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[0].style.fontSize = value + 'px';
-							else if (name === 'shineOffset')
+							} else if (name === 'shineOffset') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + (+value) + 'px';
-							if (name === 'TOW') this.user.toWeights[id] = value;
-							else this.user[name] = value;
+							}
+
+							if (name === 'TOW') {
+								this.user.toWeights[id] = value;
+							} else {
+								this.user[name] = value;
+							}
 							break;
-						case 'range':
+						}
+						case 'range': {
 							this.user.volume[name] = value;
 							let audio = document.querySelector(`#${name}`);
 							audio.volume = value;
 							audio.play();
 							break;
+						}
 					}
 					break;
+				}
 			}
 			this.save();
 		}.bind(this);
@@ -1939,32 +2027,42 @@ function table$1 () {
 				</caption>
 				<thead>
 					<tr style="font-weight:800;font-size:0.87em;text-align:center">
-						<td id="requester-column">
+						<td class="block-tc ${hidden('block')}" style="width:52px">Block</td>
+						<td>
 							Requester
 						</td>
-						<td id="title-column">
+						<td>
 							Title
 						</td>
-						<td id="rewardpanda-column" style="width:70px">
+						<td style="width:70px">
 							Reward &amp; PandA
 						</td>
-						<td id="available-column" style="width:35px">
+						<td class="available-tc ${hidden('available')}" style="width:35px">
 							# Avail
 						</td>
-						<td id="topay-column" style="width:30px">
+						<td class="duration-tc ${hidden('duration')}" style="width:47px">
+							Time
+						</td>
+						<td class="topay-tc ${hidden('topay')}" style="width:30px">
 							TO Pay
 						</td>
-						<td id="masters-column" style="width:15px">
+						<td class="masters-tc ${hidden('masters')}" style="width:15px">
 							M
 						</td>
-						<td id="notqualified-column" style="width:15px"></td>
-						<td id="hitdb-column" style="width:15px"></td>
+						<td class="notqualified-tc ${hidden('notqualified')}" style="width:15px"></td>
 					</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
 		</div>
 	`;
+}
+
+function hidden(settingName, force) {
+	if (force) return 'hidden';
+
+	if (Settings$1.user[settingName + 'Column']) return '';
+	return 'hidden';
 }
 
 function body () {
@@ -2992,23 +3090,6 @@ function makeButton(settingName, shortName, longName, data = {}, label = shortNa
 }
 
 function addRowHTML(hitRow, shouldHide, reviewsError) {
-	let _rt = '';
-	if (!hitRow.blocked) {
-		_rt = cleanTemplate(`
-			<div>
-				<button name="block" value="${hitRow.requester.name}" class="block" title="Block this requester">
-					R
-				</button>
-				<button name="block" value="${hitRow.title.replace(/"/g, '&quot;')}" class="block" title="Block this title">
-					T
-				</button>
-				<button name="block" value="${hitRow.groupId}" class="block" title="Block this Group ID">
-					ID
-				</button>
-			</div>
-		`);
-	}
-
 	const center = 'text-align:center;';
 
 	let trClass = hitRow.rowColor;
@@ -3025,18 +3106,24 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 	let requesterHref = '';
 	if (hitRow.requester.id) requesterHref = `href="${TO_REPORTS$1}${hitRow.requester.id}"`;
 
-	let dbTd = '';
-	let qualTd = '';
-	if (!hitRow.qualified) qualTd = '<td class="tooweak" title="Not qualified to work on this HIT">NQ</td>';
-
 	const expData = {
 		gid: hitRow.groupId,
 	};
 
 	return cleanTemplate(`
 		<tr class="${trClass}">
+			<td class="block-tc ${hidden('block', hitRow.blocked)}">
+				<button name="block" value="${hitRow.requester.name}" class="block" title="Block this requester">
+					R
+				</button>
+				<button name="block" value="${hitRow.title.replace(/"/g, '&quot;')}" class="block" title="Block this title">
+					T
+				</button>
+				<button name="block" value="${hitRow.groupId}" class="block" title="Block this Group ID">
+					ID
+				</button>
+			</td>
 			<td>
-				${_rt}
 				<div>
 					<a class="static" target="_blank" href="${hitRow.requester.link}">${hitRow.requester.name}</a>
 				</div>
@@ -3060,19 +3147,23 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 					${hitRow.pay}
 				</a>
 			</td>
-			<td style="${center}">
+			<td class="available-tc ${hidden('available')}" style="${center}">
 				${hitRow.numHits}
 			</td>
-			<td style="${center}">
+			<td class="duration-tc ${hidden('duration')}" style="${center}">
+				${hitRow.timeStr}
+			</td>
+			<td class="topay-tc ${hidden('topay')}" style="${center}">
 				<a class="static toLink" target="_blank" data-rid="${hitRow.requester.id || 'null'}" ${requesterHref}>
 					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', reviewsError ? false : hitRow.TO)}
 				</a>
 			</td>
-			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'}">
+			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">
 				${hitRow.masters ? 'Y' : 'N'}
 			</td>
-			${dbTd}
-			${qualTd}
+			<td class="tooweak notqualified-tc ${hidden('notqualified', hitRow.qualified)}" title="Not qualified to work on this HIT">
+				NQ
+			</td>
 		</tr>
 	`);
 }

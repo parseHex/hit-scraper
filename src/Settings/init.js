@@ -19,14 +19,15 @@ export default function () {
 				isChecked = e.target.checked, name = e.target.name, value = e.target.value;
 
 			switch (tag) {
-				case 'SELECT':
+				case 'SELECT': {
 					//get('#thedit').textContent = value === 'random' ? 'Re-roll!' : 'Edit Current Theme';
 					this.user.themes.name = value;
 					Themes.apply(value, this.user.hitColor);
 					break;
-				case 'INPUT':
+				}
+				case 'INPUT': {
 					switch (type) {
-						case 'radio':
+						case 'radio': {
 							if (name === 'checkbox') {
 								this.user.showCheckboxes = (value === 'true');
 								Array.from(document.querySelectorAll('#controlpanel input[type=checkbox],#controlpanel input[type=radio]'))
@@ -35,7 +36,8 @@ export default function () {
 							else this.user[name] = value;
 							if (name === 'hitColor') Themes.apply(this.user.themes.name, value);
 							break;
-						case 'checkbox':
+						}
+						case 'checkbox': {
 							this.user[id] = isChecked;
 							if (name === 'export') {
 								Array.from(document.querySelectorAll(`button.${value}`))
@@ -44,23 +46,39 @@ export default function () {
 							if (id === 'notifyTaskbar' && isChecked && Notification.permission === 'default') {
 								Notification.requestPermission();
 							}
+							if (name === 'tableColumn') {
+								const columnName = id.replace('Column', '');
+								const display = isChecked ? 'table-cell' : 'none';
+
+								Array.from(document.querySelectorAll(`.${columnName}-tc`))
+									.forEach((el) => el.style.display = display);
+							}
 							break;
-						case 'number':
-							if (name === 'fontSize')
+						}
+						case 'number': {
+							if (name === 'fontSize') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[0].style.fontSize = value + 'px';
-							else if (name === 'shineOffset')
+							} else if (name === 'shineOffset') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + (+value) + 'px';
-							if (name === 'TOW') this.user.toWeights[id] = value;
-							else this.user[name] = value;
+							}
+
+							if (name === 'TOW') {
+								this.user.toWeights[id] = value;
+							} else {
+								this.user[name] = value;
+							}
 							break;
-						case 'range':
+						}
+						case 'range': {
 							this.user.volume[name] = value;
 							let audio = document.querySelector(`#${name}`);
 							audio.volume = value;
 							audio.play();
 							break;
+						}
 					}
 					break;
+				}
 			}
 			this.save();
 		}.bind(this);
