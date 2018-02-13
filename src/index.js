@@ -1,8 +1,6 @@
-import HITStorage from './HITStorage/index';
 import { delegate } from './lib/util';
 import Exporter from './Exporter/index';
 import Dialogue from './Dialogue/index';
-import DBQuery from './DBQuery/index';
 import state from './lib/state';
 import Settings from './Settings/index';
 import Interface from './Interface/index';
@@ -11,13 +9,12 @@ import ScraperCache from './Cache/ScraperCache';
 console.log('HS hook');
 if (!document.getElementById('control_panel')) {
 	initialize();
-	HITStorage.attach('HITDB');
+
 	const rt = document.getElementById('resultsTable');
 	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseover', tomouseover);
 	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseout', tomouseout);
 	delegate(rt, 'tr:not(hidden) .ex', 'click', e => new Exporter(e));
 	delegate(rt, 'tr:not(hidden) button[name=block]', 'click', ({ target }) => new Dialogue(target));
-	delegate(rt, 'tr:not(hidden) .db', 'click', ({ target }) => new DBQuery(target));
 }
 
 export default function initialize() {

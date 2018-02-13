@@ -2,7 +2,6 @@ import Interface from '../../Interface/index';
 import Settings from '../../Settings/index';
 import state from '../../lib/state';
 import prepReviews from '../../lib/prep-reviews';
-import HITStorage from '../../HITStorage/index';
 
 import bubbleNewHits from './bubble-new-hits';
 import setRowColor from './set-row-color';
@@ -88,8 +87,6 @@ export default function (reviews) {
 	}
 	table.innerHTML = html.join('');
 	if (!Settings.user.asyncTO || noReviews) this.notify(counts);
-
-	Array.from(table.querySelectorAll('.db')).forEach(el => HITStorage.test(el));
 
 	if (this.active) {
 		if (this.cooldown === 0) {
