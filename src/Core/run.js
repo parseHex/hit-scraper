@@ -5,7 +5,7 @@ import { ENV } from '../lib/constants';
 export default function (skiptoggle) {
 	if (!skiptoggle) this.active = !this.active;
 
-	this.cooldown = +Settings.user.refresh;
+	this.cooldown = Settings.user.refresh;
 	this.timer = clearTimeout(this.timer);
 	Interface.resetTitle();
 

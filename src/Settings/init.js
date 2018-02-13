@@ -56,10 +56,12 @@ export default function () {
 							break;
 						}
 						case 'number': {
+							value = +value;
+
 							if (name === 'fontSize') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[0].style.fontSize = value + 'px';
 							} else if (name === 'shineOffset') {
-								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + (+value) + 'px';
+								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + value + 'px';
 							}
 
 							if (name === 'TOW') {

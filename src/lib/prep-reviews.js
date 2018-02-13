@@ -9,7 +9,7 @@ export default function prepReviews(reviews) {
 		let n = 0, d = 0;
 		Object.keys(reviews[rid].attrs).forEach(attr => {
 			n += reviews[rid].attrs[attr] * Settings.user.toWeights[attr];
-			d += +Settings.user.toWeights[attr];
+			d += Settings.user.toWeights[attr];
 		});
 		reviews[rid].attrs.qual = (n / d).toPrecision(4);
 		reviews[rid].attrs.adjQual = adj(n / d, +reviews[rid].reviews).toPrecision(4);

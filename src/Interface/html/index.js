@@ -45,7 +45,8 @@ export default function () {
 					id="pages"
 					type="number"
 					title="${titles.pages}"
-					min="1" max="100"
+					min="1"
+					max="100"
 					value="${user.pages}"
 				/>
 				<i></i>

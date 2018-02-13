@@ -23,7 +23,7 @@ export default class ScraperCache extends Cache {
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
 			const obj = {
 				isNew: false,
-				shine: !!(this._cache[key].shine && age < +Settings.user.shine && !first),
+				shine: !!(this._cache[key].shine && age < Settings.user.shine && !first),
 			};
 
 			value.discovery = this._cache[key].discovery;

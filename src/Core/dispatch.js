@@ -19,25 +19,25 @@ export default function (type, src) {
 			break;
 		case 'control':
 			const numBlocked = state.scraperHistory.filter(v => v.current && v.blocked).length;
-			const _rpp = +Settings.user.resultsPerPage;
+			const _rpp = Settings.user.resultsPerPage;
 			const skiplimit = 5; // max number of pages to skip
 
 			// i tried to make the below mess more readable. don't know if i rewrote it correctly
 			// leaving the original for reference
 			// const pagelimit = Settings.user.skips
-			// 	? ((+Settings.user.pages + Math.floor(numBlocked / _rpp) + (numBlocked % _rpp > 0.66 * _rpp
+			// 	? ((Settings.user.pages + Math.floor(numBlocked / _rpp) + (numBlocked % _rpp > 0.66 * _rpp
 			// 		? 1
 			// 		: 0)) || 3)
-			// 	: (+Settings.user.pages || 3);
+			// 	: (Settings.user.pages || 3);
 
 			let pagelimit;
 			if (Settings.user.skips) {
 				const magicNumber = (numBlocked % _rpp > 0.66 * _rpp ? 1 : 0);
 
-				pagelimit = +Settings.user.pages + Math.floor(numBlocked / _rpp) + magicNumber;
+				pagelimit = Settings.user.pages + Math.floor(numBlocked / _rpp) + magicNumber;
 				pagelimit = pagelimit || 3;
 			} else {
-				pagelimit = +Settings.user.pages || 3;
+				pagelimit = Settings.user.pages || 3;
 			}
 
 			if (
@@ -58,7 +58,7 @@ export default function (type, src) {
 				Interface.Status.edit('processing', +src.page + 1);
 				Interface.Status.show('processing');
 
-				if (+src.page + 1 > +Settings.user.pages) {
+				if (+src.page + 1 > Settings.user.pages) {
 					Interface.Status.show('correcting-skips');
 				}
 

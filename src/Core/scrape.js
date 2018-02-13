@@ -77,8 +77,8 @@ export default function (src) {
 			capData.hit.preview = 'https://www.mturk.com/mturk/searchbar?searchWords=' + window.encodeURIComponent(capData.title);
 		}
 
-		if (Settings.user.searchBy === 1 && +Settings.user.batch > 1 && +capData.numHits < +Settings.user.batch) return;
-		else if (Settings.user.gbatch && +Settings.user.batch > 1 && +capData.numHits < +Settings.user.batch) return;
+		if (Settings.user.searchBy === 1 && Settings.user.batch > 1 && +capData.numHits < Settings.user.batch) return;
+		else if (Settings.user.gbatch && Settings.user.batch > 1 && +capData.numHits < Settings.user.batch) return;
 		else if (Settings.user.onlyViable && !viable) return;
 		state.scraperHistory.set(capData.groupId, capData);
 	}, this);

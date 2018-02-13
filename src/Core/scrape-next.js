@@ -41,12 +41,12 @@ export default function (src) {
 		if (
 			(
 				Settings.user.searchBy === enums.searchBy.MOST_AVAILABLE &&
-				+Settings.user.batch > 1 &&
-				+data.numHits < +Settings.user.batch
+				Settings.user.batch > 1 &&
+				+data.numHits < Settings.user.batch
 			) || (
 				Settings.user.gbatch &&
-				+Settings.user.batch > 1 &&
-				+data.numHits < +Settings.user.batch
+				Settings.user.batch > 1 &&
+				+data.numHits < Settings.user.batch
 			) ||
 			Settings.user.onlyViable && !data.viable
 		) return;

@@ -73,7 +73,7 @@ export default function (reviews) {
 		const shouldHide = Boolean(
 			(Settings.user.hideBlock && hitRow.blocked) ||
 			(Settings.user.hideNoTO && !hitRow.TO) ||
-			(Settings.user.minTOPay && hitRow.TO && +hitRow.TO.attrs.pay < +Settings.user.minTOPay)
+			(Settings.user.minTOPay && hitRow.TO && +hitRow.TO.attrs.pay < Settings.user.minTOPay)
 		);
 
 		counts.new += hitRow.isNew ? 1 : 0;

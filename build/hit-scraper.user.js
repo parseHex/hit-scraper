@@ -1519,10 +1519,12 @@ function init () {
 							break;
 						}
 						case 'number': {
+							value = +value;
+
 							if (name === 'fontSize') {
 								document.head.querySelector('#lazyfont').sheet.cssRules[0].style.fontSize = value + 'px';
 							} else if (name === 'shineOffset') {
-								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + (+value) + 'px';
+								document.head.querySelector('#lazyfont').sheet.cssRules[1].style.fontSize = +this.user.fontSize + value + 'px';
 							}
 
 							if (name === 'TOW') {
@@ -2077,7 +2079,8 @@ function body () {
 					id="pages"
 					type="number"
 					title="${titles.pages}"
-					min="1" max="100"
+					min="1"
+					max="100"
 					value="${user.pages}"
 				/>
 				<i></i>
@@ -2498,7 +2501,7 @@ function getPayload (page = 1) {
 function run (skiptoggle) {
 	if (!skiptoggle) this.active = !this.active;
 
-	this.cooldown = +Settings$1.user.refresh;
+	this.cooldown = Settings$1.user.refresh;
 	this.timer = clearTimeout(this.timer);
 	Interface$2.resetTitle();
 
@@ -2546,25 +2549,25 @@ function dispatch (type, src) {
 			break;
 		case 'control':
 			const numBlocked = state.scraperHistory.filter(v => v.current && v.blocked).length;
-			const _rpp = +Settings$1.user.resultsPerPage;
+			const _rpp = Settings$1.user.resultsPerPage;
 			const skiplimit = 5; // max number of pages to skip
 
 			// i tried to make the below mess more readable. don't know if i rewrote it correctly
 			// leaving the original for reference
 			// const pagelimit = Settings.user.skips
-			// 	? ((+Settings.user.pages + Math.floor(numBlocked / _rpp) + (numBlocked % _rpp > 0.66 * _rpp
+			// 	? ((Settings.user.pages + Math.floor(numBlocked / _rpp) + (numBlocked % _rpp > 0.66 * _rpp
 			// 		? 1
 			// 		: 0)) || 3)
-			// 	: (+Settings.user.pages || 3);
+			// 	: (Settings.user.pages || 3);
 
 			let pagelimit;
 			if (Settings$1.user.skips) {
 				const magicNumber = (numBlocked % _rpp > 0.66 * _rpp ? 1 : 0);
 
-				pagelimit = +Settings$1.user.pages + Math.floor(numBlocked / _rpp) + magicNumber;
+				pagelimit = Settings$1.user.pages + Math.floor(numBlocked / _rpp) + magicNumber;
 				pagelimit = pagelimit || 3;
 			} else {
-				pagelimit = +Settings$1.user.pages || 3;
+				pagelimit = Settings$1.user.pages || 3;
 			}
 
 			if (
@@ -2585,7 +2588,7 @@ function dispatch (type, src) {
 				Interface$2.Status.edit('processing', +src.page + 1);
 				Interface$2.Status.show('processing');
 
-				if (+src.page + 1 > +Settings$1.user.pages) {
+				if (+src.page + 1 > Settings$1.user.pages) {
 					Interface$2.Status.show('correcting-skips');
 				}
 
@@ -2796,12 +2799,12 @@ function scrapeNext (src) {
 		if (
 			(
 				Settings$1.user.searchBy === enums.searchBy.MOST_AVAILABLE &&
-				+Settings$1.user.batch > 1 &&
-				+data.numHits < +Settings$1.user.batch
+				Settings$1.user.batch > 1 &&
+				+data.numHits < Settings$1.user.batch
 			) || (
 				Settings$1.user.gbatch &&
-				+Settings$1.user.batch > 1 &&
-				+data.numHits < +Settings$1.user.batch
+				Settings$1.user.batch > 1 &&
+				+data.numHits < Settings$1.user.batch
 			) ||
 			Settings$1.user.onlyViable && !data.viable
 		) return;
@@ -2895,8 +2898,8 @@ function scrape (src) {
 			capData.hit.preview = 'https://www.mturk.com/mturk/searchbar?searchWords=' + window.encodeURIComponent(capData.title);
 		}
 
-		if (Settings$1.user.searchBy === 1 && +Settings$1.user.batch > 1 && +capData.numHits < +Settings$1.user.batch) return;
-		else if (Settings$1.user.gbatch && +Settings$1.user.batch > 1 && +capData.numHits < +Settings$1.user.batch) return;
+		if (Settings$1.user.searchBy === 1 && Settings$1.user.batch > 1 && +capData.numHits < Settings$1.user.batch) return;
+		else if (Settings$1.user.gbatch && Settings$1.user.batch > 1 && +capData.numHits < Settings$1.user.batch) return;
 		else if (Settings$1.user.onlyViable && !viable) return;
 		state.scraperHistory.set(capData.groupId, capData);
 	}, this);
@@ -2913,7 +2916,7 @@ function prepReviews(reviews) {
 		let n = 0, d = 0;
 		Object.keys(reviews[rid].attrs).forEach(attr => {
 			n += reviews[rid].attrs[attr] * Settings$1.user.toWeights[attr];
-			d += +Settings$1.user.toWeights[attr];
+			d += Settings$1.user.toWeights[attr];
 		});
 		reviews[rid].attrs.qual = (n / d).toPrecision(4);
 		reviews[rid].attrs.adjQual = adj(n / d, +reviews[rid].reviews).toPrecision(4);
@@ -3211,7 +3214,7 @@ function meld (reviews) {
 		const shouldHide = Boolean(
 			(Settings$1.user.hideBlock && hitRow.blocked) ||
 			(Settings$1.user.hideNoTO && !hitRow.TO) ||
-			(Settings$1.user.minTOPay && hitRow.TO && +hitRow.TO.attrs.pay < +Settings$1.user.minTOPay)
+			(Settings$1.user.minTOPay && hitRow.TO && +hitRow.TO.attrs.pay < Settings$1.user.minTOPay)
 		);
 
 		counts.new += hitRow.isNew ? 1 : 0;
@@ -3932,7 +3935,6 @@ class Dialogue {
 	}
 	confirm() {
 		const { value } = this.caller;
-
 		const blockStr = value.toLowerCase().replace(/\s+/g, ' ');
 
 		let blocklist = localStorage.getItem('scraper_ignore_list');
@@ -3957,13 +3959,13 @@ class Dialogue {
 			) return;
 
 			state.scraperHistory.get(gid).blocked = true;
+
 			v.cells[0].firstChild.remove();
 			return v.classList.add('blocklisted') || Settings$1.user.hideBlock && v.classList.add('hidden');
 		});
 		this.die();
 	}
 }
-
 function eq(str1, str2) {
 	str1 = str1.toLowerCase();
 	str2 = str2.toLowerCase();
@@ -4051,7 +4053,7 @@ class ScraperCache extends Cache {
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
 			const obj = {
 				isNew: false,
-				shine: !!(this._cache[key].shine && age < +Settings$1.user.shine && !first),
+				shine: !!(this._cache[key].shine && age < Settings$1.user.shine && !first),
 			};
 
 			value.discovery = this._cache[key].discovery;
