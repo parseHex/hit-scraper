@@ -1,4 +1,4 @@
-import { sectionTitle, label, checkbox, descriptionTitle } from "../_dom";
+import { sectionTitle, label, input, descriptionTitle } from "../_dom";
 
 export default function () {
 	const { user } = this;
@@ -9,11 +9,11 @@ export default function () {
 				${sectionTitle('Experimental')}
 				<p>
 					${label('Async', 'asyncTO')}
-					${checkbox({ id: 'asyncTO', checked: user.asyncTO })}
+					${input('checkbox', { id: 'asyncTO', checked: user.asyncTO })}
 				</p>
 				<p>
 					${label('Cache Reviews', 'cacheTO')}
-					${checkbox({ id: 'cacheTO', checked: user.cacheTO })}
+					${input('checkbox', { id: 'cacheTO', checked: user.cacheTO })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

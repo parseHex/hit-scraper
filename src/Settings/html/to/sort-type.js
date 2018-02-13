@@ -1,4 +1,4 @@
-import { sectionTitle, label, radio, descriptionTitle } from "../_dom";
+import { sectionTitle, label, input, descriptionTitle } from "../_dom";
 
 export default function () {
 	const { user } = this;
@@ -9,11 +9,11 @@ export default function () {
 				${sectionTitle('Sort Type')}
 				<p>
 					${label('Simple', 'stSim')}
-					${radio({ id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
+					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'stAdj')}
-					${radio({ id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
+					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

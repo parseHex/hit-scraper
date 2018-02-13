@@ -328,4 +328,14 @@ export default `
 		font-weight: bold;
 		display: block;
 	}
+
+	.column.opts > p {
+		position: relative;
+	}
+	.column.opts > p > input[type="checkbox"],
+	.column.opts > p > input[type="radio"],
+	.column.opts > p > input[type="number"] {
+		position: absolute;
+		right: 20px;
+	}
 `;

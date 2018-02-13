@@ -10,26 +10,10 @@ export function label(text, htmlFor) {
 	return `<label ${htmlFor}>${text}</label>`;
 }
 
-export function radio(opts) {
+export function input(type, opts) {
 	return cleanTemplate(`
 		<input &nbsp;
-			type="radio"
-			${parseAttr(opts)}
-		/>
-	`);
-}
-export function checkbox(opts) {
-	return cleanTemplate(`
-		<input &nbsp;
-			type="checkbox"
-			${parseAttr(opts)}
-		/>
-	`);
-}
-export function number(opts) {
-	return cleanTemplate(`
-		<input &nbsp;
-			type="number"
+			type="${type}"
 			${parseAttr(opts)}
 		/>
 	`);

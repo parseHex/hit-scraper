@@ -1,8 +1,10 @@
-import { sectionTitle, label, number } from "../_dom";
+import { sectionTitle, label, input } from "../_dom";
 
 export default function () {
 	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
+
+	const common = { name: 'TOW', min: 1, max: 10, step: 0.5 };
 
 	return `
 		<div class="row">
@@ -10,19 +12,19 @@ export default function () {
 				${sectionTitle('TO Weighting')}
 				<p>
 					${label('comm', 'comm')}
-					${number({ id: 'comm', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.comm })}
+					${input('number', Object.assign(common, { id: 'comm', value: user.toWeights.comm }))}
 				</p>
 				<p>
 					${label('pay', 'pay')}
-					${number({ id: 'pay', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.pay })}
+					${input('number', Object.assign(common, { id: 'pay', value: user.toWeights.pay }))}
 				</p>
 				<p>
 					${label('fair', 'fair')}
-					${number({ id: 'fair', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fair })}
+					${input('number', Object.assign(common, { id: 'fair', value: user.toWeights.fair }))}
 				</p>
 				<p>
 					${label('fast', 'fast')}
-					${number({ id: 'fast', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fast })}
+					${input('number', Object.assign(common, { id: 'fast', value: user.toWeights.fast }))}
 				</p>
 			</div>
 			<div class="column opts-dsc">

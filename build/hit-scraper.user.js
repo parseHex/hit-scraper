@@ -306,173 +306,155 @@ function save () {
 	localStorage.setItem('scraper_settings', JSON.stringify(this.user));
 }
 
-function general () {
-	const _hwtf = 'https://www.reddit.com/r/HITsWorthTurkingFor';
+function sectionTitle(text) {
+	return `<span><b>${text}</b></span>`;
+}
+
+function label(text, htmlFor) {
+	if (htmlFor) htmlFor = `for="${htmlFor}"`;
+
+	return `<label ${htmlFor}>${text}</label>`;
+}
+
+function input(type, opts) {
 	return cleanTemplate(`
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative; left:-8px">
-					<b>Export Buttons</b>
-				</span>
-				<p>
-					<label for="exportVb" style="float:left; width:51px">
-						vBulletin
-					</label>
-					<input &nbsp;
-						id="exportVb"
-						name="export"
-						value="vb"
-						type="checkbox"
-						${this.user.exportVb ? 'checked' : ''}
-					/>
-				</p>
-				<p>
-					<label for="exportIrc" style="float:left; width:51px">
-						IRC
-					</label>
-					<input &nbsp;
-						id="exportIrc"
-						name="export"
-						value="irc"
-						type="checkbox"
-						${this.user.exportIrc ? 'checked' : ''}
-					/>
-				</p>
-				<p>
-					<label for="exportHwtf" style="float:left; width:51px">
-						Reddit
-					</label>
-					<input &nbsp;
-						id="exportHwtf"
-						name="export"
-						value="hwtf"
-						type="checkbox"
-						${this.user.exportHwtf ? 'checked' : ''}
-					/>
-				</p>
-				<p>
-					<label for="exportPcp" style="float:left; width:51px">
-						Panda Crazy - Panda
-					</label>
-					<input &nbsp;
-						id="exportPcp"
-						name="export"
-						value="pc-p"
-						type="checkbox"
-						${this.user.exportPcp ? 'checked' : ''}
-					/>
-				</p>
-				<p>
-					<label for="exportPco" style="float:left; width:51px">
-						Panda Crazy - Once
-					</label>
-					<input &nbsp;
-						id="exportPco"
-						name="export"
-						value="pc-o"
-						type="checkbox"
-						${this.user.exportPco ? 'checked' : ''}
-					/>
-				</p>
-			</div>
-			<section style="margin-left:110px">
-				<span style="position:relative; left:10px">
-					<i>vBulletin</i>
-				</span>
-				<br />
-				Show a button in the results to export the specified HIT with vBulletin &nbsp;
-				formatted text to share on forums.
-			</section>
-			<section style="margin-left:110px">
-				<span style="position:relative; left:10px">
-					<i>IRC</i>
-				</span>
-				<br />
-				Show a button in the results to export the specified HIT streamlined for sharing on IRC.
-			</section>
-			<section style="margin-left:110px">
-				<span style="position:relative; left:10px">
-					<i>Reddit</i>
-				</span>
-				<br />
-				Show a button in the results to export the specified HIT for sharing on Reddit, formatted to &nbsp;
-				<a style="color:black" href="${_hwtf}" target="_blank">r/HITsWorthTurkingFor</a> standards.
-			</section>
-			<section style="margin-left:110px">
-				<span style="position:relative; left:10px">
-					<i>Panda Crazy - Panda</i>
-				</span>
-				<br />
-				Show a button in the results to export the specified HIT to Panda Crazy's Panda queue.
-			</section>
-			<section style="margin-left:110px">
-				<span style="position:relative; left:10px">
-					<i>Panda Crazy - Once</i>
-				</span>
-				<br />
-				Show a button in the results to export the specified HIT to Panda Crazy's Once queue.
-			</section>
-		</div>
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative; left:-8px">
-					<b>Bubble New HITs</b>
-				</span>
-				<p>
-					<label for="bubbleNew" style="float:left; width:51px">
-						Enable
-					</label>
-					<input &nbsp;
-						id="bubbleNew"
-						type="checkbox"
-						${this.user.bubbleNew ? 'checked' : ''}
-					/>
-				</p>
-			</div>
-			<section style="margin-left:100px; margin-top:23px">
-				When this option is enabled, new HITs will always be placed at the top of the results table.
-			</section>
-		</div>
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative; left:-8px">
-					<b>Alert Volume</b>
-				</span>
-				<p>
-					<label style="float:left;width:45px">
-						Ding
-					</label>
-					<input &nbsp;
-						name="ding"
-						type="range"
-						value=${this.user.volume.ding}
-						max="1"
-						step="0.02"
-						min="0"
-					/>
-					<span style="padding-left:10px">
-						${Math.floor(this.user.volume.ding * 100)}%
-					</span>
-				</p>
-				<p>
-					<label style="float:left;width:45px">
-						Squee
-					</label>
-					<input &nbsp;
-						name="squee"
-						type="range"
-						value=${this.user.volume.squee}
-						max="1"
-						step="0.02"
-						min="0"
-					/>
-					<span style="padding-left:10px">
-						${Math.floor(this.user.volume.squee * 100)}%
-					</span>
-				</p>
-			</div>
-		</div>
+		<input &nbsp;
+			type="${type}"
+			${parseAttr(opts)}
+		/>
 	`);
+}
+
+function descriptionTitle(text) {
+	return `<span class="dsc-title">${text}</span>`;
+}
+
+
+function parseAttr(attrs) {
+	let returnAttr = '';
+	Object.keys(attrs).forEach(function (key) {
+		if (attrs[key] === false) return;
+
+		let val = '';
+		if (attrs[key] !== true) val = `="${attrs[key]}"`;
+
+		returnAttr += ` ${key}${val}`;
+	});
+	return returnAttr;
+}
+
+function exportButtons () {
+	const { user } = this;
+	const _hwtf = 'https://www.reddit.com/r/HITsWorthTurkingFor';
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Export Buttons')}
+				<p>
+					${label('vBulletin', 'exportVb')}
+					${input('checkbox', { id: 'exportVb', name: 'export', value: 'vb', checked: user.exportVb })}
+				</p>
+				<p>
+					${label('IRC', 'exportIrc')}
+					${input('checkbox', { id: 'exportIrc', name: 'export', value: 'irc', checked: user.exportIrc })}
+				</p>
+				<p>
+					${label('Reddit', 'exportHwtf')}
+					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: user.exportHwtf })}
+				</p>
+				<p>
+					${label('Panda Crazy - Panda', 'exportPcp')}
+					${input('checkbox', { id: 'exportPcp', name: 'export', value: 'pc-p', checked: user.exportPcp })}
+				</p>
+				<p>
+					${label('Panda Crazy - Once', 'exportPco')}
+					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: user.exportPco })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('vBulletin')}
+					Show a button in the results to export the specified HIT with vBulletin &nbsp;
+					formatted text to share on forums.
+				</section>
+				<section>
+					${descriptionTitle('IRC')}
+					Show a button in the results to export the specified HIT streamlined for sharing on IRC.
+				</section>
+				<section>
+					${descriptionTitle('Reddit')}
+					Show a button in the results to export the specified HIT for sharing on Reddit, formatted to &nbsp;
+					<a style="color:black" href="${_hwtf}" target="_blank">
+						r/HITsWorthTurkingFor
+					</a> standards.
+				</section>
+				<section>
+					${descriptionTitle('Panda Crazy - Panda')}
+					Show a button in the results to export the specified HIT to Panda Crazy's Panda queue.
+				</section>
+				<section>
+					${descriptionTitle('Panda Crazy - Once')}
+					Show a button in the results to export the specified HIT to Panda Crazy's Once queue.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
+function bubbleNewHITs () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Bubble New HITs')}
+				<p>
+					${label('Enable', 'bubbleNew')}
+					${input('checkbox', { id: 'bubbleNew', checked: user.bubbleNew })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					When this option is enabled, new HITs will always be placed at the top of the results table.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
+function alertVolume () {
+	const { user } = this;
+
+	const common = { min: 0, max: 1, step: 0.02 };
+
+	return `
+		<div class="row">
+			${sectionTitle('Alert Volume')}
+			<p>
+				${label('Ding')}
+				${input('range', Object.assign(common, { name: 'ding', value: user.volume.ding }))}
+				<span style="padding-left:10px">
+					${Math.floor(user.volume.ding * 100)}%
+				</span>
+			</p>
+			<p>
+				${label('Squee')}
+				${input('range', Object.assign(common, { name: 'squee', value: user.volume.squee }))}
+				<span style="padding-left:10px">
+					${Math.floor(user.volume.squee * 100)}%
+				</span>
+			</p>
+		</div>
+	`;
+}
+
+function general () {
+	return `
+		${exportButtons.apply(this)}
+		${bubbleNewHITs.apply(this)}
+		${alertVolume.apply(this)}
+	`;
 }
 
 function appearance () {
@@ -654,59 +636,6 @@ function appearance () {
 	`);
 }
 
-function sectionTitle(text) {
-	return `<span><b>${text}</b></span>`;
-}
-
-function label(text, htmlFor) {
-	if (htmlFor) htmlFor = `for="${htmlFor}"`;
-
-	return `<label ${htmlFor}>${text}</label>`;
-}
-
-function radio(opts) {
-	return cleanTemplate(`
-		<input &nbsp;
-			type="radio"
-			${parseAttr(opts)}
-		/>
-	`);
-}
-function checkbox(opts) {
-	return cleanTemplate(`
-		<input &nbsp;
-			type="checkbox"
-			${parseAttr(opts)}
-		/>
-	`);
-}
-function number(opts) {
-	return cleanTemplate(`
-		<input &nbsp;
-			type="number"
-			${parseAttr(opts)}
-		/>
-	`);
-}
-
-function descriptionTitle(text) {
-	return `<span class="dsc-title">${text}</span>`;
-}
-
-
-function parseAttr(attrs) {
-	let returnAttr = '';
-	Object.keys(attrs).forEach(function (key) {
-		if (attrs[key] === false) return;
-
-		let val = '';
-		if (attrs[key] !== true) val = `="${attrs[key]}"`;
-
-		returnAttr += ` ${key}${val}`;
-	});
-	return returnAttr;
-}
-
 function colorType () {
 	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
@@ -717,11 +646,11 @@ function colorType () {
 				${sectionTitle('Color Type')}
 				<p>
 					${label('Simple', 'ctSim')}
-					${radio({ id: 'ctSim', name: 'colorType', value: 'sim', checked: user.colorType === 'sim' })}
+					${input('radio', { id: 'ctSim', name: 'colorType', value: 'sim', checked: user.colorType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'ctAdj')}
-					${radio({ id: 'ctAdj', name: 'colorType', value: 'adj', checked: user.colorType === 'adj' })}
+					${input('radio', { id: 'ctAdj', name: 'colorType', value: 'adj', checked: user.colorType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -754,11 +683,11 @@ function sortType () {
 				${sectionTitle('Sort Type')}
 				<p>
 					${label('Simple', 'stSim')}
-					${radio({ id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
+					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'stAdj')}
-					${radio({ id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
+					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -784,25 +713,27 @@ function toWeights () {
 	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
 
+	const common = { name: 'TOW', min: 1, max: 10, step: 0.5 };
+
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('TO Weighting')}
 				<p>
 					${label('comm', 'comm')}
-					${number({ id: 'comm', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.comm })}
+					${input('number', Object.assign(common, { id: 'comm', value: user.toWeights.comm }))}
 				</p>
 				<p>
 					${label('pay', 'pay')}
-					${number({ id: 'pay', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.pay })}
+					${input('number', Object.assign(common, { id: 'pay', value: user.toWeights.pay }))}
 				</p>
 				<p>
 					${label('fair', 'fair')}
-					${number({ id: 'fair', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fair })}
+					${input('number', Object.assign(common, { id: 'fair', value: user.toWeights.fair }))}
 				</p>
 				<p>
 					${label('fast', 'fast')}
-					${number({ id: 'fast', name: 'TOW', min: 1, max: 10, step: 0.5, value: user.toWeights.fast })}
+					${input('number', Object.assign(common, { id: 'fast', value: user.toWeights.fast }))}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -830,11 +761,11 @@ function experimental () {
 				${sectionTitle('Experimental')}
 				<p>
 					${label('Async', 'asyncTO')}
-					${checkbox({ id: 'asyncTO', checked: user.asyncTO })}
+					${input('checkbox', { id: 'asyncTO', checked: user.asyncTO })}
 				</p>
 				<p>
 					${label('Cache Reviews', 'cacheTO')}
-					${checkbox({ id: 'cacheTO', checked: user.cacheTO })}
+					${input('checkbox', { id: 'cacheTO', checked: user.cacheTO })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -1971,6 +1902,16 @@ var css = `
 		font-style: italic;
 		font-weight: bold;
 		display: block;
+	}
+
+	.column.opts > p {
+		position: relative;
+	}
+	.column.opts > p > input[type="checkbox"],
+	.column.opts > p > input[type="radio"],
+	.column.opts > p > input[type="number"] {
+		position: absolute;
+		right: 20px;
 	}
 `;
 

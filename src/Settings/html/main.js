@@ -1,6 +1,6 @@
 import { cleanTemplate } from '../../lib/util';
 
-import general from './general';
+import general from './general/index';
 import appearance from './appearance';
 import to from './to/index';
 import blocks from './blocks';
