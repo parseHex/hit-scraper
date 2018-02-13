@@ -1533,6 +1533,7 @@ var css = `
 	body {
 		font-family: Verdana, Arial;
 		font-size: 14px;
+		margin: 0;
 	}
 	p {
 		margin: 8px auto;
@@ -1929,7 +1930,44 @@ var enums = {
 	},
 }
 
-function _body () {
+function table$1 () {
+	return `
+		<div id="results">
+			<table id="resultsTable" style="width:100%">
+				<caption style="font-weight:800;line-height:1.25em;font-size:1.5em;">
+					HIT Scraper Results
+				</caption>
+				<thead>
+					<tr style="font-weight:800;font-size:0.87em;text-align:center">
+						<td id="requester-column">
+							Requester
+						</td>
+						<td id="title-column">
+							Title
+						</td>
+						<td id="rewardpanda-column" style="width:70px">
+							Reward &amp; PandA
+						</td>
+						<td id="available-column" style="width:35px">
+							# Avail
+						</td>
+						<td id="topay-column" style="width:30px">
+							TO Pay
+						</td>
+						<td id="masters-column" style="width:15px">
+							M
+						</td>
+						<td id="notqualified-column" style="width:15px"></td>
+						<td id="hitdb-column" style="width:15px"></td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	`;
+}
+
+function body () {
 	const { user } = Settings$1;
 
 	const _cb = user.showCheckboxes ? '' : 'hidden';
@@ -2316,33 +2354,12 @@ function _body () {
 				&nbsp; seconds
 			</p>
 		</div>
-		<div id="results">
-			<table id="resultsTable" style="width:100%">
-				<caption style="font-weight:800;line-height:1.25em;font-size:1.5em;">
-					HIT Scraper Results
-				</caption>
-				<thead>
-					<tr style="font-weight:800;font-size:0.87em;text-align:center">
-						<td>Requester</td>
-						<td>Title</td>
-						<td style="width:70px">Reward &amp; PandA</td>
-						<td style="width:35px"># Avail</td>
-						<td style="width:30px">TO Pay</td>
-						<td style="width:15px">M</td>
-						<td style="width:15px"></td>
-						<!-- <td style="width:15px"></td> -->
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
+		${table$1.apply(this)}
 	`);
 	// NOTE: the above commented-out column is the HITDB column
 }
 
 function draw$1 () {
-	const body = _body.apply(this);
-
 	var user = this.user = Settings$1.user,
 		fCss =
 			`#resultsTable tbody {font-size:${user.fontSize}px;}` +
@@ -2353,7 +2370,7 @@ function draw$1 () {
 			`<link rel="icon" type="image/png" href="${ico}" /><link rel="stylesheet" type="text/css" />`;
 
 	document.head.innerHTML = head;
-	document.body.innerHTML = body;
+	document.body.innerHTML = body.apply(this);
 	this.elkeys = Object.keys(titles);
 	return this;
 }

@@ -2,6 +2,7 @@ export default `
 	body {
 		font-family: Verdana, Arial;
 		font-size: 14px;
+		margin: 0;
 	}
 	p {
 		margin: 8px auto;

@@ -5,11 +5,9 @@ import {
 
 import css from './css';
 import titles from './titles';
-import _body from './body-html';
+import body from './html/index';
 
 export default function () {
-	const body = _body.apply(this);
-
 	var user = this.user = Settings.user,
 		fCss =
 			`#resultsTable tbody {font-size:${user.fontSize}px;}` +
@@ -20,7 +18,7 @@ export default function () {
 			`<link rel="icon" type="image/png" href="${ico}" /><link rel="stylesheet" type="text/css" />`;
 
 	document.head.innerHTML = head;
-	document.body.innerHTML = body;
+	document.body.innerHTML = body.apply(this);
 	this.elkeys = Object.keys(titles);
 	return this;
 }

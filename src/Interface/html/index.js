@@ -1,11 +1,12 @@
-import { cleanTemplate } from "../lib/util";
-import Settings from '../Settings/index';
+import { cleanTemplate } from "../../lib/util";
+import Settings from '../../Settings/index';
 import {
 	audio0, audio1,
-} from '../lib/constants';
-import enums from '../lib/enums';
+} from '../../lib/constants';
+import enums from '../../lib/enums';
 
-import titles from './titles';
+import titles from '../titles';
+import table from "./table";
 
 export default function () {
 	const { user } = Settings;
@@ -394,26 +395,7 @@ export default function () {
 				&nbsp; seconds
 			</p>
 		</div>
-		<div id="results">
-			<table id="resultsTable" style="width:100%">
-				<caption style="font-weight:800;line-height:1.25em;font-size:1.5em;">
-					HIT Scraper Results
-				</caption>
-				<thead>
-					<tr style="font-weight:800;font-size:0.87em;text-align:center">
-						<td>Requester</td>
-						<td>Title</td>
-						<td style="width:70px">Reward &amp; PandA</td>
-						<td style="width:35px"># Avail</td>
-						<td style="width:30px">TO Pay</td>
-						<td style="width:15px">M</td>
-						<td style="width:15px"></td>
-						<!-- <td style="width:15px"></td> -->
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</div>
+		${table.apply(this)}
 	`);
 	// NOTE: the above commented-out column is the HITDB column
 }
