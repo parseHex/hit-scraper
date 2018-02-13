@@ -6,7 +6,7 @@ import { cleanTemplate } from './util';
 export default function createTooltip(type, obj) {
 	let html;
 	let reason;
-	if (Settings.disableTO) {
+	if (Settings.user.disableTO) {
 		reason = bullet('TO disabled in user settings');
 	} else if (Settings.user.asyncTO && obj === false) {
 		reason = bullet('Loading reviews...');

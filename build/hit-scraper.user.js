@@ -3006,7 +3006,7 @@ function getClassFromValue(toVal, type) {
 function createTooltip(type, obj) {
 	let html;
 	let reason;
-	if (Settings$1.disableTO) {
+	if (Settings$1.user.disableTO) {
 		reason = bullet('TO disabled in user settings');
 	} else if (Settings$1.user.asyncTO && obj === false) {
 		reason = bullet('Loading reviews...');
