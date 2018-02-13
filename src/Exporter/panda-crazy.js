@@ -1,5 +1,4 @@
 import { cleanTemplate, pad } from '../lib/util';
-
 import makeTitle from '../lib/make-title';
 
 export default function (type) {

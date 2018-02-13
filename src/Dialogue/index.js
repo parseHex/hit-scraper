@@ -59,7 +59,8 @@ export default class Dialogue {
 		this.node.remove();
 	}
 	confirm() {
-		const blockStr = this.caller.value.toLowerCase().replace(/\s+/g, ' ');
+		const { value } = this.caller;
+		const blockStr = value.toLowerCase().replace(/\s+/g, ' ');
 
 		let blocklist = localStorage.getItem('scraper_ignore_list');
 		if (!blocklist) {
@@ -72,21 +73,26 @@ export default class Dialogue {
 
 		localStorage.setItem('scraper_ignore_list', blocklist);
 
-		Array.from(document.getElementById('resultsTable').tBodies[0].rows).forEach(v => {
-			var c0 = v.cells[0].lastChild.textContent;
-			var c1 = v.cells[1].lastChild.textContent.trim();
-			var c2 = v.cells[1].querySelector('.ex').dataset.gid;
+		Array.from(document.querySelectorAll('#resultsTable tbody tr')).forEach(v => {
+			const gid = v.querySelector('.ex').dataset.gid;
+			const rName = state.scraperHistory.get(gid).requester.name;
+			const title = state.scraperHistory.get(gid).title;
 
 			if (
 				v.classList.contains('blocklisted') ||
-				c0 !== this.caller.value && c1 !== this.caller.value && c2 !== this.caller.value
+				!eq(rName, value) && !eq(title, value) && !eq(gid, value)
 			) return;
 
-			state.scraperHistory.get(c2).blocked = true;
+			state.scraperHistory.get(gid).blocked = true;
 
 			v.cells[0].firstChild.remove();
 			return v.classList.add('blocklisted') || Settings.user.hideBlock && v.classList.add('hidden');
 		});
 		this.die();
 	}
+}
+function eq(str1, str2) {
+	str1 = str1.toLowerCase();
+	str2 = str2.toLowerCase();
+	return str1 === str2;
 }
