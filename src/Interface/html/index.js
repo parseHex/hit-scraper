@@ -1,4 +1,4 @@
-import { cleanTemplate } from "../../lib/util";
+import { cleanTemplate } from '../../lib/util';
 import Settings from '../../Settings/index';
 import {
 	audio0, audio1,
@@ -6,7 +6,7 @@ import {
 import enums from '../../lib/enums';
 
 import titles from '../titles';
-import table from "./table";
+import table from './table';
 
 export default function () {
 	const { user } = Settings;

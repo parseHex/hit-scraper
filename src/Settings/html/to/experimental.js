@@ -1,4 +1,4 @@
-import { sectionTitle, label, input, descriptionTitle } from "../_dom";
+import { sectionTitle, label, input, descriptionTitle } from '../_dom';
 
 export default function () {
 	const { user } = this;

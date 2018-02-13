@@ -1594,53 +1594,7 @@ function toggleOverflow (state) {
 	document.body.style.overflow = state === 'on' ? 'hidden' : 'auto';
 }
 
-var css = `
-	body {
-		font-family: Verdana, Arial;
-		font-size: 14px;
-		margin: 0;
-	}
-	p {
-		margin: 8px auto;
-	}
-	.cpdefault {
-		display: inline-block;
-		visibility: visible;
-		overflow: hidden;
-		padding: 8px 5px 1px 5px;
-		transition: all 0.3s;
-	}
-	#controlpanel i:after, #status i:after {
-		content: " | ";
-	}
-	input[type="checkbox"], input[type="radio"] {
-		vertical-align: middle;
-	}
-	input[type="number"] {
-		width: 50px;
-		text-align: center;
-	}
-	label {
-		padding: 2px;
-	}
-	.hiddenpanel {
-		width: 0px;
-		height: 0px;
-		visibility: hidden;
-	}
-	.hidden {
-		display: none;
-	}
-	button {
-		border: 1px solid;
-	}
-	textarea {
-		font-family: inherit;
-		font-size: 11px;
-		margin: auto;
-		padding: 2px;
-	}
-
+var editorsExporters = `
 	/* for editors/exporters */
 	.pop {
 		position: fixed;
@@ -1672,7 +1626,9 @@ var css = `
 		height: 25px;
 		border: none;
 	}
+`;
 
+var settings = `
 	/* settings */
 	#settingsMain {
 		z-index: 20;
@@ -1750,6 +1706,45 @@ var css = `
 		text-align: left;
 	}
 
+	.row:after {
+    content: "";
+    display: table;
+    clear: both;
+	}
+	.column {
+		float: left;
+	}
+	.column.opts {
+		width: 35%;
+	}
+	.column.opts-dsc {
+		width: 65%;
+	}
+	.dsc-title {
+		font-style: italic;
+		font-weight: bold;
+		display: block;
+	}
+	.sec-title {
+		font-size: 1.2em;
+		border-bottom: 2px solid;
+		padding-bottom: 1px;
+	}
+	.column.opts > p:not(.no-align) {
+		position: relative;
+	}
+	.column.opts > p:not(.no-align) > input[type="checkbox"],
+	.column.opts > p:not(.no-align) > input[type="radio"] {
+		position: absolute;
+		right: 20px;
+	}
+	.column.opts > p:not(.no-align) > input[type="number"] {
+		position: absolute;
+		right: 10px;
+	}
+`;
+
+var resultsTable = `
 	#resultsTable button.block {
 		padding: 1px 4px;
 		margin-right: 1px;
@@ -1836,6 +1831,87 @@ var css = `
 		vertical-align: middle;
 		white-space: nowrap;
 	}
+	.ignored td {
+		border:2px solid #00E5FF;
+	}
+	.includelisted td {
+		border:2px dashed #008800;
+	}
+	.blocklisted td {
+		border:2px solid #cc0000;
+	}
+`;
+
+var status = `
+	.spinner {
+		display: inline-block;
+		animation: kfspin 0.7s infinite linear;
+		font-weight: bold;
+	}
+	@keyframes kfspin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(359deg);
+		}
+	}
+	.spinner:before {
+		content: "*";
+	}
+	#status-retrieving-to.hidden {
+		/* prevent screen jump from asyncTO */
+		display: block !important;
+		visibility: hidden;
+	}
+`;
+
+var css = `
+	body {
+		font-family: Verdana, Arial;
+		font-size: 14px;
+		margin: 0;
+	}
+	p {
+		margin: 8px auto;
+	}
+	.cpdefault {
+		display: inline-block;
+		visibility: visible;
+		overflow: hidden;
+		padding: 8px 5px 1px 5px;
+		transition: all 0.3s;
+	}
+	#controlpanel i:after, #status i:after {
+		content: " | ";
+	}
+	input[type="checkbox"], input[type="radio"] {
+		vertical-align: middle;
+	}
+	input[type="number"] {
+		width: 50px;
+		text-align: center;
+	}
+	label {
+		padding: 2px;
+	}
+	.hiddenpanel {
+		width: 0px;
+		height: 0px;
+		visibility: hidden;
+	}
+	.hidden {
+		display: none;
+	}
+	button {
+		border: 1px solid;
+	}
+	textarea {
+		font-family: inherit;
+		font-size: 11px;
+		margin: auto;
+		padding: 2px;
+	}
 	button.disabled {
 		position: relative;
 	}
@@ -1874,75 +1950,11 @@ var css = `
 	button.disabled:focus:after {
 		display: block;
 	}
-	.spinner {
-		display: inline-block;
-		animation: kfspin 0.7s infinite linear;
-		font-weight: bold;
-	}
-	@keyframes kfspin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(359deg);
-		}
-	}
-	.spinner:before {
-		content: "*";
-	}
-	.ignored td {
-		border:2px solid #00E5FF;
-	}
-	.includelisted td {
-		border:2px dashed #008800;
-	}
-	.blocklisted td {
-		border:2px solid #cc0000;
-	}
 
-	#status-retrieving-to.hidden {
-		/* prevent screen jump from asyncTO */
-		display: block !important;
-		visibility: hidden;
-	}
-
-	.row:after {
-    content: "";
-    display: table;
-    clear: both;
-	}
-	.column {
-		float: left;
-	}
-	.column.opts {
-		width: 35%;
-	}
-	.column.opts-dsc {
-		width: 65%;
-	}
-	.dsc-title {
-		font-style: italic;
-		font-weight: bold;
-		display: block;
-	}
-	.sec-title {
-		font-size: 1.2em;
-		border-bottom: 2px solid;
-		padding-bottom: 1px;
-	}
-
-	.column.opts > p:not(.no-align) {
-		position: relative;
-	}
-	.column.opts > p:not(.no-align) > input[type="checkbox"],
-	.column.opts > p:not(.no-align) > input[type="radio"] {
-		position: absolute;
-		right: 20px;
-	}
-	.column.opts > p:not(.no-align) > input[type="number"] {
-		position: absolute;
-		right: 10px;
-	}
+	${editorsExporters}
+	${settings}
+	${resultsTable}
+	${status}
 `;
 
 // import { ENV } from '../lib/constants';
@@ -2777,7 +2789,7 @@ function scrapeNext (src) {
 			pay: '$' + v.monetary_reward.amount_in_dollars.toFixed(2),
 			payRaw: v.monetary_reward.amount_in_dollars,
 			time: v.assignment_duration_in_seconds,
-			timeStr: fixTime(v.assignment_duration_in_seconds * 1000),
+			timeStr: fixTime(v.assignment_duration_in_seconds * 1000).replace(',', ''),
 			desc: v.description,
 			quals: v.project_requirements.length ? v.project_requirements.map(getQuals) : ['None'],
 			hit: { preview: ENV.ORIGIN + v.project_tasks_url, panda: ENV.ORIGIN + v.accept_project_task_url },

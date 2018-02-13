@@ -3,7 +3,7 @@ import {
 	ENV, DOC_TITLE, ico,
 } from '../lib/constants';
 
-import css from './css';
+import css from './css/index';
 import titles from './titles';
 import body from './html/index';
 

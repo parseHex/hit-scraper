@@ -19,7 +19,7 @@ export default function (src) {
 			pay: '$' + v.monetary_reward.amount_in_dollars.toFixed(2),
 			payRaw: v.monetary_reward.amount_in_dollars,
 			time: v.assignment_duration_in_seconds,
-			timeStr: fixTime(v.assignment_duration_in_seconds * 1000),
+			timeStr: fixTime(v.assignment_duration_in_seconds * 1000).replace(',', ''),
 			desc: v.description,
 			quals: v.project_requirements.length ? v.project_requirements.map(getQuals) : ['None'],
 			hit: { preview: ENV.ORIGIN + v.project_tasks_url, panda: ENV.ORIGIN + v.accept_project_task_url },

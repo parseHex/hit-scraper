@@ -1,4 +1,4 @@
-import importExport from "./import-export";
+import importExport from './import-export';
 
 export default function () {
 	return `

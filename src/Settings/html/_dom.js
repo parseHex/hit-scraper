@@ -1,4 +1,4 @@
-import { cleanTemplate } from "../../lib/util";
+import { cleanTemplate } from '../../lib/util';
 
 export function sectionTitle(text) {
 	return `<span class="sec-title">${text}</span>`;

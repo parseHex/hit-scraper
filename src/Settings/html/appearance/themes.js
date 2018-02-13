@@ -1,4 +1,4 @@
-import { sectionTitle, select } from "../_dom";
+import { sectionTitle, select } from '../_dom';
 
 export default function () {
 	const { user } = this;
