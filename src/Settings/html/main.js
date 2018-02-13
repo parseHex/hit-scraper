@@ -1,11 +1,11 @@
 import { cleanTemplate } from '../../lib/util';
 
 import general from './general/index';
-import appearance from './appearance';
+import appearance from './appearance/index';
 import to from './to/index';
-import blocks from './blocks';
-import notify from './notify';
-import utils from './utils';
+import blocks from './blocks/index';
+import notify from './notify/index';
+import utils from './utils/index';
 
 export default function () {
 	return cleanTemplate(`

@@ -307,13 +307,35 @@ function save () {
 }
 
 function sectionTitle(text) {
-	return `<span><b>${text}</b></span>`;
+	return `<span class="sec-title">${text}</span>`;
+}
+function descriptionTitle(text) {
+	return `<span class="dsc-title">${text}</span>`;
 }
 
 function label(text, htmlFor) {
 	if (htmlFor) htmlFor = `for="${htmlFor}"`;
 
 	return `<label ${htmlFor}>${text}</label>`;
+}
+
+function select(options, value) {
+	let html = '<select>';
+
+	options.forEach(function (opt) {
+		let selected = '';
+		if (opt.value === value) selected = 'selected';
+
+		html += `
+			<option value="${opt.value}" ${selected}>
+				${opt.text}
+			</option>
+		`;
+	});
+
+	html += '</select>';
+
+	return html;
 }
 
 function input(type, opts) {
@@ -323,10 +345,6 @@ function input(type, opts) {
 			${parseAttr(opts)}
 		/>
 	`);
-}
-
-function descriptionTitle(text) {
-	return `<span class="dsc-title">${text}</span>`;
 }
 
 
@@ -457,183 +475,139 @@ function general () {
 	`;
 }
 
-function appearance () {
-	return cleanTemplate(`
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative;left:-8px">
-					<b>Display Checkboxes</b>
-				</span>
+function displayCheckboxes () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Display Checkboxes')}
 				<p>
-					<label for="checkshow" style="float:left;width:51px">
-						Show
-					</label>
-					<input &nbsp;
-						id="checkshow"
-						type="radio"
-						name="checkbox"
-						value="true"
-						${this.user.showCheckboxes ? 'checked' : ''}
-					/>
+					${label('Show', 'checkshow')}
+					${input('radio', { id: 'checkshow', name: 'checkbox', value: 'true', checked: user.showCheckboxes })}
 				</p>
 				<p>
-					<label for="checkhide" style="float:left;width:51px">
-						Hide
-					</label>
-					<input &nbsp;
-						id="checkhide"
-						type="radio"
-						name="checkbox"
-						value="false"
-						${this.user.showCheckboxes ? '' : 'checked'}
-					/>
+					${label('Hide', 'checkhide')}
+					${input('radio', { id: 'checkhide', name: 'checkbox', value: 'false', checked: !user.showCheckboxes })}
 				</p>
 			</div>
-			<section style="margin-left:133px">
-				<span style="position:relative;left:10px">
-					<i>show</i>
-				</span>
-				<br />
-				Shows all checkboxes and radio inputs on the control panel for sake of clarity.
-			</section>
-			<section style="margin-left:133px">
-				<span style="position:relative;left:10px">
-					<i>hide</i>
-				</span>
-				<br>
-				Hides checkboxes and radio inputs for a cleaner, neater appearance. &nbsp;
-				Their visibility is not required for proper operation; &nbsp;
-				all options can still be toggled while hidden.
-			</section>
-		</div>
-		<div>
-			<div style="float:left;margin-left:15px">
-				<span style="position:relative;left:-8px">
-					<b>Themes</b>
-				</span>
-				<p>
-					<select>
-						<option value="classic"
-							${this.user.themes.name === 'classic' ? 'selected' : ''}
-						>
-							Classic
-						</option>
-						<option value="deluge"
-							${this.user.themes.name === 'deluge' ? 'selected' : ''}
-						>
-							Deluge
-						</option>
-						<option value="solDark"
-							${this.user.themes.name === 'solDark' ? 'selected' : ''}
-						>
-							Solarium:Dark
-						</option>
-						<option value="solLight"
-							${this.user.themes.name === 'solLight' ? 'selected' : ''}
-						>
-							Solarium:Light
-						</option>
-						<option value="whisper"
-							${this.user.themes.name === 'whisper' ? 'selected' : ''}
-						>
-							Whisper
-						</option>
-					</select>
-					<button id="thedit" style="cursor:pointer">
-						Edit Current Theme
-					</button>
-				</p>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Show')}
+					Shows all checkboxes and radio inputs on the control panel for sake of clarity.
+				</section>
+				<section>
+					${descriptionTitle('Hide')}
+					Hides checkboxes and radio inputs for a cleaner, neater appearance. &nbsp;
+					Their visibility is not required for proper operation; &nbsp;
+					all options can still be toggled while hidden.
+				</section>
 			</div>
 		</div>
-		<div>
-			<div style="float:left;margin-left:15px">
-				<span style="position:relative;left:-8px">
-					<b>HIT Coloring</b>
-				</span>
+	`;
+}
+
+function themes () {
+	const { user } = this;
+
+	const options = [
+		{ text: 'Classic', value: 'classic' },
+		{ text: 'Deluge', value: 'deluge' },
+		{ text: 'Solarium:Dark', value: 'solDark' },
+		{ text: 'Solarium:Light', value: 'solLight' },
+		{ text: 'Whisper', value: 'whisper' },
+	];
+
+	return `
+		<div class="row">
+			${sectionTitle('Themes')}
+			<p class="no-align">
+				${select(options, user.themes.name)}
+				<button id="thedit" style="cursor:pointer">
+					Edit Current Theme
+				</button>
+			</p>
+		</div>
+	`;
+}
+
+function hitColoring () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('HIT Coloring')}
 				<p>
-					<label for="link" style="float:left;width:51px">
-						Link
-					</label>
-					<input &nbsp;
-						id="link"
-						type="radio"
-						name="hitColor"
-						value="link"
-						${this.user.hitColor === 'link' ? 'checked' : ''}
-					/>
+					${label('Link', 'link')}
+					${input('radio', { id: 'link', name: 'hitColor', value: 'link', checked: user.hitColor === 'link' })}
 				</p>
 				<p>
-					<label for="cell" style="float:left;width:51px">
-						Cell
-					</label>
-					<input &nbsp;
-						id="cell"
-						type="radio"
-						name="hitColor"
-						value="cell"
-						${this.user.hitColor === 'cell' ? 'checked' : ''}
-					/>
+					${label('Cell', 'cell')}
+					${input('radio', { id: 'cell', name: 'hitColor', value: 'cell', checked: user.hitColor === 'cell' })}
 				</p>
 			</div>
-			<section style="margin-left:100px;padding-top:10px">
-				<span style="position:relative;left:10px">
-					<i>link</i>
-				</span>
-				<br>
-				Apply coloring based on Turkopticon reviews to all applicable links in the results table.
-			</section>
-			<section style="margin-left:100px">
-				<span style="position:relative;left:10px">
-					<i>cell</i>
-				</span>
-				<br>
-				Apply coloring based on Turkopticon reviews to the background of all &nbsp;
-				applicable cells in the results table.
-			</section>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Link')}
+					Apply coloring based on Turkopticon reviews to all applicable links in the results table.
+				</section>
+				<section>
+					${descriptionTitle('Cell')}
+					Apply coloring based on Turkopticon reviews to the background of all &nbsp;
+					applicable cells in the results table.
+				</section>
+			</div>
 			<p style="clear:both">
 				<b>Note:</b> &nbsp;
 				The Classic theme is exempt from these settings and will always colorize cells.
 			</p>
 		</div>
-		<div>
-			<div style="float:left;margin-left:15px">
-				<span style="position:relative;left:-8px">
-					<b>Font Size</b>
-				</span>
+	`;
+}
+
+function fontSize () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Font Size')}
 				<p>
-					<input &nbsp;
-						name="fontSize"
-						type="number"
-						min="5"
-						value="${this.user.fontSize}"
-						style="width:45px"
-					/>
+					${label('Normal', 'fontSize')}
+					${input('number', { id: 'fontSize', name: 'fontSize', min: 5, value: user.fontSize })}
 				</p>
-				<span style="position:relative;left:-8px">
-					<b>New HIT Offset</b>
-				</span>
 				<p>
-					<input &nbsp;
-						name="shineOffset"
-						type="number"
-						value="${this.user.shineOffset}"
-						style="width:45px"
-					/>
+					${label('New HIT Offset', 'shineOffset')}
+					${input('number', { id: 'shineOffset', name: 'shineOffset', value: user.shineOffset })}
 				</p>
 			</div>
-			<section style="margin-left:100px;margin-top:15px">
-				Change the font size (measured in px) for text in the results table. &nbsp;
-				Default is 11px.
-			</section>
-			<section style="margin-left:100px;margin-top:40px;">
-				Controls the font size of new HITs relative to the rest of the results. &nbsp;
-				Default is 1px.
-				<br />
-				<i>Example:</i> &nbsp;
-				With a font size of 11px and an offset of 1px, new HITs will be displayed at 12px.
-		</section>
-	</div>
-	`);
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Normal')}
+					Change the font size (measured in px) for text in the results table. &nbsp;
+					Default is 11px.
+				</section>
+				<section>
+					${descriptionTitle('New HIT Offset')}
+					Controls the font size of new HITs relative to the rest of the results. &nbsp;
+					Default is 1px.
+					<br />
+					<i>Example:</i> &nbsp;
+					With a font size of 11px and an offset of 1px, new HITs will be displayed at 12px.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
+function appearance () {
+	return `
+		${displayCheckboxes.apply(this)}
+		${themes.apply(this)}
+		${hitColoring.apply(this)}
+		${fontSize.apply(this)}
+	`;
 }
 
 function colorType () {
@@ -796,244 +770,228 @@ function to () {
 	`;
 }
 
+var table = `
+	<table class="ble" style="left:-100px;position:relative;width:110%;">
+		<tr>
+			<th class="blec ble">
+			</th>
+			<th class="blec ble">
+				Matches
+			</th>
+			<th class="blec ble" style="width:86px">
+				Does not match
+			</th>
+			<th class="blec ble">
+				Notes
+			</th>
+		</tr>
+		<tr>
+			<td rowspan="2" class="blec ble">
+				<code>foo*baz</code>
+			</td>
+			<td class="blec ble">
+				foo bar bat baz
+			</td>
+			<td class="blec ble">
+				bar foo bat baz
+			</td>
+			<td rowspan="2" class="blec ble">
+				no leading or closing asterisks; <code>foo</code> must be at the start of a line, &nbsp;
+				and <code>baz</code> must be at the end of a line for a positive match
+			</td>
+		</tr>
+		<tr>
+			<td class="blec ble">foobarbatbaz</td><td class="blec ble">
+				foo bar bat
+			</td>
+		</tr>
+		<tr>
+			<td class="blec ble">
+				<code>*foo</code>
+			</td>
+			<td class="ble blec">
+				bar baz foo
+			</td>
+			<td class="blec ble">
+				foo baz
+			</td>
+			<td class="ble blec">
+				matches and blocks any line ending in <code>foo</code>
+			</td>
+		</tr>
+		<tr>
+			<td class="blec ble">
+				<code>foo*</code>
+			</td>
+			<td class="ble blec">
+				foo bat bar
+			</td>
+			<td class="ble blec">
+				bat foo baz
+			</td>
+			<td class="ble blec">
+				matches and blocks any line beginning with <code>foo</code>
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec" rowspan="4">
+				<code>*bar*</code>
+			</td>
+			<td class="ble blec">
+				foo bar bat baz
+			</td>
+			<td class="ble blec" rowspan="4">
+				foo bat baz
+			</td>
+			<td class="ble blec" rowspan="4">
+				matches and blocks any line containing <code>bar</code>
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				bar bat baz
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				foo bar
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				foobatbarbaz
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				<code>** foo</code>
+			</td>
+			<td class="ble blec">
+				** foo
+			</td>
+			<td class="ble blec">
+				** foo bar baz
+			</td>
+			<td class="ble blec">
+				Multiple consecutive asterisks will be treated as a string rather than a wildcard. &nbsp;
+				This makes it compatible with HITs using multiple asterisks in their titles, &nbsp;
+				<i>e.g.</i>, <code>*** contains peanuts ***</code>.
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				<code>** *bar* ***
+			</td>
+			<td class="ble blec">
+				** foo bar baz bat ***
+			</td>
+			<td class="ble blec">
+				foo bar baz
+			</td>
+			<td class="ble blec">
+				Consecutive asterisks used in conjunction with single asterisks.
+			</td>
+		</tr>
+		<tr>
+			<td class="ble blec">
+				<code>*</code>
+			</td>
+			<td class="ble blec">
+				<i>nothing</i>
+			</td>
+			<td class="ble blec">
+				<i>all</i>
+			</td>
+			<td class="ble blec">
+				A single asterisk would usually match anything and everything, &nbsp;
+				but here, it matches nothing. &nbsp;
+				This prevents accidentally blocking everything from the results table.
+			</td>
+		</tr>
+	</table>
+`;
+
 function blocks () {
-	return cleanTemplate(`
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative; left:-8px">
-					<b>Advanced Matching</b>
-				</span>
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Advanced Matching')}
 				<p>
-					<label for="wildblocks" style="float:left; width:95px">
-						Allow Wildcards
-					</label>
-					<input &nbsp;
-						id="wildblocks"
-						type="checkbox"
-						${this.user.wildblocks ? 'checked' : ''}
-					/>
+					${label('Allow Wildcards', 'wildblocks')}
+					${input('checkbox', { id: 'wildblocks', checked: user.wildblocks })}
 				</p>
 			</div>
-			<section style="margin-left:150px">
-				Allows for the use of asterisks <code>(*)</code> as wildcards &nbsp;
-				in the blocklist for simple glob matching. &nbsp;
-				Any blocklist entry without an asterisk is treated the same as the &nbsp;
-				default behavior--the entry must exactly match a HIT title or requester to &nbsp;
-				trigger a block.
-				<p>
-					<em>Wildcards have the potential to block more HITs than intended if &nbsp;
-					using a pattern that's too generic.</em>
-				</p>
-				<p>
-					Matching is not case sensitive regardless of the wildcard setting. &nbsp;
-					Entries without an opening asterisk are expected to match the beginning of a line, &nbsp;
-					likewise, entries without a closing asterisk are expected to match the end of a line. &nbsp;
-					Example usage below.
-				</p>
-				<table class="ble" style="left:-100px;position:relative;width:110%;">
-					<tr>
-						<th class="blec ble">
-						</th>
-						<th class="blec ble">
-							Matches
-						</th>
-						<th class="blec ble" style="width:86px">
-							Does not match
-						</th>
-						<th class="blec ble">
-							Notes
-						</th>
-					</tr>
-					<tr>
-						<td rowspan="2" class="blec ble">
-							<code>foo*baz</code>
-						</td>
-						<td class="blec ble">
-							foo bar bat baz
-						</td>
-						<td class="blec ble">
-							bar foo bat baz
-						</td>
-						<td rowspan="2" class="blec ble">
-							no leading or closing asterisks; <code>foo</code> must be at the start of a line, &nbsp;
-							and <code>baz</code> must be at the end of a line for a positive match
-						</td>
-					</tr>
-					<tr>
-						<td class="blec ble">foobarbatbaz</td><td class="blec ble">
-							foo bar bat
-						</td>
-					</tr>
-					<tr>
-						<td class="blec ble">
-							<code>*foo</code>
-						</td>
-						<td class="ble blec">
-							bar baz foo
-						</td>
-						<td class="blec ble">
-							foo baz
-						</td>
-						<td class="ble blec">
-							matches and blocks any line ending in <code>foo</code>
-						</td>
-					</tr>
-					<tr>
-						<td class="blec ble">
-							<code>foo*</code>
-						</td>
-						<td class="ble blec">
-							foo bat bar
-						</td>
-						<td class="ble blec">
-							bat foo baz
-						</td>
-						<td class="ble blec">
-							matches and blocks any line beginning with <code>foo</code>
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec" rowspan="4">
-							<code>*bar*</code>
-						</td>
-						<td class="ble blec">
-							foo bar bat baz
-						</td>
-						<td class="ble blec" rowspan="4">
-							foo bat baz
-						</td>
-						<td class="ble blec" rowspan="4">
-							matches and blocks any line containing <code>bar</code>
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							bar bat baz
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							foo bar
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							foobatbarbaz
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							<code>** foo</code>
-						</td>
-						<td class="ble blec">
-							** foo
-						</td>
-						<td class="ble blec">
-							** foo bar baz
-						</td>
-						<td class="ble blec">
-							Multiple consecutive asterisks will be treated as a string rather than a wildcard. &nbsp;
-							This makes it compatible with HITs using multiple asterisks in their titles, &nbsp;
-							<i>e.g.</i>, <code>*** contains peanuts ***</code>.
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							<code>** *bar* ***
-						</td>
-						<td class="ble blec">
-							** foo bar baz bat ***
-						</td>
-						<td class="ble blec">
-							foo bar baz
-						</td>
-						<td class="ble blec">
-							Consecutive asterisks used in conjunction with single asterisks.
-						</td>
-					</tr>
-					<tr>
-						<td class="ble blec">
-							<code>*</code>
-						</td>
-						<td class="ble blec">
-							<i>nothing</i>
-						</td>
-						<td class="ble blec">
-							<i>all</i>
-						</td>
-						<td class="ble blec">
-							A single asterisk would usually match anything and everything, &nbsp;
-							but here, it matches nothing. &nbsp;
-							This prevents accidentally blocking everything from the results table.
-						</td>
-					</tr>
-				</table>
-			</section>
+			<div class="column opts-dsc">
+				<section>
+					Allows for the use of asterisks <code>(*)</code> as wildcards &nbsp;
+					in the blocklist for simple glob matching. &nbsp;
+					Any blocklist entry without an asterisk is treated the same as the &nbsp;
+					default behavior--the entry must exactly match a HIT title or requester to &nbsp;
+					trigger a block.
+					<p>
+						<em>Wildcards have the potential to block more HITs than intended if &nbsp;
+						using a pattern that's too generic.</em>
+					</p>
+					<p>
+						Matching is not case sensitive regardless of the wildcard setting. &nbsp;
+						Entries without an opening asterisk are expected to match the beginning of a line, &nbsp;
+						likewise, entries without a closing asterisk are expected to match the end of a line. &nbsp;
+						Example usage below.
+					</p>
+					${table}
+				</section>
+			</div>
 		</div>
-	`);
+	`;
 }
 
-function notify () {
-	return cleanTemplate(`
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position:relative; left:-8px">
-					<b>Additional Notifications</b>
-				</span>
-				<br />
+function additionalNotifications () {
+	const { user } = this;
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Additional Notifications')}
 				<p>
-					<label for="notifyBlink" style="float:left; width:51px">
-						Blink
-					</label>
-					<input &nbsp;
-						id="notifyBlink"
-						type="checkbox"
-						name="notify"
-						${this.user.notifyBlink ? 'checked' : ''}
-					/>
+					${label('Blink', 'notifyBlink')}
+					${input('checkbox', { id: 'notifyBlink', name: 'notify', checked: user.notifyBlink })}
 				</p>
 				<p>
-					<label for="notifyTaskbar" style="float:left; width:51px">
-						Taskbar
-					</label>
-					<input &nbsp;
-						id="notifyTaskbar"
-						type="checkbox"
-						name="notify"
-						${this.user.notifyTaskbar ? 'checked' : ''}
-					/>
+					${label('Taskbar', 'notifyTaskbar')}
+					${input('checkbox', { id: 'notifyTaskbar', name: 'notify', checked: user.notifyTaskbar })}
 				</p>
 			</div>
-			<section style="margin-left:160px">
-				<span style="position:relative; left:10px">
-					<i>blink</i>
-				</span>
-				<br />
-				Blink the tab when there are new HITs.
-			</section>
-			<section style="margin-left:160px">
-				<span style="position:relative; left:10px">
-					<i>taskbar</i>
-				</span>
-				<br />
-				Create an HTML5 browser notification when there are new HITs, &nbsp;
-				which appears over the taskbar for 10 seconds.
-			</section>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Blink')}
+					Blink the tab when there are new HITs.
+				</section>
+				<section>
+					${descriptionTitle('Taskbar')}
+					Create an HTML5 browser notification when there are new HITs, &nbsp;
+					which appears over the taskbar for 10 seconds.
+				</section>
+			</div>
 			<p style="clear:both">
 				<b>Note:</b> &nbsp;
 				These notification options will only apply when the page does not have active focus.
 			</p>
 		</div>
-	`);
+	`;
 }
 
-function utils () {
-	return cleanTemplate(`
-		<div>
-			<div style="float:left; margin-left:15px">
-				<span style="position relative; left:-8px">
-					<b>Export/Import</b>
-				</span>
+function notify () {
+	return `
+		${additionalNotifications.apply(this)}
+	`;
+}
+
+function importExport () {
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Export/Import')}
 				<p>
 					<button id="sexport">
 						Export
@@ -1044,29 +1002,27 @@ function utils () {
 						Import
 					</button>
 				</p>
-				<input &nbsp;
-					type="file"
-					id="fsimport"
-					style="display:none"
-				/>
+				${input('file', { id: 'fsimport', style: 'display:none;' })}
 			</div>
-			<section style="margin-left:130px; margin-top:15px">
-				<span style="position:relative; left:10px">
-					<i>Export</i>
-				</span>
-				<br />
-				Export your current settings, block list, and include list as a local file.
-			</section>
-			<section style="margin-left:130px">
-				<span style="position:relative; left:10px">
-					<i>Import</i>
-				</span>
-				<br />
-				Import your settings, block list, and include list from a local file.
-			</section>
-			<div style="margin-top:10px" id="eisStatus"></div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Export')}
+					Export your current settings, block list, and include list as a local file.
+				</section>
+				<section>
+					${descriptionTitle('Import')}
+					Import your settings, block list, and include list from a local file.
+				</section>
+				<div style="margin-top:10px" id="eisStatus"></div>
+			</div>
 		</div>
-	`);
+	`;
+}
+
+function utils () {
+	return `
+		${importExport.apply(this)}
+	`;
 }
 
 function main () {
@@ -1903,15 +1859,23 @@ var css = `
 		font-weight: bold;
 		display: block;
 	}
+	.sec-title {
+		font-size: 1.2em;
+		border-bottom: 2px solid;
+		padding-bottom: 1px;
+	}
 
-	.column.opts > p {
+	.column.opts > p:not(.no-align) {
 		position: relative;
 	}
-	.column.opts > p > input[type="checkbox"],
-	.column.opts > p > input[type="radio"],
-	.column.opts > p > input[type="number"] {
+	.column.opts > p:not(.no-align) > input[type="checkbox"],
+	.column.opts > p:not(.no-align) > input[type="radio"] {
 		position: absolute;
 		right: 20px;
+	}
+	.column.opts > p:not(.no-align) > input[type="number"] {
+		position: absolute;
+		right: 10px;
 	}
 `;
 

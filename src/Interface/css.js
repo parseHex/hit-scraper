@@ -328,14 +328,22 @@ export default `
 		font-weight: bold;
 		display: block;
 	}
+	.sec-title {
+		font-size: 1.2em;
+		border-bottom: 2px solid;
+		padding-bottom: 1px;
+	}
 
-	.column.opts > p {
+	.column.opts > p:not(.no-align) {
 		position: relative;
 	}
-	.column.opts > p > input[type="checkbox"],
-	.column.opts > p > input[type="radio"],
-	.column.opts > p > input[type="number"] {
+	.column.opts > p:not(.no-align) > input[type="checkbox"],
+	.column.opts > p:not(.no-align) > input[type="radio"] {
 		position: absolute;
 		right: 20px;
+	}
+	.column.opts > p:not(.no-align) > input[type="number"] {
+		position: absolute;
+		right: 10px;
 	}
 `;
