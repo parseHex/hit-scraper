@@ -1,0 +1,14 @@
+{
+	"name": "hit-scraper",
+	"version": "1.0.0",
+	"description": "Fork of HIT Scraper",
+	"scripts": {
+		"start": "rollup --config --watch",
+		"build": "rollup --config"
+	},
+	"author": "Thomas Mays",
+	"license": "ISC",
+	"devDependencies": {
+		"rollup": "^0.52.1"
+	}
+}
