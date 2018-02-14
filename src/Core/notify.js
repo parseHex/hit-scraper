@@ -2,7 +2,7 @@ import Interface from '../Interface/index';
 import Settings from '../Settings/index';
 import { DOC_TITLE } from '../lib/constants';
 
-export default function (c) {
+export default function (c, loading) {
 	var s = [];
 	s.push(c.total > 0 ? `${c.total} HIT${c.total > 1 ? 's' : ''}` : '<b>No HITs found.</b>');
 	if (c.new) s.push(`<i></i>${c.new} new`);
@@ -17,8 +17,11 @@ export default function (c) {
 	Interface.Status.show('scrape-complete');
 	Interface.Status.edit('scrape-complete', s.join(''));
 
-	if (c.newVis && Settings.user.notifySound[0]) document.getElementById(Settings.user.notifySound[1]).play();
-	if (!c.newVis || Interface.focused) return;
+	if (c.newVis && Settings.user.notifySound[0] && !loading) {
+		document.getElementById(Settings.user.notifySound[1]).play();
+	}
+	if (!c.newVis || Interface.focused || loading) return;
+
 	document.title = `[${c.newVis} new]` + DOC_TITLE;
 	if (Settings.user.notifyBlink) Interface.blackhole.blink =
 		setInterval(() => document.title = /scraper/i.test(document.title)

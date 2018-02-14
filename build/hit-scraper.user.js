@@ -3270,7 +3270,7 @@ function meld (reviews) {
 		html.push(addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading));
 	}
 	table.innerHTML = html.join('');
-	if (!noReviews || reviewsError || Settings$1.user.disableTO) this.notify(counts);
+	this.notify(counts, reviewsLoading);
 
 	if (this.active) {
 		if (this.cooldown === 0) {
@@ -3283,7 +3283,8 @@ function meld (reviews) {
 		}
 	}
 
-	if (!Settings$1.user.asyncTO || reviewsError) {
+	if (!Settings$1.user.asyncTO || !noReviews) {
+		// theres probably an edge case where there are 0 results where this will break
 		this.lastScrape = Date.now();
 	}
 }
@@ -3416,7 +3417,7 @@ function crossRef (...needles) {
 	return found; // [ blocklist,includelist ]
 }
 
-function notify$1 (c) {
+function notify$1 (c, loading) {
 	var s = [];
 	s.push(c.total > 0 ? `${c.total} HIT${c.total > 1 ? 's' : ''}` : '<b>No HITs found.</b>');
 	if (c.new) s.push(`<i></i>${c.new} new`);
@@ -3431,8 +3432,11 @@ function notify$1 (c) {
 	Interface$2.Status.show('scrape-complete');
 	Interface$2.Status.edit('scrape-complete', s.join(''));
 
-	if (c.newVis && Settings$1.user.notifySound[0]) document.getElementById(Settings$1.user.notifySound[1]).play();
-	if (!c.newVis || Interface$2.focused) return;
+	if (c.newVis && Settings$1.user.notifySound[0] && !loading) {
+		document.getElementById(Settings$1.user.notifySound[1]).play();
+	}
+	if (!c.newVis || Interface$2.focused || loading) return;
+
 	document.title = `[${c.newVis} new]` + DOC_TITLE;
 	if (Settings$1.user.notifyBlink) Interface$2.blackhole.blink =
 		setInterval(() => document.title = /scraper/i.test(document.title)
@@ -4108,23 +4112,24 @@ class ScraperCache extends Cache {
 		) {
 			value.TO = this._toCache.get(value.requester.id);
 		}
-		const first = !Core$2.lastScrape;
+		const isFirstScrape = !Core$2.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
 			const obj = {
 				isNew: false,
-				shine: !!(this._cache[key].shine && age < Settings$1.user.shine && !first),
+				shine: this._cache[key].shine && age < Settings$1.user.shine && !isFirstScrape,
 			};
 
 			value.discovery = this._cache[key].discovery;
 			return (this._cache[key] = Object.assign(value, obj));
 		} else { // new
 			const obj = {
-				isNew: !first,
-				shine: !first,
+				isNew: !isFirstScrape,
+				shine: !isFirstScrape,
 				TO: this._toCache.get(value.requester.id),
 			};
-			this._update(key, Object.assign(value, obj));
+
+			return this._update(key, Object.assign(value, obj));
 		}
 	}
 

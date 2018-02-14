@@ -18,23 +18,24 @@ export default class ScraperCache extends Cache {
 		) {
 			value.TO = this._toCache.get(value.requester.id);
 		}
-		const first = !Core.lastScrape;
+		const isFirstScrape = !Core.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
 			const obj = {
 				isNew: false,
-				shine: !!(this._cache[key].shine && age < Settings.user.shine && !first),
+				shine: this._cache[key].shine && age < Settings.user.shine && !isFirstScrape,
 			};
 
 			value.discovery = this._cache[key].discovery;
 			return (this._cache[key] = Object.assign(value, obj));
 		} else { // new
 			const obj = {
-				isNew: !first,
-				shine: !first,
+				isNew: !isFirstScrape,
+				shine: !isFirstScrape,
 				TO: this._toCache.get(value.requester.id),
 			};
-			this._update(key, Object.assign(value, obj));
+
+			return this._update(key, Object.assign(value, obj));
 		}
 	}
 

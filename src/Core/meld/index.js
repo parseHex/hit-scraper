@@ -78,7 +78,7 @@ export default function (reviews) {
 		html.push(addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading));
 	}
 	table.innerHTML = html.join('');
-	if (!noReviews || reviewsError || Settings.user.disableTO) this.notify(counts);
+	this.notify(counts, reviewsLoading);
 
 	if (this.active) {
 		if (this.cooldown === 0) {
@@ -91,7 +91,8 @@ export default function (reviews) {
 		}
 	}
 
-	if (!Settings.user.asyncTO || reviewsError) {
+	if (!Settings.user.asyncTO || !noReviews) {
+		// theres probably an edge case where there are 0 results where this will break
 		this.lastScrape = Date.now();
 	}
 }
