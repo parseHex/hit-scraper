@@ -1,7 +1,6 @@
 import { sectionTitle, descriptionTitle, label, input } from '../_dom';
 
 export default function () {
-	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
 
 	return `
@@ -10,11 +9,11 @@ export default function () {
 				${sectionTitle('Color Type')}
 				<p>
 					${label('Simple', 'ctSim')}
-					${input('radio', { id: 'ctSim', name: 'colorType', value: 'sim', checked: user.colorType === 'sim' })}
+					${input('radio', { id: 'ctSim', name: 'colorType', value: 'sim', checked: this.colorType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'ctAdj')}
-					${input('radio', { id: 'ctAdj', name: 'colorType', value: 'adj', checked: user.colorType === 'adj' })}
+					${input('radio', { id: 'ctAdj', name: 'colorType', value: 'adj', checked: this.colorType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

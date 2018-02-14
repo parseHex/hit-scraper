@@ -1,19 +1,17 @@
 import { sectionTitle, input, descriptionTitle, label } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Display Checkboxes')}
 				<p>
 					${label('Show', 'checkshow')}
-					${input('radio', { id: 'checkshow', name: 'checkbox', value: 'true', checked: user.showCheckboxes })}
+					${input('radio', { id: 'checkshow', name: 'checkbox', value: 'true', checked: this.showCheckboxes })}
 				</p>
 				<p>
 					${label('Hide', 'checkhide')}
-					${input('radio', { id: 'checkhide', name: 'checkbox', value: 'false', checked: !user.showCheckboxes })}
+					${input('radio', { id: 'checkhide', name: 'checkbox', value: 'false', checked: !this.showCheckboxes })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

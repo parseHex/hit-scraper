@@ -1,19 +1,17 @@
 import { sectionTitle, label, descriptionTitle, input } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Font Size')}
 				<p>
 					${label('Normal', 'fontSize')}
-					${input('number', { id: 'fontSize', name: 'fontSize', min: 5, value: user.fontSize })}
+					${input('number', { id: 'fontSize', name: 'fontSize', min: 5, value: this.fontSize })}
 				</p>
 				<p>
 					${label('New HIT Offset', 'shineOffset')}
-					${input('number', { id: 'shineOffset', name: 'shineOffset', value: user.shineOffset })}
+					${input('number', { id: 'shineOffset', name: 'shineOffset', value: this.shineOffset })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

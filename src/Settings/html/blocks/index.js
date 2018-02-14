@@ -2,15 +2,13 @@ import table from './table';
 import { label, sectionTitle, input } from '../_dom'
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Advanced Matching')}
 				<p>
 					${label('Allow Wildcards', 'wildblocks')}
-					${input('checkbox', { id: 'wildblocks', checked: user.wildblocks })}
+					${input('checkbox', { id: 'wildblocks', checked: this.user.wildblocks })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

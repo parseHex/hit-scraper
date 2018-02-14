@@ -1,7 +1,6 @@
 import { sectionTitle, input, descriptionTitle, label } from '../_dom'
 
 export default function () {
-	const { user } = this;
 	const _hwtf = 'https://www.reddit.com/r/HITsWorthTurkingFor';
 
 	return `
@@ -10,15 +9,15 @@ export default function () {
 				${sectionTitle('Export Buttons')}
 				<p>
 					${label('vBulletin', 'exportVb')}
-					${input('checkbox', { id: 'exportVb', name: 'export', value: 'vb', checked: user.exportVb })}
+					${input('checkbox', { id: 'exportVb', name: 'export', value: 'vb', checked: this.exportVb })}
 				</p>
 				<p>
 					${label('IRC', 'exportIrc')}
-					${input('checkbox', { id: 'exportIrc', name: 'export', value: 'irc', checked: user.exportIrc })}
+					${input('checkbox', { id: 'exportIrc', name: 'export', value: 'irc', checked: this.exportIrc })}
 				</p>
 				<p>
 					${label('Reddit', 'exportHwtf')}
-					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: user.exportHwtf })}
+					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: this.exportHwtf })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

@@ -252,6 +252,10 @@ var defaults$1 = {
 	mastersColumn: true,
 	notqualifiedColumn: true,
 
+	pcQueue: false,
+	pcQueueMin: 1,
+	pcQueueWaitTime: 0,
+
 	refresh: 0,
 	pages: 1,
 	skips: false,
@@ -344,7 +348,6 @@ function parseAttr(attrs) {
 }
 
 function exportButtons () {
-	const { user } = this;
 	const _hwtf = 'https://www.reddit.com/r/HITsWorthTurkingFor';
 
 	return `
@@ -353,15 +356,15 @@ function exportButtons () {
 				${sectionTitle('Export Buttons')}
 				<p>
 					${label('vBulletin', 'exportVb')}
-					${input('checkbox', { id: 'exportVb', name: 'export', value: 'vb', checked: user.exportVb })}
+					${input('checkbox', { id: 'exportVb', name: 'export', value: 'vb', checked: this.exportVb })}
 				</p>
 				<p>
 					${label('IRC', 'exportIrc')}
-					${input('checkbox', { id: 'exportIrc', name: 'export', value: 'irc', checked: user.exportIrc })}
+					${input('checkbox', { id: 'exportIrc', name: 'export', value: 'irc', checked: this.exportIrc })}
 				</p>
 				<p>
 					${label('Reddit', 'exportHwtf')}
-					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: user.exportHwtf })}
+					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: this.exportHwtf })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -387,15 +390,13 @@ function exportButtons () {
 }
 
 function bubbleNewHITs () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Bubble New HITs')}
 				<p>
 					${label('Enable', 'bubbleNew')}
-					${input('checkbox', { id: 'bubbleNew', checked: user.bubbleNew })}
+					${input('checkbox', { id: 'bubbleNew', checked: this.bubbleNew })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -408,8 +409,6 @@ function bubbleNewHITs () {
 }
 
 function alertVolume () {
-	const { user } = this;
-
 	const common = { min: 0, max: 1, step: 0.02 };
 
 	return `
@@ -417,16 +416,16 @@ function alertVolume () {
 			${sectionTitle('Alert Volume')}
 			<p>
 				${label('Ding')}
-				${input('range', Object.assign(common, { name: 'ding', value: user.volume.ding }))}
+				${input('range', Object.assign(common, { name: 'ding', value: this.volume.ding }))}
 				<span style="padding-left:10px">
-					${Math.floor(user.volume.ding * 100)}%
+					${Math.floor(this.volume.ding * 100)}%
 				</span>
 			</p>
 			<p>
 				${label('Squee')}
-				${input('range', Object.assign(common, { name: 'squee', value: user.volume.squee }))}
+				${input('range', Object.assign(common, { name: 'squee', value: this.volume.squee }))}
 				<span style="padding-left:10px">
-					${Math.floor(user.volume.squee * 100)}%
+					${Math.floor(this.volume.squee * 100)}%
 				</span>
 			</p>
 		</div>
@@ -434,39 +433,37 @@ function alertVolume () {
 }
 
 function tableColumns () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Results Table Columns')}
 				<p>
 					${label('Block', 'blockColumn')}
-					${input('checkbox', { id: 'blockColumn', name: 'tableColumn', checked: user.blockColumn })}
+					${input('checkbox', { id: 'blockColumn', name: 'tableColumn', checked: this.blockColumn })}
 				</p>
 				<p>
 					${label('Requester', 'requesterColumn')}
-					${input('checkbox', { id: 'requesterColumn', name: 'tableColumn', checked: user.requesterColumn })}
+					${input('checkbox', { id: 'requesterColumn', name: 'tableColumn', checked: this.requesterColumn })}
 				</p>
 				<p>
 					${label('# Avail', 'availableColumn')}
-					${input('checkbox', { id: 'availableColumn', name: 'tableColumn', checked: user.availableColumn })}
+					${input('checkbox', { id: 'availableColumn', name: 'tableColumn', checked: this.availableColumn })}
 				</p>
 				<p>
 					${label('Time', 'durationColumn')}
-					${input('checkbox', { id: 'durationColumn', name: 'tableColumn', checked: user.durationColumn })}
+					${input('checkbox', { id: 'durationColumn', name: 'tableColumn', checked: this.durationColumn })}
 				</p>
 				<p>
 					${label('TO Pay', 'topayColumn')}
-					${input('checkbox', { id: 'topayColumn', name: 'tableColumn', checked: user.topayColumn })}
+					${input('checkbox', { id: 'topayColumn', name: 'tableColumn', checked: this.topayColumn })}
 				</p>
 				<p>
 					${label('M', 'mastersColumn')}
-					${input('checkbox', { id: 'mastersColumn', name: 'tableColumn', checked: user.mastersColumn })}
+					${input('checkbox', { id: 'mastersColumn', name: 'tableColumn', checked: this.mastersColumn })}
 				</p>
 				<p>
 					${label('NQ', 'notqualifiedColumn')}
-					${input('checkbox', { id: 'notqualifiedColumn', name: 'tableColumn', checked: user.notqualifiedColumn })}
+					${input('checkbox', { id: 'notqualifiedColumn', name: 'tableColumn', checked: this.notqualifiedColumn })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -505,27 +502,25 @@ function tableColumns () {
 
 function general () {
 	return `
-		${exportButtons.apply(this)}
-		${bubbleNewHITs.apply(this)}
-		${alertVolume.apply(this)}
-		${tableColumns.apply(this)}
+		${exportButtons.apply(this.user)}
+		${bubbleNewHITs.apply(this.user)}
+		${alertVolume.apply(this.user)}
+		${tableColumns.apply(this.user)}
 	`;
 }
 
 function displayCheckboxes () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Display Checkboxes')}
 				<p>
 					${label('Show', 'checkshow')}
-					${input('radio', { id: 'checkshow', name: 'checkbox', value: 'true', checked: user.showCheckboxes })}
+					${input('radio', { id: 'checkshow', name: 'checkbox', value: 'true', checked: this.showCheckboxes })}
 				</p>
 				<p>
 					${label('Hide', 'checkhide')}
-					${input('radio', { id: 'checkhide', name: 'checkbox', value: 'false', checked: !user.showCheckboxes })}
+					${input('radio', { id: 'checkhide', name: 'checkbox', value: 'false', checked: !this.showCheckboxes })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -545,8 +540,6 @@ function displayCheckboxes () {
 }
 
 function themes () {
-	const { user } = this;
-
 	const options = [
 		{ text: 'Classic', value: 'classic' },
 		{ text: 'Deluge', value: 'deluge' },
@@ -559,7 +552,7 @@ function themes () {
 		<div class="row">
 			${sectionTitle('Themes')}
 			<p class="no-align">
-				${select(options, user.themes.name)}
+				${select(options, this.themes.name)}
 				<button id="thedit" style="cursor:pointer">
 					Edit Current Theme
 				</button>
@@ -569,19 +562,17 @@ function themes () {
 }
 
 function hitColoring () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('HIT Coloring')}
 				<p>
 					${label('Link', 'link')}
-					${input('radio', { id: 'link', name: 'hitColor', value: 'link', checked: user.hitColor === 'link' })}
+					${input('radio', { id: 'link', name: 'hitColor', value: 'link', checked: this.hitColor === 'link' })}
 				</p>
 				<p>
 					${label('Cell', 'cell')}
-					${input('radio', { id: 'cell', name: 'hitColor', value: 'cell', checked: user.hitColor === 'cell' })}
+					${input('radio', { id: 'cell', name: 'hitColor', value: 'cell', checked: this.hitColor === 'cell' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -604,19 +595,17 @@ function hitColoring () {
 }
 
 function fontSize () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Font Size')}
 				<p>
 					${label('Normal', 'fontSize')}
-					${input('number', { id: 'fontSize', name: 'fontSize', min: 5, value: user.fontSize })}
+					${input('number', { id: 'fontSize', name: 'fontSize', min: 5, value: this.fontSize })}
 				</p>
 				<p>
 					${label('New HIT Offset', 'shineOffset')}
-					${input('number', { id: 'shineOffset', name: 'shineOffset', value: user.shineOffset })}
+					${input('number', { id: 'shineOffset', name: 'shineOffset', value: this.shineOffset })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -640,27 +629,25 @@ function fontSize () {
 
 function appearance () {
 	return `
-		${displayCheckboxes.apply(this)}
-		${themes.apply(this)}
-		${hitColoring.apply(this)}
-		${fontSize.apply(this)}
+		${displayCheckboxes.apply(this.user)}
+		${themes.apply(this.user)}
+		${hitColoring.apply(this.user)}
+		${fontSize.apply(this.user)}
 	`;
 }
 
 function addJobButtons () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Add Job Buttons')}
 				<p>
 					${label('Panda', 'exportPcp')}
-					${input('checkbox', { id: 'exportPcp', name: 'export', value: 'pc-p', checked: user.exportPcp })}
+					${input('checkbox', { id: 'exportPcp', name: 'export', value: 'pc-p', checked: this.exportPcp })}
 				</p>
 				<p>
 					${label('Once', 'exportPco')}
-					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: user.exportPco })}
+					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: this.exportPco })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -677,14 +664,67 @@ function addJobButtons () {
 	`;
 }
 
+function pauseWithQueue () {
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Don\'t Auto-Refresh When Queue Not Empty')}
+				<p>
+					${label('Enable', 'pcQ')}
+					${input('checkbox', { id: 'pcQueue', value: this.pcQueue })}
+				</p>
+				<p>
+					${label('Minimum HITs', 'pcQMin')}
+					${input('number', { id: 'pcQMin', name: 'pcQueueMin', min: 1, max: 35, value: this.pcQueueMin })}
+				</p>
+				<p>
+					${label('Wait Time')}
+					${input('number', { id: 'pcQWait', name: 'pcQueueWaitTime', min: 0, value: this.pcQueueWaitTime })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Enable')}
+					When this is enabled, HIT Scraper will not auto-refresh while there are HITs in your &nbsp;
+					<a href="https://worker.mturk.com/tasks" target="_blank">
+						Queue
+					</a>.
+				</section>
+				<section>
+					${descriptionTitle('Minimum HITs')}
+					If there are at least this many HITs in the Queue, don't search until there are less.
+					<br />
+					Set this to 1 to disable auto-refresh while you're working on any HITs.
+					<br />
+					Example: If you set this to 5 then HIT Scraper won't auto-refresh until you have 4 or less &nbsp;
+					HITs accepted (i.e. in your Queue).
+				</section>
+				<section>
+					${descriptionTitle('Wait Time')}
+					How long to wait before checking the Queue again. Set to 0 to skip auto-refresh cycles &nbsp;
+					instead of using a a separate timer to check the Queue.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
 function pandaCrazy () {
 	return `
-		${addJobButtons.apply(this)}
+		<p style="margin-left:15px">
+			<b>
+				<a href="https://greasyfork.org/en/scripts/19168-jr-mturk-panda-crazy" target="_blank">
+					Panda Crazy
+				</a> &nbsp;
+				must be running for these options to work!
+			</b>
+		</p>
+		${addJobButtons.apply(this.user)}
+		${pauseWithQueue.apply(this.user)}
 	`;
 }
 
 function colorType () {
-	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
 
 	return `
@@ -693,11 +733,11 @@ function colorType () {
 				${sectionTitle('Color Type')}
 				<p>
 					${label('Simple', 'ctSim')}
-					${input('radio', { id: 'ctSim', name: 'colorType', value: 'sim', checked: user.colorType === 'sim' })}
+					${input('radio', { id: 'ctSim', name: 'colorType', value: 'sim', checked: this.colorType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'ctAdj')}
-					${input('radio', { id: 'ctAdj', name: 'colorType', value: 'adj', checked: user.colorType === 'adj' })}
+					${input('radio', { id: 'ctAdj', name: 'colorType', value: 'adj', checked: this.colorType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -722,19 +762,17 @@ function colorType () {
 }
 
 function sortType () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Sort Type')}
 				<p>
 					${label('Simple', 'stSim')}
-					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
+					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: this.sortType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'stAdj')}
-					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
+					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: this.sortType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -757,7 +795,6 @@ function sortType () {
 }
 
 function toWeights () {
-	const { user } = this;
 	const _ccs = 'https://greasyfork.org/en/scripts/3118-mmmturkeybacon-color-coded-search-with-checkpoints';
 
 	const common = { name: 'TOW', min: 1, max: 10, step: 0.5 };
@@ -768,19 +805,19 @@ function toWeights () {
 				${sectionTitle('TO Weighting')}
 				<p>
 					${label('Communication', 'comm')}
-					${input('number', Object.assign(common, { id: 'comm', value: user.toWeights.comm }))}
+					${input('number', Object.assign(common, { id: 'comm', value: this.toWeights.comm }))}
 				</p>
 				<p>
 					${label('Pay', 'pay')}
-					${input('number', Object.assign(common, { id: 'pay', value: user.toWeights.pay }))}
+					${input('number', Object.assign(common, { id: 'pay', value: this.toWeights.pay }))}
 				</p>
 				<p>
 					${label('Fair', 'fair')}
-					${input('number', Object.assign(common, { id: 'fair', value: user.toWeights.fair }))}
+					${input('number', Object.assign(common, { id: 'fair', value: this.toWeights.fair }))}
 				</p>
 				<p>
 					${label('Fast', 'fast')}
-					${input('number', Object.assign(common, { id: 'fast', value: user.toWeights.fast }))}
+					${input('number', Object.assign(common, { id: 'fast', value: this.toWeights.fast }))}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -800,22 +837,20 @@ function toWeights () {
 }
 
 function other () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				<p>
 					${label('Timeout', 'toTimeout')}
-					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: user.toTimeout })}
+					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: this.toTimeout })}
 				</p>
 				<p>
 					${label('Async', 'asyncTO')}
-					${input('checkbox', { id: 'asyncTO', checked: user.asyncTO })}
+					${input('checkbox', { id: 'asyncTO', checked: this.asyncTO })}
 				</p>
 				<p>
 					${label('Cache Reviews', 'cacheTO')}
-					${input('checkbox', { id: 'cacheTO', checked: user.cacheTO })}
+					${input('checkbox', { id: 'cacheTO', checked: this.cacheTO })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -846,10 +881,10 @@ function other () {
 
 function to () {
 	return `
-		${colorType.apply(this)}
-		${sortType.apply(this)}
-		${toWeights.apply(this)}
-		${other.apply(this)}
+		${colorType.apply(this.user)}
+		${sortType.apply(this.user)}
+		${toWeights.apply(this.user)}
+		${other.apply(this.user)}
 	`;
 }
 
@@ -995,15 +1030,13 @@ var table = `
 `;
 
 function blocks () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Advanced Matching')}
 				<p>
 					${label('Allow Wildcards', 'wildblocks')}
-					${input('checkbox', { id: 'wildblocks', checked: user.wildblocks })}
+					${input('checkbox', { id: 'wildblocks', checked: this.user.wildblocks })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -1031,18 +1064,17 @@ function blocks () {
 }
 
 function additionalNotifications () {
-	const { user } = this;
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Additional Notifications')}
 				<p>
 					${label('Blink', 'notifyBlink')}
-					${input('checkbox', { id: 'notifyBlink', name: 'notify', checked: user.notifyBlink })}
+					${input('checkbox', { id: 'notifyBlink', name: 'notify', checked: this.notifyBlink })}
 				</p>
 				<p>
 					${label('Taskbar', 'notifyTaskbar')}
-					${input('checkbox', { id: 'notifyTaskbar', name: 'notify', checked: user.notifyTaskbar })}
+					${input('checkbox', { id: 'notifyTaskbar', name: 'notify', checked: this.notifyTaskbar })}
 				</p>
 			</div>
 			<div class="column opts-dsc">
@@ -1066,7 +1098,7 @@ function additionalNotifications () {
 
 function notify () {
 	return `
-		${additionalNotifications.apply(this)}
+		${additionalNotifications.apply(this.user)}
 	`;
 }
 
@@ -1104,7 +1136,7 @@ function importExport () {
 
 function utils () {
 	return `
-		${importExport.apply(this)}
+		${importExport.apply(this.user)}
 	`;
 }
 
@@ -1762,15 +1794,13 @@ var settings = `
 		font-size: 1.2em;
 		border-bottom: 2px solid;
 		padding-bottom: 1px;
+		line-height: 20px;
 	}
 	.column.opts > p:not(.no-align) {
 		position: relative;
 	}
 	.column.opts > p:not(.no-align) > input[type="checkbox"],
-	.column.opts > p:not(.no-align) > input[type="radio"] {
-		position: absolute;
-		right: 20px;
-	}
+	.column.opts > p:not(.no-align) > input[type="radio"],
 	.column.opts > p:not(.no-align) > input[type="number"] {
 		position: absolute;
 		right: 10px;
@@ -2112,6 +2142,44 @@ function hidden(settingName, force) {
 	if (Settings$1.user[settingName + 'Column']) return '';
 	return 'hidden';
 }
+
+var status$1 = `
+	<div id="status">
+		<p id="status-stopped">
+			Stopped
+		</p>
+		<p id="status-processing" class="hidden">
+			<b class="spinner"></b>
+			Processing page: &nbsp;
+			<span>1</span>
+		</p>
+		<p id="status-correcting-skips" class="hidden">
+			Correcting for skips
+		</p>
+		<p id="status-retrieving-to" class="hidden">
+			<b class="spinner"></b>
+			Retrieving TO data
+		</p>
+		<p id="status-to-error" class="hidden">
+			Error retrieving TO data. &nbsp;
+			<button id="btnRetryTO">
+				Retry
+			</button>
+		</p>
+		<p id="status-scrape-complete" class="hidden">
+			Scrape Complete: &nbsp;
+			<span></span>
+		</p>
+		<p id="status-queue-wait" class="hidden">
+			Queue not empty. Waiting to Auto-Refresh.
+		</p>
+		<p id="status-scraping-again" class="hidden">
+			Scraping again in &nbsp;
+			<span>0</span>
+			&nbsp; seconds
+		</p>
+	</div>
+`;
 
 function body () {
 	const { user } = Settings$1;
@@ -2469,38 +2537,7 @@ function body () {
 			</button>
 		</div>
 		<div id="loggedout" style="font-size:11px;margin-left:10px;text-transform:uppercase"></div>
-		<div id="status">
-			<p id="status-stopped">
-				Stopped
-			</p>
-			<p id="status-processing" class="hidden">
-				<b class="spinner"></b>
-				Processing page: &nbsp;
-				<span>1</span>
-			</p>
-			<p id="status-correcting-skips" class="hidden">
-				Correcting for skips
-			</p>
-			<p id="status-retrieving-to" class="hidden">
-				<b class="spinner"></b>
-				Retrieving TO data
-			</p>
-			<p id="status-to-error" class="hidden">
-				Error retrieving TO data. &nbsp;
-				<button id="btnRetryTO">
-					Retry
-				</button>
-			</p>
-			<p id="status-scrape-complete" class="hidden">
-				Scrape Complete: &nbsp;
-				<span></span>
-			</p>
-			<p id="status-scraping-again" class="hidden">
-				Scraping again in &nbsp;
-				<span>0</span>
-				&nbsp; seconds
-			</p>
-		</div>
+		${status$1}
 		${table$1.apply(this)}
 	`);
 	// NOTE: the above commented-out column is the HITDB column
@@ -2588,15 +2625,47 @@ function run (skiptoggle) {
 	}
 }
 
-function cruise () {
+function cruise (firstTick) {
 	if (!this.active) return;
 
-	if (--this.cooldown === 0) {
+	if (!firstTick) this.cooldown--;
+
+	let noTimer = false;
+
+	if (this.cooldown === 0 && Settings$1.user.pcQueue && !queueEmpty()) {
+		if (Settings$1.user.pcQueueWaitTime === 0) {
+			reset.apply(this);
+		} else {
+			noTimer = true;
+			setTimeout(this.cruise.bind(this), Settings$1.user.pcQueueWaitTime);
+		}
+
+		Interface$2.Status.show('queue-wait');
+	}
+
+	if (this.cooldown === 0) {
+		Interface$2.Status.hide('queue-wait');
 		this.run(true);
-	} else {
+	} else if (!noTimer) {
 		Interface$2.Status.edit('scraping-again', this.cooldown);
+		Interface$2.Status.show('scraping-again');
+
 		this.timer = setTimeout(this.cruise.bind(this), 1000);
 	}
+}
+
+function queueEmpty() {
+	let pcData = localStorage.getItem('JR_QUEUE_StoreData');
+	if (!pcData) return true;
+	pcData = JSON.parse(pcData);
+	return pcData.queue.length < Settings$1.user.pcQueueMin;
+}
+
+function reset() {
+	this.cooldown = Settings$1.user.refresh;
+	this.timer = clearTimeout(this.timer);
+	Interface$2.resetTitle();
+	Interface$2.Status.clear();
 }
 
 var state = {
@@ -3312,10 +3381,7 @@ function meld (reviews) {
 		if (this.cooldown === 0) {
 			Interface$2.buttons.main.click();
 		} else if (!this.timer && (!Settings$1.user.asyncTO || noReviews)) {
-			this.timer = setTimeout(this.cruise.bind(this), 1000);
-
-			Interface$2.Status.edit('scraping-again', this.cooldown);
-			Interface$2.Status.show('scraping-again');
+			this.cruise(true);
 		}
 	}
 

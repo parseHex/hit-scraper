@@ -1,19 +1,17 @@
 import { sectionTitle, label, input, descriptionTitle } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('HIT Coloring')}
 				<p>
 					${label('Link', 'link')}
-					${input('radio', { id: 'link', name: 'hitColor', value: 'link', checked: user.hitColor === 'link' })}
+					${input('radio', { id: 'link', name: 'hitColor', value: 'link', checked: this.hitColor === 'link' })}
 				</p>
 				<p>
 					${label('Cell', 'cell')}
-					${input('radio', { id: 'cell', name: 'hitColor', value: 'cell', checked: user.hitColor === 'cell' })}
+					${input('radio', { id: 'cell', name: 'hitColor', value: 'cell', checked: this.hitColor === 'cell' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

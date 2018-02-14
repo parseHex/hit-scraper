@@ -1,8 +1,6 @@
 import { sectionTitle, input, descriptionTitle } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">

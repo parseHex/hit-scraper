@@ -99,15 +99,13 @@ export default `
 		font-size: 1.2em;
 		border-bottom: 2px solid;
 		padding-bottom: 1px;
+		line-height: 20px;
 	}
 	.column.opts > p:not(.no-align) {
 		position: relative;
 	}
 	.column.opts > p:not(.no-align) > input[type="checkbox"],
-	.column.opts > p:not(.no-align) > input[type="radio"] {
-		position: absolute;
-		right: 20px;
-	}
+	.column.opts > p:not(.no-align) > input[type="radio"],
 	.column.opts > p:not(.no-align) > input[type="number"] {
 		position: absolute;
 		right: 10px;

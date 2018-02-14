@@ -1,22 +1,20 @@
 import { label, input, descriptionTitle } from "../_dom";
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				<p>
 					${label('Timeout', 'toTimeout')}
-					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: user.toTimeout })}
+					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: this.toTimeout })}
 				</p>
 				<p>
 					${label('Async', 'asyncTO')}
-					${input('checkbox', { id: 'asyncTO', checked: user.asyncTO })}
+					${input('checkbox', { id: 'asyncTO', checked: this.asyncTO })}
 				</p>
 				<p>
 					${label('Cache Reviews', 'cacheTO')}
-					${input('checkbox', { id: 'cacheTO', checked: user.cacheTO })}
+					${input('checkbox', { id: 'cacheTO', checked: this.cacheTO })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

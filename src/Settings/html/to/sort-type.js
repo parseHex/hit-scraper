@@ -1,19 +1,17 @@
 import { sectionTitle, label, input, descriptionTitle } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Sort Type')}
 				<p>
 					${label('Simple', 'stSim')}
-					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: user.sortType === 'sim' })}
+					${input('radio', { id: 'stSim', name: 'sortType', value: 'sim', checked: this.sortType === 'sim' })}
 				</p>
 				<p>
 					${label('Adjusted', 'stAdj')}
-					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: user.sortType === 'adj' })}
+					${input('radio', { id: 'stAdj', name: 'sortType', value: 'adj', checked: this.sortType === 'adj' })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

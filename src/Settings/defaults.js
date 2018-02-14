@@ -33,6 +33,10 @@ export default {
 	mastersColumn: true,
 	notqualifiedColumn: true,
 
+	pcQueue: false,
+	pcQueueMin: 1,
+	pcQueueWaitTime: 0,
+
 	refresh: 0,
 	pages: 1,
 	skips: false,

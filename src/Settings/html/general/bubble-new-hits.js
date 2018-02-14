@@ -1,15 +1,13 @@
 import { sectionTitle, label, input } from '../_dom';
 
 export default function () {
-	const { user } = this;
-
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Bubble New HITs')}
 				<p>
 					${label('Enable', 'bubbleNew')}
-					${input('checkbox', { id: 'bubbleNew', checked: user.bubbleNew })}
+					${input('checkbox', { id: 'bubbleNew', checked: this.bubbleNew })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

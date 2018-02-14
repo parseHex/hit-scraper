@@ -1,18 +1,17 @@
 import { sectionTitle, descriptionTitle, label, input } from '../_dom';
 
 export default function () {
-	const { user } = this;
 	return `
 		<div class="row">
 			<div class="column opts">
 				${sectionTitle('Additional Notifications')}
 				<p>
 					${label('Blink', 'notifyBlink')}
-					${input('checkbox', { id: 'notifyBlink', name: 'notify', checked: user.notifyBlink })}
+					${input('checkbox', { id: 'notifyBlink', name: 'notify', checked: this.notifyBlink })}
 				</p>
 				<p>
 					${label('Taskbar', 'notifyTaskbar')}
-					${input('checkbox', { id: 'notifyTaskbar', name: 'notify', checked: user.notifyTaskbar })}
+					${input('checkbox', { id: 'notifyTaskbar', name: 'notify', checked: this.notifyTaskbar })}
 				</p>
 			</div>
 			<div class="column opts-dsc">

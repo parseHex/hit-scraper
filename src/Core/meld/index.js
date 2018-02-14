@@ -84,10 +84,7 @@ export default function (reviews) {
 		if (this.cooldown === 0) {
 			Interface.buttons.main.click();
 		} else if (!this.timer && (!Settings.user.asyncTO || noReviews)) {
-			this.timer = setTimeout(this.cruise.bind(this), 1000);
-
-			Interface.Status.edit('scraping-again', this.cooldown);
-			Interface.Status.show('scraping-again');
+			this.cruise(true);
 		}
 	}
 
