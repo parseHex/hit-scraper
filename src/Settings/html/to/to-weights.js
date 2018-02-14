@@ -11,19 +11,19 @@ export default function () {
 			<div class="column opts">
 				${sectionTitle('TO Weighting')}
 				<p>
-					${label('comm', 'comm')}
+					${label('Communication', 'comm')}
 					${input('number', Object.assign(common, { id: 'comm', value: user.toWeights.comm }))}
 				</p>
 				<p>
-					${label('pay', 'pay')}
+					${label('Pay', 'pay')}
 					${input('number', Object.assign(common, { id: 'pay', value: user.toWeights.pay }))}
 				</p>
 				<p>
-					${label('fair', 'fair')}
+					${label('Fair', 'fair')}
 					${input('number', Object.assign(common, { id: 'fair', value: user.toWeights.fair }))}
 				</p>
 				<p>
-					${label('fast', 'fast')}
+					${label('Fast', 'fast')}
 					${input('number', Object.assign(common, { id: 'fast', value: user.toWeights.fast }))}
 				</p>
 			</div>

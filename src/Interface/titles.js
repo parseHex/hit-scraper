@@ -6,7 +6,7 @@ export default {
 	skips: 'Searches additional pages to get a more consistent number of results. Helpful if you\'re blocking a lot of items.',
 	resultsPerPage: 'Number of results to return per page (maximum is 100, default is 30)',
 	batch: 'Enter minimum HITs for batch search (must be searching by Most Available).',
-	pay: 'Enter the minimum desired pay per HIT (e.g. 0.10).',
+	reward: 'Enter the minimum desired pay per HIT (e.g. 0.10).',
 	qual: 'Only show HITs you\'re currently qualified for (must be logged in).',
 	monly: 'Only show HITs that require Masters qualifications.',
 	mhide: 'Remove masters hits from the results if selected, otherwise display both masters and non-masters HITS.\n' +

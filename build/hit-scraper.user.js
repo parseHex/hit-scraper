@@ -221,11 +221,14 @@ const kb = { ESC: 27, ENTER: 13 };
 
 var defaults$1 = {
 	themes: { name: 'classic', colors: defaults.themes },
+
 	colorType: 'sim',
 	sortType: 'adj',
 	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
 	asyncTO: false,
 	cacheTO: false,
+	toTimeout: 6,
+
 	exportVb: true,
 	exportIrc: true,
 	exportHwtf: true,
@@ -254,7 +257,7 @@ var defaults$1 = {
 	skips: false,
 	resultsPerPage: 50,
 	batch: 0,
-	pay: 0,
+	reward: 0,
 	qual: true,
 	monly: false,
 	mhide: false,
@@ -744,19 +747,19 @@ function toWeights () {
 			<div class="column opts">
 				${sectionTitle('TO Weighting')}
 				<p>
-					${label('comm', 'comm')}
+					${label('Communication', 'comm')}
 					${input('number', Object.assign(common, { id: 'comm', value: user.toWeights.comm }))}
 				</p>
 				<p>
-					${label('pay', 'pay')}
+					${label('Pay', 'pay')}
 					${input('number', Object.assign(common, { id: 'pay', value: user.toWeights.pay }))}
 				</p>
 				<p>
-					${label('fair', 'fair')}
+					${label('Fair', 'fair')}
 					${input('number', Object.assign(common, { id: 'fair', value: user.toWeights.fair }))}
 				</p>
 				<p>
-					${label('fast', 'fast')}
+					${label('Fast', 'fast')}
 					${input('number', Object.assign(common, { id: 'fast', value: user.toWeights.fast }))}
 				</p>
 			</div>
@@ -2021,7 +2024,7 @@ var titles = {
 	skips: 'Searches additional pages to get a more consistent number of results. Helpful if you\'re blocking a lot of items.',
 	resultsPerPage: 'Number of results to return per page (maximum is 100, default is 30)',
 	batch: 'Enter minimum HITs for batch search (must be searching by Most Available).',
-	pay: 'Enter the minimum desired pay per HIT (e.g. 0.10).',
+	reward: 'Enter the minimum desired pay per HIT (e.g. 0.10).',
 	qual: 'Only show HITs you\'re currently qualified for (must be logged in).',
 	monly: 'Only show HITs that require Masters qualifications.',
 	mhide: 'Remove masters hits from the results if selected, otherwise display both masters and non-masters HITS.\n' +
@@ -2178,12 +2181,12 @@ function body () {
 			<p>
 				Min reward: &nbsp;
 				<input &nbsp;
-					id="pay"
+					id="reward"
 					type="number"
-					title="${titles.pay}"
+					title="${titles.reward}"
 					min="0"
 					step="0.05"
-					value="${user.pay}"
+					value="${user.reward}"
 				/>
 				<i></i>
 

@@ -2,11 +2,14 @@ import { defaults } from '../lib/constants';
 
 export default {
 	themes: { name: 'classic', colors: defaults.themes },
+
 	colorType: 'sim',
 	sortType: 'adj',
 	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
 	asyncTO: false,
 	cacheTO: false,
+	toTimeout: 6,
+
 	exportVb: true,
 	exportIrc: true,
 	exportHwtf: true,
@@ -35,7 +38,7 @@ export default {
 	skips: false,
 	resultsPerPage: 50,
 	batch: 0,
-	pay: 0,
+	reward: 0,
 	qual: true,
 	monly: false,
 	mhide: false,

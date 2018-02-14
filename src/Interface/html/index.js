@@ -76,12 +76,12 @@ export default function () {
 			<p>
 				Min reward: &nbsp;
 				<input &nbsp;
-					id="pay"
+					id="reward"
 					type="number"
-					title="${titles.pay}"
+					title="${titles.reward}"
 					min="0"
 					step="0.05"
-					value="${user.pay}"
+					value="${user.reward}"
 				/>
 				<i></i>
 
