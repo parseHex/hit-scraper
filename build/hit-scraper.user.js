@@ -779,13 +779,16 @@ function toWeights () {
 	`;
 }
 
-function experimental () {
+function other () {
 	const { user } = this;
 
 	return `
 		<div class="row">
 			<div class="column opts">
-				${sectionTitle('Experimental')}
+				<p>
+					${label('Timeout', 'toTimeout')}
+					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: user.toTimeout })}
+				</p>
 				<p>
 					${label('Async', 'asyncTO')}
 					${input('checkbox', { id: 'asyncTO', checked: user.asyncTO })}
@@ -796,6 +799,13 @@ function experimental () {
 				</p>
 			</div>
 			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Timeout')}
+					The max time (in seconds) to wait on a response from TO before giving up.
+					<br />
+					You might want a longer timeout (>15s) if you're using Async TO mode. &nbsp;
+					Try out different values and see what works best for you.
+				</section>
 				<section>
 					${descriptionTitle('Async')}
 					When this option is enabled, Turkopticon reviews will be loaded in the background &nbsp;
@@ -811,30 +821,6 @@ function experimental () {
 				</section>
 			</div>
 		</div>
-	`
-}
-
-function other () {
-	const { user } = this;
-
-	return `
-		<div class="row">
-			<div class="column opts">
-				<p>
-					${label('Timeout', 'toTimeout')}
-					${input('number', { id: 'toTimeout', name: 'toTimeout', min: 1, max: 60, value: user.toTimeout })}
-				</p>
-			</div>
-			<div class="column opts-dsc">
-				<section>
-					${descriptionTitle('Timeout')}
-					The max time (in seconds) to wait on a response from TO before giving up.
-					<br />
-					You might want a longer timeout (>15s) if you're using Async TO mode. &nbsp;
-					Try out different values and see what works best for you.
-				</section>
-			</div>
-		</div>
 	`;
 }
 
@@ -844,7 +830,6 @@ function to () {
 		${sortType.apply(this)}
 		${toWeights.apply(this)}
 		${other.apply(this)}
-		${experimental.apply(this)}
 	`;
 }
 
@@ -1701,7 +1686,7 @@ var settings = `
 	#settingsSidebar > span {
 		display: block;
 		margin-bottom: 5px;
-		width: 100px;
+		width: 100%;
 		font-size: 1em;
 		cursor: pointer;
 	}

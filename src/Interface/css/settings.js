@@ -38,7 +38,7 @@ export default `
 	#settingsSidebar > span {
 		display: block;
 		margin-bottom: 5px;
-		width: 100px;
+		width: 100%;
 		font-size: 1em;
 		cursor: pointer;
 	}
