@@ -3,20 +3,20 @@ import Interface from '../Interface/index';
 import { ENV } from './constants';
 import { cleanTemplate } from './util';
 
-export default function createTooltip(type, obj) {
+export default function createTooltip(type, opts) {
 	let html;
 	let reason;
 	if (Settings.user.disableTO) {
 		reason = bullet('TO disabled in user settings');
-	} else if (Settings.user.asyncTO && obj === false) {
+	} else if (opts.loading) {
 		reason = bullet('Loading reviews...');
-	} else if (obj === null) {
-		reason = bullet('Requester has not been reviewed yet');
-	} else {
+	} else if (opts.error) {
 		reason = bullet('Invalid response from server');
+	} else if (opts.data === null) {
+		reason = bullet('Requester has not been reviewed yet');
 	}
 
-	if (!obj) {
+	if (reason) {
 		html = cleanTemplate(`
 			<div class="tooltip" style="width:260px;">
 				<p style="padding-left:5px">
@@ -29,11 +29,11 @@ export default function createTooltip(type, obj) {
 		html = cleanTemplate(`
 			<div class="tooltip" style="width:260px">
 				<p style="padding-left:5px">
-					<b>${obj.name}</b>
+					<b>${opts.data.name}</b>
 					<br />
-					Reviews: ${obj.reviews} | TOS Flags: ${obj.tos_flags}
+					Reviews: ${opts.data.reviews} | TOS Flags: ${opts.data.tos_flags}
 				</p>
-				${genMeters(obj)}
+				${genMeters(opts.data)}
 			</div>
 		`);
 		/*<table style="margin-top:6px;width:100%;font-size:10px"><tr><td>Adjusted Pay</td><td>${obj.attrs.adjPay}</td>
@@ -45,11 +45,11 @@ export default function createTooltip(type, obj) {
 			<div class="tooltip" style="width:300px">
 				<dl>
 					<dt>description</dt>
-					<dd>${obj.desc}</dd>
+					<dd>${opts.data.desc}</dd>
 					<dt>qualifications</dt>
-					<dd>${obj.quals.join(';')}</dd>
+					<dd>${opts.data.quals.join(';')}</dd>
 					<dt>duration</dt>
-					<dd>${obj.timeStr}</dd>
+					<dd>${opts.data.timeStr}</dd>
 				</dl>
 			</div>
 		`);

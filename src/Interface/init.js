@@ -128,12 +128,20 @@ export default function () {
 		this.toggleOverflow('on');
 		new Editor('include');
 	};
-	this.buttons.ignores.onclick = () => Array.from(get('.ignored:not(.blocklisted)', true)).forEach(v => v.classList.toggle('hidden'));
+	this.buttons.ignores.onclick = () => {
+		Array.from(get('.ignored:not(.blocklisted)', true)).forEach(v => {
+			v.classList.toggle('hidden');
+		});
+	};
 	this.buttons.settings.onclick = () => {
 		this.toggleOverflow('on');
 		Settings.draw().init();
 	};
-	get('#hideBlock').addEventListener('change', () => Array.from(get('.blocklisted', true)).forEach(v => v.classList.toggle('hidden')));
+	get('#hideBlock').addEventListener('change', () => {
+		Array.from(get('.blocklisted', true)).forEach(v => {
+			v.classList.toggle('hidden');
+		});
+	});
 	document.body.onblur = () => this.focused = false;
 	document.body.onfocus = () => {
 		this.focused = true;

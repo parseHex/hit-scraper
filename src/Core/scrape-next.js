@@ -5,6 +5,12 @@ import fixTime from '../lib/fix-time';
 import enums from '../lib/enums';
 
 export default function (src) {
+	Object.keys(state.scraperHistory._cache).forEach(function (gid) {
+		// set all hits to .current = false
+		// (any hits in results will go back to .current = true below)
+		state.scraperHistory.get(gid).current = false;
+	});
+
 	src.results.forEach((v, i) => {
 		// url .json fix
 		v.requester_url = v.requester_url.replace('.json', '');

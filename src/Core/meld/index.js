@@ -8,27 +8,20 @@ import setRowColor from './set-row-color';
 import addRowHTML from './add-row-html';
 
 export default function (reviews) {
-	if (reviews) state.scraperHistory.updateTOData(prepReviews(reviews));
+	let reviewsError = reviews.error;
+	let reviewsLoading = reviews.loading;
+	if (reviewsError || reviewsLoading) reviews = {};
 
 	let noReviews = false;
 	if (isEmptyObj(reviews)) noReviews = true;
 
+	if (!noReviews) state.scraperHistory.updateTOData(prepReviews(reviews));
+
 	const table = document.querySelector('#resultsTable').tBodies[0];
 	const html = [];
-	const results = state.scraperHistory.filter((hit) => { // only keep hit.current hits
+	const results = state.scraperHistory.filter((hit) => {
 		if (!hit.current) return false;
-		if (Settings.user.mhide && hit.masters) {
-			hit.current = false;
-
-			return false;
-		}
-
-		if (
-			Settings.user.disableTO ||
-			(Settings.user.asyncTO && reviews && !noReviews)
-		) {
-			hit.current = false;
-		}
+		if (Settings.user.mhide && hit.masters) return false;
 
 		return true;
 	});
@@ -40,7 +33,6 @@ export default function (reviews) {
 		Settings.user.sortPay !== Settings.user.sortAll
 	) {
 		let field;
-
 		if (Settings.user.sortPay) {
 			field = Settings.user.sortType === 'sim' ? 'pay' : 'adjPay';
 		} else if (Settings.user.sortAll) {
@@ -83,10 +75,10 @@ export default function (reviews) {
 		counts.included += hitRow.included ? 1 : 0;
 		counts.includedNew += hitRow.included && hitRow.isNew ? 1 : 0;
 		setRowColor(hitRow);
-		html.push(addRowHTML(hitRow, shouldHide, noReviews));
+		html.push(addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading));
 	}
 	table.innerHTML = html.join('');
-	if (!Settings.user.asyncTO || noReviews) this.notify(counts);
+	if (!noReviews || reviewsError || Settings.user.disableTO) this.notify(counts);
 
 	if (this.active) {
 		if (this.cooldown === 0) {
@@ -99,9 +91,9 @@ export default function (reviews) {
 		}
 	}
 
-	if (Settings.user.asyncTO && !noReviews) return; // lastScrape isn't set when reviews are loaded async
-
-	this.lastScrape = Date.now();
+	if (!Settings.user.asyncTO || reviewsError) {
+		this.lastScrape = Date.now();
+	}
 }
 
 function isEmptyObj(val) {

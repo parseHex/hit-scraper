@@ -6,7 +6,7 @@ import { hidden } from '../../Interface/html/table';
 
 import makeButton from './make-button';
 
-export default function addRowHTML(hitRow, shouldHide, reviewsError) {
+export default function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading) {
 	const center = 'text-align:center;';
 
 	let trClass = hitRow.rowColor;
@@ -25,6 +25,15 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 
 	const expData = {
 		gid: hitRow.groupId,
+	};
+
+	const titleTooltipData = {
+		data: hitRow,
+	};
+	const toTooltipData = {
+		error: reviewsError,
+		loading: reviewsLoading,
+		data: hitRow.TO,
 	};
 
 	return cleanTemplate(`
@@ -57,7 +66,7 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 				</div>
 				<div>
 					<a target="_blank" class="static hit-title" href="${hitRow.hit.preview}">
-						${hitRow.title + createTooltip('hit', hitRow)}
+						${hitRow.title + createTooltip('hit', titleTooltipData)}
 					</a>
 				</div>
 			</td>
@@ -74,7 +83,7 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError) {
 			</td>
 			<td class="topay-tc ${hidden('topay')}" style="${center}">
 				<a class="static toLink" target="_blank" data-rid="${hitRow.requester.id || 'null'}" ${requesterHref}>
-					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', reviewsError ? false : hitRow.TO)}
+					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', toTooltipData)}
 				</a>
 			</td>
 			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">

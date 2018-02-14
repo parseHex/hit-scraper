@@ -9,11 +9,11 @@ export default function () {
 	const ids = state.scraperHistory.filter(v => v.current && !v.TO && !v.blocked && v.requester.id, true)
 		.filter((v, i, a) => a.indexOf(v) === i).join();
 
-	if (!ids.length) return this.meld();
+	if (!ids.length) return this.meld({});
 
 	if (Settings.user.asyncTO) {
 		// go ahead and show the results without ratings
-		this.meld({});
+		this.meld({ loading: true });
 	}
 
 	Interface.Status.show('retrieving-to');

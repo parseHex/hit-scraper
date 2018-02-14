@@ -2799,6 +2799,12 @@ function fixTime (...args) {
 }
 
 function scrapeNext (src) {
+	Object.keys(state.scraperHistory._cache).forEach(function (gid) {
+		// set all hits to .current = false
+		// (any hits in results will go back to .current = true below)
+		state.scraperHistory.get(gid).current = false;
+	});
+
 	src.results.forEach((v, i) => {
 		// url .json fix
 		v.requester_url = v.requester_url.replace('.json', '');
@@ -3008,20 +3014,20 @@ function getClassFromValue(toVal, type) {
 	}
 }
 
-function createTooltip(type, obj) {
+function createTooltip(type, opts) {
 	let html;
 	let reason;
 	if (Settings$1.user.disableTO) {
 		reason = bullet('TO disabled in user settings');
-	} else if (Settings$1.user.asyncTO && obj === false) {
+	} else if (opts.loading) {
 		reason = bullet('Loading reviews...');
-	} else if (obj === null) {
-		reason = bullet('Requester has not been reviewed yet');
-	} else {
+	} else if (opts.error) {
 		reason = bullet('Invalid response from server');
+	} else if (opts.data === null) {
+		reason = bullet('Requester has not been reviewed yet');
 	}
 
-	if (!obj) {
+	if (reason) {
 		html = cleanTemplate(`
 			<div class="tooltip" style="width:260px;">
 				<p style="padding-left:5px">
@@ -3034,11 +3040,11 @@ function createTooltip(type, obj) {
 		html = cleanTemplate(`
 			<div class="tooltip" style="width:260px">
 				<p style="padding-left:5px">
-					<b>${obj.name}</b>
+					<b>${opts.data.name}</b>
 					<br />
-					Reviews: ${obj.reviews} | TOS Flags: ${obj.tos_flags}
+					Reviews: ${opts.data.reviews} | TOS Flags: ${opts.data.tos_flags}
 				</p>
-				${genMeters(obj)}
+				${genMeters(opts.data)}
 			</div>
 		`);
 		/*<table style="margin-top:6px;width:100%;font-size:10px"><tr><td>Adjusted Pay</td><td>${obj.attrs.adjPay}</td>
@@ -3050,11 +3056,11 @@ function createTooltip(type, obj) {
 			<div class="tooltip" style="width:300px">
 				<dl>
 					<dt>description</dt>
-					<dd>${obj.desc}</dd>
+					<dd>${opts.data.desc}</dd>
 					<dt>qualifications</dt>
-					<dd>${obj.quals.join(';')}</dd>
+					<dd>${opts.data.quals.join(';')}</dd>
 					<dt>duration</dt>
-					<dd>${obj.timeStr}</dd>
+					<dd>${opts.data.timeStr}</dd>
 				</dl>
 			</div>
 		`);
@@ -3103,7 +3109,7 @@ function makeButton(settingName, shortName, longName, data = {}, label = shortNa
 	`);
 }
 
-function addRowHTML(hitRow, shouldHide, reviewsError) {
+function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading) {
 	const center = 'text-align:center;';
 
 	let trClass = hitRow.rowColor;
@@ -3122,6 +3128,15 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 
 	const expData = {
 		gid: hitRow.groupId,
+	};
+
+	const titleTooltipData = {
+		data: hitRow,
+	};
+	const toTooltipData = {
+		error: reviewsError,
+		loading: reviewsLoading,
+		data: hitRow.TO,
 	};
 
 	return cleanTemplate(`
@@ -3154,7 +3169,7 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 				</div>
 				<div>
 					<a target="_blank" class="static hit-title" href="${hitRow.hit.preview}">
-						${hitRow.title + createTooltip('hit', hitRow)}
+						${hitRow.title + createTooltip('hit', titleTooltipData)}
 					</a>
 				</div>
 			</td>
@@ -3171,7 +3186,7 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 			</td>
 			<td class="topay-tc ${hidden('topay')}" style="${center}">
 				<a class="static toLink" target="_blank" data-rid="${hitRow.requester.id || 'null'}" ${requesterHref}>
-					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', reviewsError ? false : hitRow.TO)}
+					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', toTooltipData)}
 				</a>
 			</td>
 			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">
@@ -3185,27 +3200,20 @@ function addRowHTML(hitRow, shouldHide, reviewsError) {
 }
 
 function meld (reviews) {
-	if (reviews) state.scraperHistory.updateTOData(prepReviews(reviews));
+	let reviewsError = reviews.error;
+	let reviewsLoading = reviews.loading;
+	if (reviewsError || reviewsLoading) reviews = {};
 
 	let noReviews = false;
 	if (isEmptyObj(reviews)) noReviews = true;
 
+	if (!noReviews) state.scraperHistory.updateTOData(prepReviews(reviews));
+
 	const table = document.querySelector('#resultsTable').tBodies[0];
 	const html = [];
-	const results = state.scraperHistory.filter((hit) => { // only keep hit.current hits
+	const results = state.scraperHistory.filter((hit) => {
 		if (!hit.current) return false;
-		if (Settings$1.user.mhide && hit.masters) {
-			hit.current = false;
-
-			return false;
-		}
-
-		if (
-			Settings$1.user.disableTO ||
-			(Settings$1.user.asyncTO && reviews && !noReviews)
-		) {
-			hit.current = false;
-		}
+		if (Settings$1.user.mhide && hit.masters) return false;
 
 		return true;
 	});
@@ -3217,7 +3225,6 @@ function meld (reviews) {
 		Settings$1.user.sortPay !== Settings$1.user.sortAll
 	) {
 		let field;
-
 		if (Settings$1.user.sortPay) {
 			field = Settings$1.user.sortType === 'sim' ? 'pay' : 'adjPay';
 		} else if (Settings$1.user.sortAll) {
@@ -3260,10 +3267,10 @@ function meld (reviews) {
 		counts.included += hitRow.included ? 1 : 0;
 		counts.includedNew += hitRow.included && hitRow.isNew ? 1 : 0;
 		setRowColor(hitRow);
-		html.push(addRowHTML(hitRow, shouldHide, noReviews));
+		html.push(addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading));
 	}
 	table.innerHTML = html.join('');
-	if (!Settings$1.user.asyncTO || noReviews) this.notify(counts);
+	if (!noReviews || reviewsError || Settings$1.user.disableTO) this.notify(counts);
 
 	if (this.active) {
 		if (this.cooldown === 0) {
@@ -3276,9 +3283,9 @@ function meld (reviews) {
 		}
 	}
 
-	if (Settings$1.user.asyncTO && !noReviews) return; // lastScrape isn't set when reviews are loaded async
-
-	this.lastScrape = Date.now();
+	if (!Settings$1.user.asyncTO || reviewsError) {
+		this.lastScrape = Date.now();
+	}
 }
 
 function isEmptyObj(val) {
@@ -3355,11 +3362,7 @@ function fetch (url, payload, responseType, inline = true) {
 			Interface$2.Status.hide('retrieving-to');
 			Interface$2.Status.show('to-error');
 
-			const args = [];
-			if (Settings$1.user.asyncTO) {
-				args.push({});
-			}
-			this.meld.apply(this, args);
+			this.meld.apply(this, [{ error: true }]);
 		});
 	} else {
 		return _p;
@@ -3449,11 +3452,11 @@ function getTO () {
 	const ids = state.scraperHistory.filter(v => v.current && !v.TO && !v.blocked && v.requester.id, true)
 		.filter((v, i, a) => a.indexOf(v) === i).join();
 
-	if (!ids.length) return this.meld();
+	if (!ids.length) return this.meld({});
 
 	if (Settings$1.user.asyncTO) {
 		// go ahead and show the results without ratings
-		this.meld({});
+		this.meld({ loading: true });
 	}
 
 	Interface$2.Status.show('retrieving-to');
@@ -3608,12 +3611,20 @@ function init$1 () {
 		this.toggleOverflow('on');
 		new Editor$1('include');
 	};
-	this.buttons.ignores.onclick = () => Array.from(get('.ignored:not(.blocklisted)', true)).forEach(v => v.classList.toggle('hidden'));
+	this.buttons.ignores.onclick = () => {
+		Array.from(get('.ignored:not(.blocklisted)', true)).forEach(v => {
+			v.classList.toggle('hidden');
+		});
+	};
 	this.buttons.settings.onclick = () => {
 		this.toggleOverflow('on');
 		Settings$1.draw().init();
 	};
-	get('#hideBlock').addEventListener('change', () => Array.from(get('.blocklisted', true)).forEach(v => v.classList.toggle('hidden')));
+	get('#hideBlock').addEventListener('change', () => {
+		Array.from(get('.blocklisted', true)).forEach(v => {
+			v.classList.toggle('hidden');
+		});
+	});
 	document.body.onblur = () => this.focused = false;
 	document.body.onfocus = () => {
 		this.focused = true;

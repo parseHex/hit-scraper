@@ -61,11 +61,7 @@ export default function (url, payload, responseType, inline = true) {
 			Interface.Status.hide('retrieving-to');
 			Interface.Status.show('to-error');
 
-			const args = [];
-			if (Settings.user.asyncTO) {
-				args.push({});
-			}
-			this.meld.apply(this, args);
+			this.meld.apply(this, [{ error: true }]);
 		});
 	} else {
 		return _p;
