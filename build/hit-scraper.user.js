@@ -363,14 +363,6 @@ function exportButtons () {
 					${label('Reddit', 'exportHwtf')}
 					${input('checkbox', { id: 'exportHwtf', name: 'export', value: 'hwtf', checked: user.exportHwtf })}
 				</p>
-				<p>
-					${label('Panda Crazy - Panda', 'exportPcp')}
-					${input('checkbox', { id: 'exportPcp', name: 'export', value: 'pc-p', checked: user.exportPcp })}
-				</p>
-				<p>
-					${label('Panda Crazy - Once', 'exportPco')}
-					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: user.exportPco })}
-				</p>
 			</div>
 			<div class="column opts-dsc">
 				<section>
@@ -388,14 +380,6 @@ function exportButtons () {
 					<a style="color:black" href="${_hwtf}" target="_blank">
 						r/HITsWorthTurkingFor
 					</a> standards.
-				</section>
-				<section>
-					${descriptionTitle('Panda Crazy - Panda')}
-					Show a button in the results to export the specified HIT to Panda Crazy's Panda queue.
-				</section>
-				<section>
-					${descriptionTitle('Panda Crazy - Once')}
-					Show a button in the results to export the specified HIT to Panda Crazy's Once queue.
 				</section>
 			</div>
 		</div>
@@ -660,6 +644,42 @@ function appearance () {
 		${themes.apply(this)}
 		${hitColoring.apply(this)}
 		${fontSize.apply(this)}
+	`;
+}
+
+function addJobButtons () {
+	const { user } = this;
+
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Add Job Buttons')}
+				<p>
+					${label('Panda', 'exportPcp')}
+					${input('checkbox', { id: 'exportPcp', name: 'export', value: 'pc-p', checked: user.exportPcp })}
+				</p>
+				<p>
+					${label('Once', 'exportPco')}
+					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: user.exportPco })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Panda')}
+					Show a button in the results to add the HIT to Panda Crazy as a Panda job.
+				</section>
+				<section>
+					${descriptionTitle('Once')}
+					Show a button in the results to add the HIT to Panda Crazy as a Once job.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
+function pandaCrazy () {
+	return `
+		${addJobButtons.apply(this)}
 	`;
 }
 
@@ -1096,42 +1116,36 @@ function main () {
 			</label>
 		</div>
 		<div id="settingsSidebar">
-			<span class="settingsSelected">
+			<span data-target="general" class="settingsSelected">
 				General
 			</span>
-			<span>
-				Turkopticon
-			</span>
-			<span>
-				Appearance
-			</span>
-			<span>
-				Blocklist
-			</span>
-			<span>
-				Notifications
-			</span>
-			<span>
-				Utilities
-			</span>
+			<span data-target="to">Turkopticon</span>
+			<span data-target="pc">Panda Crazy</span>
+			<span data-target="appearance">Appearance</span>
+			<span data-target="blocklist">Blocklist</span>
+			<span data-target="notify">Notifications</span>
+			<span data-target="utils">Utilities</span>
 		</div>
 		<div id="panelContainer" style="margin-left:10px;border:none;overflow:auto;width:auto;height:92%">
-			<div id="General" class="settingsPanel">
+			<div id="settings-general" class="settingsPanel">
 				${general.apply(this)}
 			</div>
-			<div id="Turkopticon" class="settingsPanel">
+			<div id="settings-to" class="settingsPanel">
 				${to.apply(this)}
 			</div>
-			<div id="Appearance" class="settingsPanel">
+			<div id="settings-pc" class="settingsPanel">
+				${pandaCrazy.apply(this)}
+			</div>
+			<div id="settings-appearance" class="settingsPanel">
 				${appearance.apply(this)}
 			</div>
-			<div id="Blocklist" class="settingsPanel">
+			<div id="settings-blocklist" class="settingsPanel">
 				${blocks.apply(this)}
 			</div>
-			<div id="Notifications" class="settingsPanel">
+			<div id="settings-notify" class="settingsPanel">
 				${notify.apply(this)}
 			</div>
-			<div id="Utilities" class="settingsPanel">
+			<div id="settings-utils" class="settingsPanel">
 				${utils.apply(this)}
 			</div>
 		</div>
@@ -1486,11 +1500,12 @@ function Editor$1 (type) {
 function init () {
 	var get = (q, all) => this.main['querySelector' + (all ? 'All' : '')](q),
 		sidebarFn = function (e) {
-			if (e.target.classList.contains('settingsSelected')) return;
-			get('#' + get('.settingsSelected').textContent).style.display = 'none';
+			if (e.target.classList.contains('settingsSelected')) return; // already selected
+
+			get('#settings-' + get('.settingsSelected').dataset.target).style.display = 'none';
 			get('.settingsSelected').classList.toggle('settingsSelected');
 			e.target.classList.toggle('settingsSelected');
-			get('#' + e.target.textContent).style.display = 'block';
+			get('#settings-' + e.target.dataset.target).style.display = 'block';
 		}.bind(this),
 		sliderFn = function (e) {
 			e.target.nextElementSibling.textContent = Math.floor(e.target.value * 100) + '%';
@@ -1567,7 +1582,7 @@ function init () {
 		}.bind(this);
 
 	get('#settingsClose').onclick = this.die.bind(this);
-	get('#General').style.display = 'block';
+	get('#settings-general').style.display = 'block';
 	Array.from(get('#settingsSidebar span', true)).forEach(v => v.onclick = sidebarFn);
 	Array.from(get('input:not([type=file]),select', true)).forEach(v => v.onchange = optChangeFn);
 	Array.from(get('input[type=range]', true)).forEach(v => v.oninput = sliderFn);
@@ -3909,7 +3924,7 @@ function makeTitle(hit) {
 	return deleteTime + pay + title;
 }
 
-function pandaCrazy (type) {
+function pandaCrazy$1 (type) {
 	const msgData = {
 		time: (new Date()).getTime(),
 		command: 'add' + type + 'Job',
@@ -3966,8 +3981,8 @@ class Exporter {
 			hwtf: hwtf.bind(this),
 			vb: vb.bind(this),
 			irc: irc.bind(this),
-			'pc-p': pandaCrazy.bind(this, ''), // Panda mode
-			'pc-o': pandaCrazy.bind(this, 'Once'), // Once mode
+			'pc-p': pandaCrazy$1.bind(this, ''), // Panda mode
+			'pc-o': pandaCrazy$1.bind(this, 'Once'), // Once mode
 		};
 		const exportName = this.target.dataset.exporter;
 		exports[exportName]();

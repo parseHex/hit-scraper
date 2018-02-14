@@ -5,11 +5,12 @@ import Editor from '../Editor/index';
 export default function () {
 	var get = (q, all) => this.main['querySelector' + (all ? 'All' : '')](q),
 		sidebarFn = function (e) {
-			if (e.target.classList.contains('settingsSelected')) return;
-			get('#' + get('.settingsSelected').textContent).style.display = 'none';
+			if (e.target.classList.contains('settingsSelected')) return; // already selected
+
+			get('#settings-' + get('.settingsSelected').dataset.target).style.display = 'none';
 			get('.settingsSelected').classList.toggle('settingsSelected');
 			e.target.classList.toggle('settingsSelected');
-			get('#' + e.target.textContent).style.display = 'block';
+			get('#settings-' + e.target.dataset.target).style.display = 'block';
 		}.bind(this),
 		sliderFn = function (e) {
 			e.target.nextElementSibling.textContent = Math.floor(e.target.value * 100) + '%';
@@ -86,7 +87,7 @@ export default function () {
 		}.bind(this);
 
 	get('#settingsClose').onclick = this.die.bind(this);
-	get('#General').style.display = 'block';
+	get('#settings-general').style.display = 'block';
 	Array.from(get('#settingsSidebar span', true)).forEach(v => v.onclick = sidebarFn);
 	Array.from(get('input:not([type=file]),select', true)).forEach(v => v.onchange = optChangeFn);
 	Array.from(get('input[type=range]', true)).forEach(v => v.oninput = sliderFn);
