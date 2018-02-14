@@ -111,7 +111,15 @@ export default function () {
 		Core.run();
 	};
 	this.buttons.retryto.onclick = function (e) {
+		if (!Core.canRetryTO) return;
+		Core.canRetryTO = false;
+
+		e.target.classList.add('disabled');
 		Core.getTO();
+		setTimeout(function () {
+			Core.canRetryTO = true;
+			e.target.classList.remove('disabled');
+		}, 3000);
 	};
 	this.buttons.hide.onclick = function (e) {
 		get('#controlpanel').classList.toggle('hiddenpanel');
@@ -137,6 +145,11 @@ export default function () {
 		this.toggleOverflow('on');
 		Settings.draw().init();
 	};
+	get('#disableTO').addEventListener('change', (e) => {
+		if (e.target.checked) {
+			this.Status.hide('to-error');
+		}
+	});
 	get('#hideBlock').addEventListener('change', () => {
 		Array.from(get('.blocklisted', true)).forEach(v => {
 			v.classList.toggle('hidden');

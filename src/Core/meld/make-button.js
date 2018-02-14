@@ -3,7 +3,7 @@ import Settings from '../../Settings/index';
 import { cleanTemplate } from '../../lib/util';
 
 export default function makeButton(settingName, shortName, longName, data = {}, label = shortName) {
-	const _st = Interface.isLoggedout ? 'disabled' : ''; // TODO broken on new site; always disabled
+	const _st = Interface.isLoggedout ? 'disabled' : ''; // TODO broken on new site; never disabled
 	const settingHidden = Settings.user['export' + settingName] ? '' : 'hidden';
 
 	const className = `ex ${shortName.toLowerCase()} ${settingHidden}`;

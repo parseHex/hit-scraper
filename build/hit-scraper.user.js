@@ -1885,6 +1885,13 @@ var status = `
 		display: block !important;
 		visibility: hidden;
 	}
+	button#btnRetryTO.disabled {
+		background-color: lightgray;
+    color: darkgray;
+	}
+	button#btnRetryTO:focus {
+		outline: 0;
+	}
 `;
 
 var css = `
@@ -1936,10 +1943,10 @@ var css = `
 		margin: auto;
 		padding: 2px;
 	}
-	button.disabled {
+	button.disabled:not(#btnRetryTO) {
 		position: relative;
 	}
-	button.disabled:before {
+	button.disabled:not(#btnRetryTO):before {
 		content: "";
 		display: none;
 		z-index: 5;
@@ -1953,7 +1960,7 @@ var css = `
 		border-top: 6px solid black;
 		transform: translateX(-50%);
 	}
-	button.disabled:after {
+	button.disabled:not(#btnRetryTO):after {
 		content: "Exports are disabled while logged out.";
 		display: none;
 		z-index: 5;
@@ -1968,10 +1975,10 @@ var css = `
 		box-shadow: 0px 0px 6px 1px #fff;
 		font-size: 12px;
 	}
-	button.disabled:focus:before {
+	button.disabled:not(#btnRetryTO):focus:before {
 		display: block;
 	}
-	button.disabled:focus:after {
+	button.disabled:not(#btnRetryTO):focus:after {
 		display: block;
 	}
 
@@ -2572,6 +2579,7 @@ function dispatch (type, src) {
 	switch (type) {
 		case 'external':
 			Interface$2.Status.hide('retrieving-to');
+			Interface$2.Status.hide('to-error');
 			this.meld(src);
 			break;
 		case 'internal':
@@ -3326,10 +3334,13 @@ function fetch (url, payload, responseType, inline = true) {
 	}
 
 	const _p = new Promise(function (resolve, reject) {
-		let timeout = 6 * 1000;
+		let timeout = 3 * 1000;
 		if (isTO && Settings$1.user.asyncTO) {
 			// increase TO's timeout to 30s since they timeout a lot
 			timeout = 30 * 1000;
+
+			// good for debugging (errors immediately, set to https otherwise):
+			// url = 'http://httpstat.us/200?sleep=50000';
 		}
 
 		const xhr = new XMLHttpRequest();
@@ -3451,8 +3462,6 @@ function notify$1 (c, loading) {
 }
 
 function getTO () {
-	Interface$2.Status.hide('to-error');
-
 	const ids = state.scraperHistory.filter(v => v.current && !v.TO && !v.blocked && v.requester.id, true)
 		.filter((v, i, a) => a.indexOf(v) === i).join();
 
@@ -3474,6 +3483,7 @@ class Core$1 {
 		this.timer = null;
 		this.cooldown = null;
 		this.lastScrape = null;
+		this.canRetryTO = true;
 
 		this.getPayload = getPayload.bind(this);
 		this.run = run.bind(this);
@@ -3598,7 +3608,15 @@ function init$1 () {
 		Core$2.run();
 	};
 	this.buttons.retryto.onclick = function (e) {
+		if (!Core$2.canRetryTO) return;
+		Core$2.canRetryTO = false;
+
+		e.target.classList.add('disabled');
 		Core$2.getTO();
+		setTimeout(function () {
+			Core$2.canRetryTO = true;
+			e.target.classList.remove('disabled');
+		}, 3000);
 	};
 	this.buttons.hide.onclick = function (e) {
 		get('#controlpanel').classList.toggle('hiddenpanel');
@@ -3624,6 +3642,11 @@ function init$1 () {
 		this.toggleOverflow('on');
 		Settings$1.draw().init();
 	};
+	get('#disableTO').addEventListener('change', (e) => {
+		if (e.target.checked) {
+			this.Status.hide('to-error');
+		}
+	});
 	get('#hideBlock').addEventListener('change', () => {
 		Array.from(get('.blocklisted', true)).forEach(v => {
 			v.classList.toggle('hidden');

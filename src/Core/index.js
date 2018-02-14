@@ -17,6 +17,7 @@ class Core {
 		this.timer = null;
 		this.cooldown = null;
 		this.lastScrape = null;
+		this.canRetryTO = true;
 
 		this.getPayload = getPayload.bind(this);
 		this.run = run.bind(this);

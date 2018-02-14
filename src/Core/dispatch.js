@@ -6,6 +6,7 @@ export default function (type, src) {
 	switch (type) {
 		case 'external':
 			Interface.Status.hide('retrieving-to');
+			Interface.Status.hide('to-error');
 			this.meld(src);
 			break;
 		case 'internal':

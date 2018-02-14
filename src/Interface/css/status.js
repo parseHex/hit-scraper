@@ -20,4 +20,11 @@ export default `
 		display: block !important;
 		visibility: hidden;
 	}
+	button#btnRetryTO.disabled {
+		background-color: lightgray;
+    color: darkgray;
+	}
+	button#btnRetryTO:focus {
+		outline: 0;
+	}
 `;

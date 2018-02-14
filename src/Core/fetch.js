@@ -24,10 +24,13 @@ export default function (url, payload, responseType, inline = true) {
 	}
 
 	const _p = new Promise(function (resolve, reject) {
-		let timeout = 6 * 1000;
+		let timeout = 3 * 1000;
 		if (isTO && Settings.user.asyncTO) {
 			// increase TO's timeout to 30s since they timeout a lot
 			timeout = 30 * 1000;
+
+			// good for debugging (errors immediately, set to https otherwise):
+			// url = 'http://httpstat.us/200?sleep=50000';
 		}
 
 		const xhr = new XMLHttpRequest();

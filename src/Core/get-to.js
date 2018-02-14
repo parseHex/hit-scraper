@@ -4,8 +4,6 @@ import state from '../lib/state';
 import { TO_API } from '../lib/constants';
 
 export default function () {
-	Interface.Status.hide('to-error');
-
 	const ids = state.scraperHistory.filter(v => v.current && !v.TO && !v.blocked && v.requester.id, true)
 		.filter((v, i, a) => a.indexOf(v) === i).join();
 
