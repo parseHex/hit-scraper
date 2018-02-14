@@ -72,7 +72,7 @@ const SETTINGS_KEY = ENV.BETA ? 'beta_scraper_settings' : 'scraper_settings';
 
 const DOC_TITLE = 'HIT Scraper';
 const TO_BASE = 'https://turkopticon.ucsd.edu/';
-const TO_REPORTS$1 = TO_BASE + 'reports?id=';
+const TO_REPORTS = TO_BASE + 'reports?id=';
 const TO_API = TO_BASE + 'api/multi-attrs.php?ids=';
 
 const ico = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wsTDwctGwJAtQAAAYRJREFUOMudkz1rWmEUx3/6gFeC1A5p6RJByGTGTpEM3iHfwMmxfggH1yyB69BFyFAy5FIQ6wdw9CVxUOhQXFykYFcTLvEaiuafQU0wXoPkwIHnOS8/znPOeWAh18AU0I7qA61lLjfbAl3X1Ww2k+u620AtgP9BTsdx1O/3lUqlNBgM5DhOEGAaWh7eLeEgYywWo1QqMRwO8X2fdrtNsVjcCtkorVKpSJKy2awsy1Imk1Gv19vWh02j53mSpHQ6vctENo2dTkcrGY/HqlarSiaTuwMSiYRqtZomk8kzqNvt7g5YqTFGtm1LkjzPC4wJnEKz2cS2bSKRCMYYAOr1+htTCFtr1EKhoEajId/3NRqNVC6XFY/HF/69LyKfE9bivlikfA72D+H8DHh8e3PyOfAMfJjDj58YoMjvP4bQPVz9g4MU7Ifh7y2EDJgoHB/BqQ3fLuDzAdz14fIXaP6w+okvT8jnRFub+r0mTr6+bmJzVVgLmKw5w1ER/SQiH4O6fw80AJ4AC20qRDxx28IAAAAASUVORK5CYII=';
@@ -210,7 +210,7 @@ const defaults = {
 	},
 	vbTemplate: '[table][tr][td][b]Title:[/b] [URL=${previewLink}]${title}[/URL] | [URL=${pandaLink}]PANDA[/URL]\n' +
 		'[b]Requester:[/b] [URL=${requesterLink}]${requesterName}[/URL] [${requesterId}] ' +
-		'([URL=' + TO_REPORTS$1 + '${requesterId}]TO[/URL])\n' +
+		'([URL=' + TO_REPORTS + '${requesterId}]TO[/URL])\n' +
 		'[b]TO Ratings:[/b]\n${toVerbose}\n${toFoot}\n' +
 		'[b]Description:[/b] ${description}\n[b]Time:[/b] ${time}\n[b]HITs Available:[/b] ${numHits}\n' +
 		'[b]Reward:[/b] [COLOR=green][b]${reward}[/b][/COLOR]\n' +
@@ -3160,7 +3160,7 @@ function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading) {
 	if (hitRow.hit.panda) pandaHref = `href="${hitRow.hit.panda}"`;
 
 	let requesterHref = '';
-	if (hitRow.requester.id) requesterHref = `href="${TO_REPORTS$1}${hitRow.requester.id}"`;
+	if (hitRow.requester.id) requesterHref = `href="${TO_REPORTS}${hitRow.requester.id}"`;
 
 	const expData = {
 		gid: hitRow.groupId,
@@ -3504,7 +3504,7 @@ function getTO () {
 	this.fetch(TO_API + ids, null, 'json');
 }
 
-class Core$1 {
+class Core {
 	constructor() {
 		this.active = false;
 		this.timer = null;
@@ -3526,7 +3526,7 @@ class Core$1 {
 		this.getTO = getTO.bind(this);
 	}
 }
-var Core$2 = new Core$1();
+var Core$1 = new Core();
 
 function init$1 () {
 	this.panel = {};
@@ -3632,16 +3632,16 @@ function init$1 () {
 	// set up button click events
 	this.buttons.main.onclick = function (e) {
 		e.target.textContent = e.target.textContent === 'Start' ? 'Stop' : 'Start';
-		Core$2.run();
+		Core$1.run();
 	};
 	this.buttons.retryto.onclick = function (e) {
-		if (!Core$2.canRetryTO) return;
-		Core$2.canRetryTO = false;
+		if (!Core$1.canRetryTO) return;
+		Core$1.canRetryTO = false;
 
 		e.target.classList.add('disabled');
-		Core$2.getTO();
+		Core$1.getTO();
 		setTimeout(function () {
-			Core$2.canRetryTO = true;
+			Core$1.canRetryTO = true;
 			e.target.classList.remove('disabled');
 		}, 3000);
 	};
@@ -3856,7 +3856,7 @@ function irc () {
 	payload = '&urls[]=' + urlArr.join('&urls[]=');
 
 	this.node.innerHTML = '<span style="font-size:16px">Shortening URLs... <i class="spinner"></i></span>';
-	Core.fetch(api + payload, null, 'text', false).then(r => {
+	Core$1.fetch(api + payload, null, 'text', false).then(r => {
 		urlArr = r.split(';').slice(0, 4);
 		this.node.innerHTML = '<p>IRC Export</p>' +
 			'<textarea style="display:block;padding:2px;margin:auto;height:130px;width:500px" tabindex="1">' +
@@ -4162,7 +4162,7 @@ class ScraperCache extends Cache {
 		) {
 			value.TO = this._toCache.get(value.requester.id);
 		}
-		const isFirstScrape = !Core$2.lastScrape;
+		const isFirstScrape = !Core$1.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
 			const obj = {

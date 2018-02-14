@@ -1,3 +1,5 @@
+import { TO_REPORTS } from "../lib/constants";
+
 export default function () {
 	var _location = 'ICA';
 	var _quals;

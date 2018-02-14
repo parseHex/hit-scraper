@@ -1,3 +1,6 @@
+import { TO_REPORTS } from "../lib/constants";
+import Core from '../Core/index';
+
 export default function () {
 	// custom MTurk/TO url shortener courtesy of Tjololo
 	var api = 'https://ns4t.net/yourls-api.php?action=bulkshortener&title=MTurk&signature=39f6cf4959',
