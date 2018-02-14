@@ -3625,6 +3625,11 @@ function init$1 () {
 			v.classList.toggle('hidden');
 		});
 	});
+	get('#hideNoTO').addEventListener('change', () => {
+		Array.from(get('.toNone', true)).forEach(v => {
+			v.classList.toggle('hidden');
+		});
+	});
 	document.body.onblur = () => this.focused = false;
 	document.body.onfocus = () => {
 		this.focused = true;
