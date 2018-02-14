@@ -3501,26 +3501,32 @@ function init$1 () {
 				isChecked = e.target.checked, name = e.target.name, value = e.target.value;
 
 			switch (tag) {
-				case 'SELECT':
+				case 'SELECT': {
 					if (id === 'soundSelect')
 						this.user.notifySound[1] = e.target.value;
 					else
 						this.user[id] = e.target.selectedIndex;
 					break;
-				case 'INPUT':
+				}
+				case 'INPUT': {
 					switch (type) {
-						case 'number':
-						case 'text':
+						case 'number': {
+							this.user[id] = +value;
+							break;
+						}
+						case 'text': {
 							this.user[id] = value;
 							break;
-						case 'radio':
+						}
+						case 'radio': {
 							Array.from(get(`input[name=${name}]`, true))
 								.forEach(v => {
 									this.user[v.id] = v.checked;
 									get(`label[for=${v.id}]`).classList.toggle('checked');
 								});
 							break;
-						case 'checkbox':
+						}
+						case 'checkbox': {
 							if (name === 'sort') {
 								Array.from(get(`input[name=${name}]`, true)).forEach(v => {
 									if (e.target !== v) v.checked = false;
@@ -3536,8 +3542,10 @@ function init$1 () {
 							this.user[id] = isChecked;
 							get(`label[for=${id}]`).classList.toggle('checked');
 							break;
+						}
 					}
 					break;
+				}
 			}
 			Settings$1.save();
 		}.bind(this);
