@@ -101,13 +101,13 @@ export default `
 		border-right: 1px solid;
 	}
 	#resultsTable td { padding: 0 3px; }
-	.block-tc { min-width: 52px; }
-	.requester-tc { min-width: 130px; }
-	.title-tc { min-width: 200px; }
-	.rewardpanda-tc { min-width: 70px; }
-	.available-tc { min-width: 35px; }
-	.duration-tc { min-width: 47px; }
-	.topay-tc { min-width: 30px; }
-	.master-tc { min-width: 15px; }
-	.notqualified-tc { min-width: 15px; }
+	.block-tc { width: 65px; text-align: center; }
+	.requester-tc {  }
+	.title-tc {  }
+	.rewardpanda-tc { width: 70px; }
+	.available-tc { width: 35px; }
+	.duration-tc { width: 67px; }
+	.topay-tc { width: 30px; }
+	.masters-tc { width: 15px; }
+	.notqualified-tc { width: 15px; }
 `;

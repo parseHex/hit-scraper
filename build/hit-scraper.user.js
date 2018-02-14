@@ -4,7 +4,7 @@
 // @description Snag HITs. mturk.
 // @namespace   https://greasyfork.org/users/8394
 // @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper[-_]?beta$/
-// @version     4.3.3
+// @version     4.4.0
 // @grant       none
 // ==/UserScript==
 
@@ -1852,15 +1852,15 @@ var resultsTable = `
 		border-right: 1px solid;
 	}
 	#resultsTable td { padding: 0 3px; }
-	.block-tc { min-width: 52px; }
-	.requester-tc { min-width: 130px; }
-	.title-tc { min-width: 200px; }
-	.rewardpanda-tc { min-width: 70px; }
-	.available-tc { min-width: 35px; }
-	.duration-tc { min-width: 47px; }
-	.topay-tc { min-width: 30px; }
-	.master-tc { min-width: 15px; }
-	.notqualified-tc { min-width: 15px; }
+	.block-tc { width: 65px; text-align: center; }
+	.requester-tc {  }
+	.title-tc {  }
+	.rewardpanda-tc { width: 70px; }
+	.available-tc { width: 35px; }
+	.duration-tc { width: 67px; }
+	.topay-tc { width: 30px; }
+	.masters-tc { width: 15px; }
+	.notqualified-tc { width: 15px; }
 `;
 
 var status = `
@@ -1888,6 +1888,9 @@ var status = `
 `;
 
 var css = `
+	* {
+		box-sizing: border-box;
+	}
 	body {
 		font-family: Verdana, Arial;
 		font-size: 14px;

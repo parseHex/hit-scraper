@@ -4,6 +4,9 @@ import resultsTable from './results-table';
 import status from './status';
 
 export default `
+	* {
+		box-sizing: border-box;
+	}
 	body {
 		font-family: Verdana, Arial;
 		font-size: 14px;
