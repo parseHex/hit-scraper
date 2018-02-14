@@ -5,6 +5,7 @@ import state from './lib/state';
 import Settings from './Settings/index';
 import Interface from './Interface/index';
 import ScraperCache from './Cache/ScraperCache';
+import { SETTINGS_KEY } from './lib/constants';
 
 console.log('HS hook');
 if (!document.getElementById('control_panel')) {
@@ -18,7 +19,7 @@ if (!document.getElementById('control_panel')) {
 }
 
 export default function initialize() {
-	Settings.user = Object.assign({}, Settings.defaults, JSON.parse(localStorage.getItem('scraper_settings')));
+	Settings.user = Object.assign({}, Settings.defaults, JSON.parse(localStorage.getItem(SETTINGS_KEY)));
 	Interface.draw().init();
 	state.scraperHistory = new ScraperCache(650);
 }

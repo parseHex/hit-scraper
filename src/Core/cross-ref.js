@@ -1,11 +1,12 @@
 import Settings from '../Settings/index';
 import Editor from '../Editor/index';
+import { INCLUDE_KEY, IGNORE_KEY } from '../lib/constants';
 
 export default function (...needles) {
 	var found = [false, false]
 	var s;
 	if (Settings.user.onlyIncludes) { // everything not in includelist gets blocked, unless includelist is empty or doesn't exist
-		var list = (localStorage.getItem('scraper_include_list') || '').toLowerCase().split('^');
+		var list = (localStorage.getItem(INCLUDE_KEY) || '').toLowerCase().split('^');
 		if (list.length === 1 && !list[0].length) return found; // includelist is empty
 		for (s of needles) {
 			found[1] = Boolean(~list.indexOf(s.toLowerCase().replace(/\s+/g, ' ')));
@@ -16,12 +17,12 @@ export default function (...needles) {
 				found[0] = true;
 		}
 	} else {
-		if (localStorage.getItem('scraper_ignore_list') === null) {
+		if (localStorage.getItem(IGNORE_KEY) === null) {
 			new Editor().setDefaultBlocks();
 		}
 
-		const blist = (localStorage.getItem('scraper_ignore_list') || '').toLowerCase().split('^');
-		const ilist = (localStorage.getItem('scraper_include_list') || '').toLowerCase().split('^')
+		const blist = (localStorage.getItem(IGNORE_KEY) || '').toLowerCase().split('^');
+		const ilist = (localStorage.getItem(INCLUDE_KEY) || '').toLowerCase().split('^')
 		const blist_wild = Settings.user.wildblocks ? blist.filter(v => /.*?[*].*/.test(v)) : null;
 
 		if (blist_wild) {

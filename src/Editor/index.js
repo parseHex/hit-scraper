@@ -3,6 +3,7 @@ import Settings from '../Settings/index';
 import Themes from '../Themes/index';
 import Exporter from '../Exporter/index';
 import { cleanTemplate } from '../lib/util';
+import { IGNORE_KEY } from '../lib/constants';
 
 export default function (type) {
 	if (!type) {
@@ -22,7 +23,7 @@ export default function (type) {
 
 	function setDefaultBlocks() {
 		// TODO seems like this should go under Settings? (make static method for it)
-		return localStorage.setItem('scraper_ignore_list',
+		return localStorage.setItem(IGNORE_KEY,
 			'oscar smith^diamond tip research llc^jonathan weber^jerry torres^' +
 			'crowdsource^we-pay-you-fast^turk experiment^jon brelig^p9r^scoutit');
 	}
@@ -30,7 +31,7 @@ export default function (type) {
 	switch (type) {
 		case 'include':
 		case 'ignore':
-			if (type === 'ignore' && !localStorage.getItem('scraper_ignore_list')) setDefaultBlocks();
+			if (type === 'ignore' && !localStorage.getItem(IGNORE_KEY)) setDefaultBlocks();
 
 			const btnStyle = 'margin:5px auto;width:50%;color:white;background:black;';
 
@@ -59,7 +60,7 @@ export default function (type) {
 					${titleText}
 				</div>
 				<textarea style="display:block;height:200px;width:500px;font:12px monospace" placeholder="nothing here yet">
-					${localStorage.getItem(`scraper_${type}_list`) || ''}
+					${localStorage.getItem(IGNORE_KEY.replace('ignore', type)) || ''}
 				</textarea>
 				<button id="edSave" style="${btnStyle}">
 					Save
@@ -73,7 +74,7 @@ export default function (type) {
 				textarea.value = textarea.value.replace(/\^\w{30}/g, '');
 			};
 			this.node.querySelector('#edSave').onclick = () => {
-				localStorage.setItem(`scraper_${type}_list`, this.node.querySelector('textarea').value.trim());
+				localStorage.setItem(IGNORE_KEY.replace('ignore', type), this.node.querySelector('textarea').value.trim());
 				this.die();
 			};
 			break;

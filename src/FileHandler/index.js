@@ -1,12 +1,13 @@
 import Settings from '../Settings/index';
 import initialize from '../index';
+import { IGNORE_KEY, INCLUDE_KEY } from '../lib/constants';
 
 export default class FileHandler {
 	static exports() {
 		var obj = {
 			settings: JSON.stringify(Settings.user),
-			ignore_list: localStorage.getItem('scraper_ignore_list') || '',
-			include_list: localStorage.getItem('scraper_include_list') || ''
+			ignore_list: localStorage.getItem(IGNORE_KEY) || '',
+			include_list: localStorage.getItem(INCLUDE_KEY) || ''
 		},
 			blob = new Blob([JSON.stringify(obj)], { type: 'application/json' }),
 			a = document.body.appendChild(document.createElement('a'));
@@ -27,7 +28,7 @@ export default class FileHandler {
 			try { obj = JSON.parse(this.result); } catch (err) { return invalid(); }
 			for (var key of ['settings', 'ignore_list', 'include_list']) {
 				if (key in obj && typeof obj[key] === 'string')
-					localStorage.setItem('scraper_' + key, obj[key]);
+					localStorage.setItem(IGNORE_KEY.replace('ignore_list', key), obj[key]);
 			}
 			initialize();
 		};

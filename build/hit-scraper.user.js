@@ -3,7 +3,7 @@
 // @author      feihtality, parseHex
 // @description Snag HITs. mturk.
 // @namespace   https://greasyfork.org/users/8394
-// @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper$/
+// @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper[-_]?beta$/
 // @version     4.3.3
 // @grant       none
 // ==/UserScript==
@@ -63,7 +63,12 @@ const ENV = Object.freeze({
 	ORIGIN: window.location.origin,
 	ISFF: Boolean(window.sidebar),
 	VERSION: '4.2.1',
+	BETA: /beta$/i.test(window.location.href),
 });
+const INCLUDE_KEY = ENV.BETA ? 'beta_scraper_include_list' : 'scraper_scraper_include_list';
+const IGNORE_KEY = ENV.BETA ? 'beta_scraper_ignore_list' : 'scraper_scraper_ignore_list';
+const SETTINGS_KEY = ENV.BETA ? 'beta_scraper_settings' : 'scraper_settings';
+
 
 const DOC_TITLE = 'HIT Scraper';
 const TO_BASE = 'https://turkopticon.ucsd.edu/';
@@ -277,7 +282,7 @@ var defaults$1 = {
 }
 
 function save () {
-	localStorage.setItem('scraper_settings', JSON.stringify(this.user));
+	localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
 }
 
 function sectionTitle(text) {
@@ -1280,8 +1285,8 @@ class FileHandler {
 	static exports() {
 		var obj = {
 			settings: JSON.stringify(Settings$1.user),
-			ignore_list: localStorage.getItem('scraper_ignore_list') || '',
-			include_list: localStorage.getItem('scraper_include_list') || ''
+			ignore_list: localStorage.getItem(IGNORE_KEY) || '',
+			include_list: localStorage.getItem(INCLUDE_KEY) || ''
 		},
 			blob = new Blob([JSON.stringify(obj)], { type: 'application/json' }),
 			a = document.body.appendChild(document.createElement('a'));
@@ -1302,7 +1307,7 @@ class FileHandler {
 			try { obj = JSON.parse(this.result); } catch (err) { return invalid(); }
 			for (var key of ['settings', 'ignore_list', 'include_list']) {
 				if (key in obj && typeof obj[key] === 'string')
-					localStorage.setItem('scraper_' + key, obj[key]);
+					localStorage.setItem(IGNORE_KEY.replace('ignore_list', key), obj[key]);
 			}
 			initialize();
 		};
@@ -1327,7 +1332,7 @@ function Editor$1 (type) {
 
 	function setDefaultBlocks() {
 		// TODO seems like this should go under Settings? (make static method for it)
-		return localStorage.setItem('scraper_ignore_list',
+		return localStorage.setItem(IGNORE_KEY,
 			'oscar smith^diamond tip research llc^jonathan weber^jerry torres^' +
 			'crowdsource^we-pay-you-fast^turk experiment^jon brelig^p9r^scoutit');
 	}
@@ -1335,7 +1340,7 @@ function Editor$1 (type) {
 	switch (type) {
 		case 'include':
 		case 'ignore':
-			if (type === 'ignore' && !localStorage.getItem('scraper_ignore_list')) setDefaultBlocks();
+			if (type === 'ignore' && !localStorage.getItem(IGNORE_KEY)) setDefaultBlocks();
 
 			const btnStyle = 'margin:5px auto;width:50%;color:white;background:black;';
 
@@ -1364,7 +1369,7 @@ function Editor$1 (type) {
 					${titleText}
 				</div>
 				<textarea style="display:block;height:200px;width:500px;font:12px monospace" placeholder="nothing here yet">
-					${localStorage.getItem(`scraper_${type}_list`) || ''}
+					${localStorage.getItem(IGNORE_KEY.replace('ignore', type)) || ''}
 				</textarea>
 				<button id="edSave" style="${btnStyle}">
 					Save
@@ -1378,7 +1383,7 @@ function Editor$1 (type) {
 				textarea.value = textarea.value.replace(/\^\w{30}/g, '');
 			};
 			this.node.querySelector('#edSave').onclick = () => {
-				localStorage.setItem(`scraper_${type}_list`, this.node.querySelector('textarea').value.trim());
+				localStorage.setItem(IGNORE_KEY.replace('ignore', type), this.node.querySelector('textarea').value.trim());
 				this.die();
 			};
 			break;
@@ -2480,30 +2485,30 @@ function draw$1 () {
 }
 
 function getPayload (page = 1) {
-	const user = Settings$1.user,
-		payload = {
-			legacy: {
-				searchWords: user.search,
-				minReward: user.pay,
-				qualifiedFor: Interface$2.isLoggedout ? 'off' : (user.qual ? 'on' : 'off'),
-				requiresMasterQual: user.monly ? 'on' : 'off',
-				sortType: '',
-				pageNumber: page,
-				pageSize: user.resultsPerPage || 50
+	const { user } = Settings$1;
+	const payload = {
+		legacy: {
+			searchWords: user.search,
+			minReward: user.pay,
+			qualifiedFor: Interface$2.isLoggedout ? 'off' : (user.qual ? 'on' : 'off'),
+			requiresMasterQual: user.monly ? 'on' : 'off',
+			sortType: '',
+			pageNumber: page,
+			pageSize: user.resultsPerPage || 50
+		},
+		next: {
+			filters: {
+				search_term: user.search,
+				qualified: user.qual,
+				masters: user.monly,
+				min_reward: user.pay
 			},
-			next: {
-				filters: {
-					search_term: user.search,
-					qualified: user.qual,
-					masters: user.monly,
-					min_reward: user.pay
-				},
-				page_size: user.resultsPerPage || 50,
-				sort: '',
-				page_number: page,
-				format: 'json'
-			}
-		};
+			page_size: user.resultsPerPage || 50,
+			sort: '',
+			page_number: page,
+			format: 'json'
+		}
+	};
 	const sort = user.invert ? 'asc' : 'desc';
 	switch (user.searchBy) {
 		case 0:
@@ -3362,7 +3367,7 @@ function crossRef (...needles) {
 	var found = [false, false];
 	var s;
 	if (Settings$1.user.onlyIncludes) { // everything not in includelist gets blocked, unless includelist is empty or doesn't exist
-		var list = (localStorage.getItem('scraper_include_list') || '').toLowerCase().split('^');
+		var list = (localStorage.getItem(INCLUDE_KEY) || '').toLowerCase().split('^');
 		if (list.length === 1 && !list[0].length) return found; // includelist is empty
 		for (s of needles) {
 			found[1] = Boolean(~list.indexOf(s.toLowerCase().replace(/\s+/g, ' ')));
@@ -3373,12 +3378,12 @@ function crossRef (...needles) {
 				found[0] = true;
 		}
 	} else {
-		if (localStorage.getItem('scraper_ignore_list') === null) {
+		if (localStorage.getItem(IGNORE_KEY) === null) {
 			new Editor$1().setDefaultBlocks();
 		}
 
-		const blist = (localStorage.getItem('scraper_ignore_list') || '').toLowerCase().split('^');
-		const ilist = (localStorage.getItem('scraper_include_list') || '').toLowerCase().split('^');
+		const blist = (localStorage.getItem(IGNORE_KEY) || '').toLowerCase().split('^');
+		const ilist = (localStorage.getItem(INCLUDE_KEY) || '').toLowerCase().split('^');
 		const blist_wild = Settings$1.user.wildblocks ? blist.filter(v => /.*?[*].*/.test(v)) : null;
 
 		if (blist_wild) {
@@ -3965,7 +3970,7 @@ class Dialogue {
 		const { value } = this.caller;
 		const blockStr = value.toLowerCase().replace(/\s+/g, ' ');
 
-		let blocklist = localStorage.getItem('scraper_ignore_list');
+		let blocklist = localStorage.getItem(IGNORE_KEY);
 		if (!blocklist) {
 			blocklist = blockStr;
 		} else if (blocklist.slice(-1) === '^') {
@@ -3974,7 +3979,7 @@ class Dialogue {
 			blocklist += '^' + blockStr;
 		}
 
-		localStorage.setItem('scraper_ignore_list', blocklist);
+		localStorage.setItem(IGNORE_KEY, blocklist);
 
 		Array.from(document.querySelectorAll('#resultsTable tbody tr')).forEach(v => {
 			const gid = v.querySelector('.ex').dataset.gid;
@@ -4134,7 +4139,7 @@ if (!document.getElementById('control_panel')) {
 }
 
 function initialize() {
-	Settings$1.user = Object.assign({}, Settings$1.defaults, JSON.parse(localStorage.getItem('scraper_settings')));
+	Settings$1.user = Object.assign({}, Settings$1.defaults, JSON.parse(localStorage.getItem(SETTINGS_KEY)));
 	Interface$2.draw().init();
 	state.scraperHistory = new ScraperCache(650);
 }

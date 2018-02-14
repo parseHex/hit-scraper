@@ -1,3 +1,5 @@
+import { SETTINGS_KEY } from "../lib/constants";
+
 export default function () {
-	localStorage.setItem('scraper_settings', JSON.stringify(this.user));
+	localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
 }

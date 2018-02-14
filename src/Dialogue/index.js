@@ -1,6 +1,6 @@
 import Interface from '../Interface/index';
 import Settings from '../Settings/index';
-import { kb } from '../lib/constants';
+import { kb, IGNORE_KEY } from '../lib/constants';
 import { cleanTemplate } from '../lib/util';
 import state from '../lib/state';
 
@@ -62,7 +62,7 @@ export default class Dialogue {
 		const { value } = this.caller;
 		const blockStr = value.toLowerCase().replace(/\s+/g, ' ');
 
-		let blocklist = localStorage.getItem('scraper_ignore_list');
+		let blocklist = localStorage.getItem(IGNORE_KEY);
 		if (!blocklist) {
 			blocklist = blockStr;
 		} else if (blocklist.slice(-1) === '^') {
@@ -71,7 +71,7 @@ export default class Dialogue {
 			blocklist += '^' + blockStr;
 		}
 
-		localStorage.setItem('scraper_ignore_list', blocklist);
+		localStorage.setItem(IGNORE_KEY, blocklist);
 
 		Array.from(document.querySelectorAll('#resultsTable tbody tr')).forEach(v => {
 			const gid = v.querySelector('.ex').dataset.gid;
