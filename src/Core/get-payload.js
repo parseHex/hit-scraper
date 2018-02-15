@@ -6,7 +6,7 @@ export default function (page = 1) {
 	const payload = {
 		legacy: {
 			searchWords: user.search,
-			minReward: user.pay,
+			minReward: user.reward,
 			qualifiedFor: Interface.isLoggedout ? 'off' : (user.qual ? 'on' : 'off'),
 			requiresMasterQual: user.monly ? 'on' : 'off',
 			sortType: '',
@@ -18,7 +18,7 @@ export default function (page = 1) {
 				search_term: user.search,
 				qualified: user.qual,
 				masters: user.monly,
-				min_reward: user.pay
+				min_reward: user.reward
 			},
 			page_size: user.resultsPerPage || 50,
 			sort: '',
