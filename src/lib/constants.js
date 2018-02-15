@@ -5,11 +5,10 @@ export const ENV = Object.freeze({
 	ORIGIN: window.location.origin,
 	ISFF: Boolean(window.sidebar),
 	VERSION: '4.2.1',
-	BETA: /beta$/i.test(window.location.href),
 });
-export const INCLUDE_KEY = ENV.BETA ? 'beta_scraper_include_list' : 'scraper_scraper_include_list';
-export const IGNORE_KEY = ENV.BETA ? 'beta_scraper_ignore_list' : 'scraper_scraper_ignore_list';
-export const SETTINGS_KEY = ENV.BETA ? 'beta_scraper_settings' : 'scraper_settings';
+export const INCLUDE_KEY = 'new_scraper_scraper_include_list';
+export const IGNORE_KEY = 'new_scraper_scraper_ignore_list';
+export const SETTINGS_KEY = 'new_scraper_settings';
 
 export const URL_SELF = 'https://greasyfork.org/en/scripts/10615-hit-scraper-with-export#ugTop';
 export const DOC_TITLE = 'HIT Scraper';

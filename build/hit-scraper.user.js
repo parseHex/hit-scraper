@@ -3,7 +3,7 @@
 // @author      feihtality, parseHex
 // @description Snag HITs. mturk.
 // @namespace   https://greasyfork.org/users/8394
-// @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper[-_]?beta$/
+// @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper$/
 // @version     4.4.0
 // @grant       none
 // ==/UserScript==
@@ -63,11 +63,10 @@ const ENV = Object.freeze({
 	ORIGIN: window.location.origin,
 	ISFF: Boolean(window.sidebar),
 	VERSION: '4.2.1',
-	BETA: /beta$/i.test(window.location.href),
 });
-const INCLUDE_KEY = ENV.BETA ? 'beta_scraper_include_list' : 'scraper_scraper_include_list';
-const IGNORE_KEY = ENV.BETA ? 'beta_scraper_ignore_list' : 'scraper_scraper_ignore_list';
-const SETTINGS_KEY = ENV.BETA ? 'beta_scraper_settings' : 'scraper_settings';
+const INCLUDE_KEY = 'new_scraper_scraper_include_list';
+const IGNORE_KEY = 'new_scraper_scraper_ignore_list';
+const SETTINGS_KEY = 'new_scraper_settings';
 
 
 const DOC_TITLE = 'HIT Scraper';
