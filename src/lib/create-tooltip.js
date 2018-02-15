@@ -6,13 +6,15 @@ import { cleanTemplate } from './util';
 export default function createTooltip(type, opts) {
 	let html;
 	let reason;
-	if (Settings.user.disableTO) {
+	if (opts.data) {
+		// data is present so skip these ifs
+	} else if (Settings.user.disableTO) {
 		reason = bullet('TO disabled in user settings');
 	} else if (opts.loading) {
 		reason = bullet('Loading reviews...');
 	} else if (opts.error) {
 		reason = bullet('Invalid response from server');
-	} else if (opts.data === null) {
+	} else {
 		reason = bullet('Requester has not been reviewed yet');
 	}
 
