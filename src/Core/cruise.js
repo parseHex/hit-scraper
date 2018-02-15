@@ -1,28 +1,26 @@
 import Interface from '../Interface/index';
 import Settings from '../Settings/index';
 
-export default function (firstTick) {
+export default function (firstTick, tryAgain) {
 	if (!this.active) return;
 
-	if (!firstTick) this.cooldown--;
+	if (!firstTick && !tryAgain) this.cooldown--;
 
-	let noTimer = false;
-
-	if (this.cooldown === 0 && Settings.user.pcQueue && !queueEmpty()) {
-		if (Settings.user.pcQueueWaitTime === 0) {
-			reset.apply(this);
-		} else {
-			noTimer = true;
-			setTimeout(this.cruise.bind(this), Settings.user.pcQueueWaitTime);
-		}
-
+	if (
+		(this.cooldown === 0 || tryAgain) &&
+		Settings.user.pcQueue &&
+		!queueEmpty()
+	) {
+		reset.apply(this);
 		Interface.Status.show('queue-wait');
+
+		tryAgain = false;
 	}
 
-	if (this.cooldown === 0) {
+	if (this.cooldown === 0 || tryAgain) {
 		Interface.Status.hide('queue-wait');
 		this.run(true);
-	} else if (!noTimer) {
+	} else {
 		Interface.Status.edit('scraping-again', this.cooldown);
 		Interface.Status.show('scraping-again');
 

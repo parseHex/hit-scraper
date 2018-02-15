@@ -35,7 +35,6 @@ export default {
 
 	pcQueue: false,
 	pcQueueMin: 1,
-	pcQueueWaitTime: 0,
 
 	refresh: 0,
 	pages: 1,

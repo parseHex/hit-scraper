@@ -121,6 +121,11 @@ export default function () {
 			e.target.classList.remove('disabled');
 		}, 3000);
 	};
+	this.buttons.retryqueue.onclick = function (e) {
+		if (!Settings.user.pcQueue) return;
+
+		Core.cruise(false, true);
+	};
 	this.buttons.hide.onclick = function (e) {
 		get('#controlpanel').classList.toggle('hiddenpanel');
 		e.target.textContent = e.target.textContent === 'Hide Panel' ? 'Show Panel' : 'Hide Panel';

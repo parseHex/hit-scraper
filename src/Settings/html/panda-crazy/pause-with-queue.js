@@ -13,10 +13,6 @@ export default function () {
 					${label('Minimum HITs', 'pcQMin')}
 					${input('number', { id: 'pcQMin', name: 'pcQueueMin', min: 1, max: 35, value: this.pcQueueMin })}
 				</p>
-				<p>
-					${label('Wait Time')}
-					${input('number', { id: 'pcQWait', name: 'pcQueueWaitTime', min: 0, value: this.pcQueueWaitTime })}
-				</p>
 			</div>
 			<div class="column opts-dsc">
 				<section>
@@ -34,11 +30,6 @@ export default function () {
 					<br />
 					Example: If you set this to 5 then HIT Scraper won't auto-refresh until you have 4 or less &nbsp;
 					HITs accepted (i.e. in your Queue).
-				</section>
-				<section>
-					${descriptionTitle('Wait Time')}
-					How long to wait before checking the Queue again. Set to 0 to skip auto-refresh cycles &nbsp;
-					instead of using a a separate timer to check the Queue.
 				</section>
 			</div>
 		</div>

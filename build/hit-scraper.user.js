@@ -253,7 +253,6 @@ var defaults$1 = {
 
 	pcQueue: false,
 	pcQueueMin: 1,
-	pcQueueWaitTime: 0,
 
 	refresh: 0,
 	pages: 1,
@@ -676,10 +675,6 @@ function pauseWithQueue () {
 					${label('Minimum HITs', 'pcQMin')}
 					${input('number', { id: 'pcQMin', name: 'pcQueueMin', min: 1, max: 35, value: this.pcQueueMin })}
 				</p>
-				<p>
-					${label('Wait Time')}
-					${input('number', { id: 'pcQWait', name: 'pcQueueWaitTime', min: 0, value: this.pcQueueWaitTime })}
-				</p>
 			</div>
 			<div class="column opts-dsc">
 				<section>
@@ -697,11 +692,6 @@ function pauseWithQueue () {
 					<br />
 					Example: If you set this to 5 then HIT Scraper won't auto-refresh until you have 4 or less &nbsp;
 					HITs accepted (i.e. in your Queue).
-				</section>
-				<section>
-					${descriptionTitle('Wait Time')}
-					How long to wait before checking the Queue again. Set to 0 to skip auto-refresh cycles &nbsp;
-					instead of using a a separate timer to check the Queue.
 				</section>
 			</div>
 		</div>
@@ -2170,7 +2160,10 @@ var status$1 = `
 			<span></span>
 		</p>
 		<p id="status-queue-wait" class="hidden">
-			Queue not empty. Waiting to Auto-Refresh.
+			Queue not empty. Waiting to Auto-Refresh. &nbsp;
+			<button id="btnRetryQueue">
+				Retry
+			</button>
 		</p>
 		<p id="status-scraping-again" class="hidden">
 			Scraping again in &nbsp;
@@ -2624,28 +2617,26 @@ function run (skiptoggle) {
 	}
 }
 
-function cruise (firstTick) {
+function cruise (firstTick, tryAgain) {
 	if (!this.active) return;
 
-	if (!firstTick) this.cooldown--;
+	if (!firstTick && !tryAgain) this.cooldown--;
 
-	let noTimer = false;
-
-	if (this.cooldown === 0 && Settings$1.user.pcQueue && !queueEmpty()) {
-		if (Settings$1.user.pcQueueWaitTime === 0) {
-			reset.apply(this);
-		} else {
-			noTimer = true;
-			setTimeout(this.cruise.bind(this), Settings$1.user.pcQueueWaitTime);
-		}
-
+	if (
+		(this.cooldown === 0 || tryAgain) &&
+		Settings$1.user.pcQueue &&
+		!queueEmpty()
+	) {
+		reset.apply(this);
 		Interface$2.Status.show('queue-wait');
+
+		tryAgain = false;
 	}
 
-	if (this.cooldown === 0) {
+	if (this.cooldown === 0 || tryAgain) {
 		Interface$2.Status.hide('queue-wait');
 		this.run(true);
-	} else if (!noTimer) {
+	} else {
 		Interface$2.Status.edit('scraping-again', this.cooldown);
 		Interface$2.Status.show('scraping-again');
 
@@ -3709,6 +3700,11 @@ function init$1 () {
 			Core$1.canRetryTO = true;
 			e.target.classList.remove('disabled');
 		}, 3000);
+	};
+	this.buttons.retryqueue.onclick = function (e) {
+		if (!Settings$1.user.pcQueue) return;
+
+		Core$1.cruise(false, true);
 	};
 	this.buttons.hide.onclick = function (e) {
 		get('#controlpanel').classList.toggle('hiddenpanel');

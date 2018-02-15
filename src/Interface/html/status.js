@@ -26,7 +26,10 @@ export default `
 			<span></span>
 		</p>
 		<p id="status-queue-wait" class="hidden">
-			Queue not empty. Waiting to Auto-Refresh.
+			Queue not empty. Waiting to Auto-Refresh. &nbsp;
+			<button id="btnRetryQueue">
+				Retry
+			</button>
 		</p>
 		<p id="status-scraping-again" class="hidden">
 			Scraping again in &nbsp;
