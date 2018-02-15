@@ -7,7 +7,7 @@ export default function () {
 				${sectionTitle('Don\'t Auto-Refresh When Queue Not Empty')}
 				<p>
 					${label('Enable', 'pcQ')}
-					${input('checkbox', { id: 'pcQueue', value: this.pcQueue })}
+					${input('checkbox', { id: 'pcQueue', checked: this.pcQueue })}
 				</p>
 				<p>
 					${label('Minimum HITs', 'pcQMin')}
