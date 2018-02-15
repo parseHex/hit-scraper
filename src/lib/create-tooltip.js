@@ -50,8 +50,6 @@ export default function createTooltip(type, opts) {
 					<dd>${opts.data.desc}</dd>
 					<dt>qualifications</dt>
 					<dd>${opts.data.quals.join(';')}</dd>
-					<dt>duration</dt>
-					<dd>${opts.data.timeStr}</dd>
 				</dl>
 			</div>
 		`);
