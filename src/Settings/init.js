@@ -79,6 +79,10 @@ export default function () {
 							audio.play();
 							break;
 						}
+						case 'text': {
+							this.user[id] = value;
+							break;
+						}
 					}
 					break;
 				}
