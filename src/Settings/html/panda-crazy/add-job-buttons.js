@@ -24,6 +24,11 @@ export default function () {
 					Show a button in the results to add the HIT to Panda Crazy as a Once job.
 				</section>
 			</div>
+			<p>
+				<a href="http://pandacrazy.allbyjohn.com/help/jobs/add-job" target="_blank">
+					Learn about Panda Crazy's jobs
+				</a>
+			</p>
 		</div>
 	`;
 }

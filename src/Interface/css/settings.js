@@ -89,6 +89,8 @@ export default `
 	}
 	.column.opts-dsc {
 		width: 65%;
+		border-left: 1px solid lightgray;
+		padding-left: 5px;
 	}
 	.dsc-title {
 		font-style: italic;

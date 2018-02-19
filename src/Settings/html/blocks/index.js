@@ -28,9 +28,9 @@ export default function () {
 						likewise, entries without a closing asterisk are expected to match the end of a line. &nbsp;
 						Example usage below.
 					</p>
-					${table}
 				</section>
 			</div>
+			${table}
 		</div>
 	`;
 }

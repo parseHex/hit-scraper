@@ -1,5 +1,5 @@
 export default `
-	<table class="ble" style="left:-100px;position:relative;width:110%;">
+	<table class="ble" style="position:relative;top:5px">
 		<tr>
 			<th class="blec ble">
 			</th>

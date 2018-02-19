@@ -399,6 +399,7 @@ function bubbleNewHITs () {
 			</div>
 			<div class="column opts-dsc">
 				<section>
+					${descriptionTitle('Enable')}
 					When this option is enabled, new HITs will always be placed at the top of the results table.
 				</section>
 			</div>
@@ -658,6 +659,11 @@ function addJobButtons () {
 					Show a button in the results to add the HIT to Panda Crazy as a Once job.
 				</section>
 			</div>
+			<p>
+				<a href="http://pandacrazy.allbyjohn.com/help/jobs/add-job" target="_blank">
+					Learn about Panda Crazy's jobs
+				</a>
+			</p>
 		</div>
 	`;
 }
@@ -878,7 +884,7 @@ function to () {
 }
 
 var table = `
-	<table class="ble" style="left:-100px;position:relative;width:110%;">
+	<table class="ble" style="position:relative;top:5px">
 		<tr>
 			<th class="blec ble">
 			</th>
@@ -1045,9 +1051,9 @@ function blocks () {
 						likewise, entries without a closing asterisk are expected to match the end of a line. &nbsp;
 						Example usage below.
 					</p>
-					${table}
 				</section>
 			</div>
+			${table}
 		</div>
 	`;
 }
@@ -1779,6 +1785,8 @@ var settings = `
 	}
 	.column.opts-dsc {
 		width: 65%;
+		border-left: 1px solid lightgray;
+		padding-left: 5px;
 	}
 	.dsc-title {
 		font-style: italic;

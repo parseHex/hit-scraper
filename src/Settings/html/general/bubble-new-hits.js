@@ -1,4 +1,4 @@
-import { sectionTitle, label, input } from '../_dom';
+import { sectionTitle, label, input, descriptionTitle } from '../_dom';
 
 export default function () {
 	return `
@@ -12,6 +12,7 @@ export default function () {
 			</div>
 			<div class="column opts-dsc">
 				<section>
+					${descriptionTitle('Enable')}
 					When this option is enabled, new HITs will always be placed at the top of the results table.
 				</section>
 			</div>
