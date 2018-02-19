@@ -2653,6 +2653,13 @@ function cruise (firstTick, tryAgain) {
 function queueEmpty() {
 	let pcData = localStorage.getItem('JR_QUEUE_StoreData');
 	if (!pcData) return true;
+
+	const now = Date.now();
+	if (now - pcData.date > 30) {
+		// pcData is more than 30 seconds old so panda crazy probably isnt open
+		return true;
+	}
+
 	pcData = JSON.parse(pcData);
 	return pcData.queue.length < Settings$1.user.pcQueueMin;
 }
