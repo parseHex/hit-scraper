@@ -4,8 +4,8 @@
 // @description Snag HITs. mturk.
 // @namespace   https://greasyfork.org/users/8394
 // @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper$/
-// @version     4.4.0
-// @grant       unsafeWindow
+// @version     5.0.0
+// @grant       none
 // ==/UserScript==
 
 var hit_scraper = (function () {
@@ -234,7 +234,6 @@ var defaults$1 = {
 	exportPcp: false,
 	exportPco: false,
 	exportExternal: false,
-	externalFunctions: '',
 	externalNoBlocked: false,
 
 	notifySound: [false, 'ding'],
@@ -1149,10 +1148,6 @@ function exportExternal () {
 					${input('checkbox', { id: 'exportExternal', checked: this.exportExternal })}
 				</p>
 				<p>
-					${label('Function Name(s)', 'externalFunctions')}
-					${input('text', { id: 'externalFunctions', value: this.externalFunctions })}
-				</p>
-				<p>
 					${label('Ignore Blocked HITs', 'externalNoBlocked')}
 					${input('checkbox', { id: 'externalNoBlocked', checked: this.externalNoBlocked })}
 				</p>
@@ -1165,11 +1160,6 @@ function exportExternal () {
 					<br />
 					You do not need to enable this if you don't know what it does, but it &nbsp;
 					won't break anything if you do.
-				</section>
-				<section>
-					${descriptionTitle('Function Name(s)')}
-					Separate multiple function names with a comma, no spaces. &nbsp;
-					Each function should be on the <code>window</code> object.
 				</section>
 				<section>
 					${descriptionTitle('Ignore Blocked HITs')}
@@ -4352,11 +4342,10 @@ class ScraperCache extends Cache {
 }
 
 function exportData(hit) {
-	if (Settings$1.user.exportExternal && Settings$1.user.externalFunctions) {
+	if (Settings$1.user.exportExternal) {
 		if (Settings$1.user.externalNoBlocked && hit.blocked) return;
 
-		const funcs = Settings$1.user.externalFunctions.split(',');
-		const data = {
+		const hitData = {
 			title: hit.title,
 			groupID: hit.groupId,
 			requesterName: hit.requester.name,
@@ -4375,14 +4364,10 @@ function exportData(hit) {
 			included: hit.included,
 		};
 
-		for (let i = 0; i < funcs.length; i++) {
-			if (!unsafeWindow[funcs[i]]) {
-				console.log(funcs[i] + ' not found');
-				continue;
-			}
-
-			unsafeWindow[funcs[i]](data);
-		}
+		window.postMessage({
+			from: 'hit-scraper',
+			hitData,
+		}, '*');
 	}
 }
 

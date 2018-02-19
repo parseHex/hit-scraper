@@ -10,10 +10,6 @@ export default function () {
 					${input('checkbox', { id: 'exportExternal', checked: this.exportExternal })}
 				</p>
 				<p>
-					${label('Function Name(s)', 'externalFunctions')}
-					${input('text', { id: 'externalFunctions', value: this.externalFunctions })}
-				</p>
-				<p>
 					${label('Ignore Blocked HITs', 'externalNoBlocked')}
 					${input('checkbox', { id: 'externalNoBlocked', checked: this.externalNoBlocked })}
 				</p>
@@ -26,11 +22,6 @@ export default function () {
 					<br />
 					You do not need to enable this if you don't know what it does, but it &nbsp;
 					won't break anything if you do.
-				</section>
-				<section>
-					${descriptionTitle('Function Name(s)')}
-					Separate multiple function names with a comma, no spaces. &nbsp;
-					Each function should be on the <code>window</code> object.
 				</section>
 				<section>
 					${descriptionTitle('Ignore Blocked HITs')}

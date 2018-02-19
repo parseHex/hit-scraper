@@ -70,11 +70,10 @@ export default class ScraperCache extends Cache {
 }
 
 function exportData(hit) {
-	if (Settings.user.exportExternal && Settings.user.externalFunctions) {
+	if (Settings.user.exportExternal) {
 		if (Settings.user.externalNoBlocked && hit.blocked) return;
 
-		const funcs = Settings.user.externalFunctions.split(',');
-		const data = {
+		const hitData = {
 			title: hit.title,
 			groupID: hit.groupId,
 			requesterName: hit.requester.name,
@@ -93,13 +92,9 @@ function exportData(hit) {
 			included: hit.included,
 		};
 
-		for (let i = 0; i < funcs.length; i++) {
-			if (!unsafeWindow[funcs[i]]) {
-				console.log(funcs[i] + ' not found');
-				continue;
-			}
-
-			unsafeWindow[funcs[i]](data);
-		}
+		window.postMessage({
+			from: 'hit-scraper',
+			hitData,
+		}, '*');
 	}
 }

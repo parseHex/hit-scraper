@@ -16,7 +16,6 @@ export default {
 	exportPcp: false,
 	exportPco: false,
 	exportExternal: false,
-	externalFunctions: '',
 	externalNoBlocked: false,
 
 	notifySound: [false, 'ding'],
