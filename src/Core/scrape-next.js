@@ -36,6 +36,7 @@ export default function (src) {
 			blocked: false,
 			included: false,
 			current: true,
+			ignored: false,
 			qualified: v.caller_meets_requirements,
 			viable: !~v.project_requirements.findIndex(q => q.caller_meets_requirement === false && q.qualification_type.is_requestable === false)
 		};
