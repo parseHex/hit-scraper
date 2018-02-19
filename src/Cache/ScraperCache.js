@@ -18,6 +18,9 @@ export default class ScraperCache extends Cache {
 		) {
 			value.TO = this._toCache.get(value.requester.id);
 		}
+
+		exportData(value);
+
 		const isFirstScrape = !Core.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
@@ -32,7 +35,6 @@ export default class ScraperCache extends Cache {
 			const obj = {
 				isNew: !isFirstScrape,
 				shine: !isFirstScrape,
-				TO: this._toCache.get(value.requester.id),
 			};
 
 			return this._update(key, Object.assign(value, obj));
@@ -60,7 +62,44 @@ export default class ScraperCache extends Cache {
 		this.filter(v => v.current && v.TO === null).forEach((group) => {
 			if (this._toCache.has(group.requester.id)) {
 				this._cache[group.groupId].TO = this._toCache.get(group.requester.id);
+
+				exportData(this._cache[group.groupId]);
 			}
 		});
+	}
+}
+
+function exportData(hit) {
+	if (Settings.user.exportExternal && Settings.user.externalFunctions) {
+		if (Settings.user.externalNoBlocked && hit.blocked) return;
+
+		const funcs = Settings.user.externalFunctions.split(',');
+		const data = {
+			title: hit.title,
+			groupID: hit.groupId,
+			requesterName: hit.requester.name,
+			requesterID: hit.requester.id,
+			description: hit.desc,
+			quals: hit.quals,
+			pay: hit.payRaw,
+			time: hit.time,
+			timeStr: hit.timeStr,
+			TO: hit.TO === null ? {} : hit.TO,
+			qualified: hit.qualified,
+			masters: hit.masters,
+			numHITs: hit.numHits,
+			blocked: hit.blocked,
+			ignored: hit.ignored,
+			included: hit.included,
+		};
+
+		for (let i = 0; i < funcs.length; i++) {
+			if (!unsafeWindow[funcs[i]]) {
+				console.log(funcs[i] + ' not found');
+				continue;
+			}
+
+			unsafeWindow[funcs[i]](data);
+		}
 	}
 }

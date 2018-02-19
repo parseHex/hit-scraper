@@ -5,7 +5,7 @@
 // @namespace   https://greasyfork.org/users/8394
 // @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper$/
 // @version     4.4.0
-// @grant       none
+// @grant       unsafeWindow
 // ==/UserScript==
 
 var hit_scraper = (function () {
@@ -233,6 +233,10 @@ var defaults$1 = {
 	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
+	exportExternal: false,
+	externalFunctions: '',
+	externalNoBlocked: false,
+
 	notifySound: [false, 'ding'],
 	notifyBlink: false,
 	notifyTaskbar: false,
@@ -1135,6 +1139,53 @@ function utils () {
 	`;
 }
 
+function exportExternal () {
+	return `
+		<div class="row">
+			<div class="column opts">
+				${sectionTitle('Export to External Script(s)')}
+				<p>
+					${label('Enable', 'exportExternal')}
+					${input('checkbox', { id: 'exportExternal', checked: this.exportExternal })}
+				</p>
+				<p>
+					${label('Function Name(s)', 'externalFunctions')}
+					${input('text', { id: 'externalFunctions', value: this.externalFunctions })}
+				</p>
+				<p>
+					${label('Ignore Blocked HITs', 'externalNoBlocked')}
+					${input('checkbox', { id: 'externalNoBlocked', checked: this.externalNoBlocked })}
+				</p>
+			</div>
+			<div class="column opts-dsc">
+				<section>
+					${descriptionTitle('Enable')}
+					This is for script authors who would like HIT Scraper to intergrate &nbsp;
+					with their scripts.
+					<br />
+					You do not need to enable this if you don't know what it does, but it &nbsp;
+					won't break anything if you do.
+				</section>
+				<section>
+					${descriptionTitle('Function Name(s)')}
+					Separate multiple function names with a comma, no spaces. &nbsp;
+					Each function should be on the <code>window</code> object.
+				</section>
+				<section>
+					${descriptionTitle('Ignore Blocked HITs')}
+					Will not export blocked HITs.
+				</section>
+			</div>
+		</div>
+	`;
+}
+
+function advanced () {
+	return `
+		${exportExternal.apply(this.user)}
+	`;
+}
+
 function main () {
 	return cleanTemplate(`
 		<div style="top:0;left:0;margin:0;text-align:right;padding:0px;border:none;width:100%">
@@ -1152,6 +1203,7 @@ function main () {
 			<span data-target="blocklist">Blocklist</span>
 			<span data-target="notify">Notifications</span>
 			<span data-target="utils">Utilities</span>
+			<span data-target="advanced">Advanced</span>
 		</div>
 		<div id="panelContainer" style="margin-left:10px;border:none;overflow:auto;width:auto;height:92%">
 			<div id="settings-general" class="settingsPanel">
@@ -1174,6 +1226,9 @@ function main () {
 			</div>
 			<div id="settings-utils" class="settingsPanel">
 				${utils.apply(this)}
+			</div>
+			<div id="settings-advanced" class="settingsPanel">
+				${advanced.apply(this)}
 			</div>
 		</div>
 	`);
@@ -4245,6 +4300,9 @@ class ScraperCache extends Cache {
 		) {
 			value.TO = this._toCache.get(value.requester.id);
 		}
+
+		exportData(value);
+
 		const isFirstScrape = !Core$1.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this._cache[key].discovery) / 1000);
@@ -4259,7 +4317,6 @@ class ScraperCache extends Cache {
 			const obj = {
 				isNew: !isFirstScrape,
 				shine: !isFirstScrape,
-				TO: this._toCache.get(value.requester.id),
 			};
 
 			return this._update(key, Object.assign(value, obj));
@@ -4287,8 +4344,45 @@ class ScraperCache extends Cache {
 		this.filter(v => v.current && v.TO === null).forEach((group) => {
 			if (this._toCache.has(group.requester.id)) {
 				this._cache[group.groupId].TO = this._toCache.get(group.requester.id);
+
+				exportData(this._cache[group.groupId]);
 			}
 		});
+	}
+}
+
+function exportData(hit) {
+	if (Settings$1.user.exportExternal && Settings$1.user.externalFunctions) {
+		if (Settings$1.user.externalNoBlocked && hit.blocked) return;
+
+		const funcs = Settings$1.user.externalFunctions.split(',');
+		const data = {
+			title: hit.title,
+			groupID: hit.groupId,
+			requesterName: hit.requester.name,
+			requesterID: hit.requester.id,
+			description: hit.desc,
+			quals: hit.quals,
+			pay: hit.payRaw,
+			time: hit.time,
+			timeStr: hit.timeStr,
+			TO: hit.TO === null ? {} : hit.TO,
+			qualified: hit.qualified,
+			masters: hit.masters,
+			numHITs: hit.numHits,
+			blocked: hit.blocked,
+			ignored: hit.ignored,
+			included: hit.included,
+		};
+
+		for (let i = 0; i < funcs.length; i++) {
+			if (!unsafeWindow[funcs[i]]) {
+				console.log(funcs[i] + ' not found');
+				continue;
+			}
+
+			unsafeWindow[funcs[i]](data);
+		}
 	}
 }
 

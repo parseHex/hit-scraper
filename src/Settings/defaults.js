@@ -15,6 +15,10 @@ export default {
 	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
+	exportExternal: false,
+	externalFunctions: '',
+	externalNoBlocked: false,
+
 	notifySound: [false, 'ding'],
 	notifyBlink: false,
 	notifyTaskbar: false,
