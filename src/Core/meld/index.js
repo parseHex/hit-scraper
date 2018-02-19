@@ -78,7 +78,7 @@ export default function (reviews) {
 		html.push(addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading));
 	}
 	table.innerHTML = html.join('');
-	this.notify(counts, reviewsLoading);
+	if (!reviewsError) this.notify(counts, reviewsLoading);
 
 	if (this.active) {
 		if (this.cooldown === 0) {
