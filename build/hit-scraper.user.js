@@ -1426,10 +1426,12 @@ function Editor$1 (type) {
 					Cancel
 				</button>
 			`);
-			this.node.querySelector('#clearIds').onclick = () => {
-				const textarea = this.node.querySelector('textarea');
-				textarea.value = textarea.value.replace(/\^\w{30}/g, '');
-			};
+			if (type === 'ignore') {
+				this.node.querySelector('#clearIds').onclick = () => {
+					const textarea = this.node.querySelector('textarea');
+					textarea.value = textarea.value.replace(/\^\w{30}/g, '');
+				};
+			}
 			this.node.querySelector('#edSave').onclick = () => {
 				localStorage.setItem(IGNORE_KEY.replace('ignore', type), this.node.querySelector('textarea').value.trim());
 				this.die();
