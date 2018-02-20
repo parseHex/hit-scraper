@@ -15,6 +15,7 @@ export default {
 	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
+	exportPcCustomTitle: false,
 	exportExternal: false,
 	externalNoBlocked: false,
 

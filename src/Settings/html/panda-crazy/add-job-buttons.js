@@ -13,6 +13,10 @@ export default function () {
 					${label('Once', 'exportPco')}
 					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: this.exportPco })}
 				</p>
+				<p>
+					${label('Use Custom Title', 'exportPcCustomTitle')}
+					${input('checkbox', { id: 'exportPcCustomTitle', checked: this.exportPcCustomTitle })}
+				</p>
 			</div>
 			<div class="column opts-dsc">
 				<section>
@@ -22,6 +26,14 @@ export default function () {
 				<section>
 					${descriptionTitle('Once')}
 					Show a button in the results to add the HIT to Panda Crazy as a Once job.
+				</section>
+				<section>
+					${descriptionTitle('Use Custom Title')}
+					When adding to Panda Crazy, use a custom (pre-defined) title for the HIT.
+					<br />
+					(<a href="https://github.com/parseHex/hit-scraper/wiki/Panda-Crazy-Custom-Title" target="_blank">
+						Learn about Custom Titles
+					</a>)
 				</section>
 			</div>
 			<p>

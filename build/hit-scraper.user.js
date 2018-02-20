@@ -233,6 +233,7 @@ var defaults$1 = {
 	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
+	exportPcCustomTitle: false,
 	exportExternal: false,
 	externalNoBlocked: false,
 
@@ -651,6 +652,10 @@ function addJobButtons () {
 					${label('Once', 'exportPco')}
 					${input('checkbox', { id: 'exportPco', name: 'export', value: 'pc-o', checked: this.exportPco })}
 				</p>
+				<p>
+					${label('Use Custom Title', 'exportPcCustomTitle')}
+					${input('checkbox', { id: 'exportPcCustomTitle', checked: this.exportPcCustomTitle })}
+				</p>
 			</div>
 			<div class="column opts-dsc">
 				<section>
@@ -660,6 +665,14 @@ function addJobButtons () {
 				<section>
 					${descriptionTitle('Once')}
 					Show a button in the results to add the HIT to Panda Crazy as a Once job.
+				</section>
+				<section>
+					${descriptionTitle('Use Custom Title')}
+					When adding to Panda Crazy, use a custom (pre-defined) title for the HIT.
+					<br />
+					(<a href="https://github.com/parseHex/hit-scraper/wiki/Panda-Crazy-Custom-Title" target="_blank">
+						Learn about Custom Titles
+					</a>)
 				</section>
 			</div>
 			<p>
@@ -4057,12 +4070,12 @@ function makeTitle(hit) {
 }
 
 function pandaCrazy$1 (type) {
-	const msgData = {
+	let msgData = {
 		time: (new Date()).getTime(),
 		command: 'add' + type + 'Job',
 		data: {
 			groupId: this.record.groupId,
-			title: makeTitle(convertObj(this.record)),
+			title: this.record.title,
 			requesterName: this.record.requester.name,
 			requesterId: this.record.requester.id,
 			pay: +this.record.pay.replace('+', '').replace('$', ''),
@@ -4070,6 +4083,11 @@ function pandaCrazy$1 (type) {
 			hitsAvailable: this.record.numHits,
 		},
 	};
+
+	if (Settings$1.exportPcCustomTitle) {
+		msgData.data.title = makeTitle(convertObj(this.record));
+	}
+
 	localStorage.setItem('JR_message_pandacrazy', JSON.stringify(msgData));
 
 	this.die();

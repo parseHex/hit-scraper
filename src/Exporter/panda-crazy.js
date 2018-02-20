@@ -1,13 +1,14 @@
 import { cleanTemplate, pad } from '../lib/util';
 import makeTitle from '../lib/make-title';
+import Settings from '../Settings/index';
 
 export default function (type) {
-	const msgData = {
+	let msgData = {
 		time: (new Date()).getTime(),
 		command: 'add' + type + 'Job',
 		data: {
 			groupId: this.record.groupId,
-			title: makeTitle(convertObj(this.record)),
+			title: this.record.title,
 			requesterName: this.record.requester.name,
 			requesterId: this.record.requester.id,
 			pay: +this.record.pay.replace('+', '').replace('$', ''),
@@ -15,6 +16,11 @@ export default function (type) {
 			hitsAvailable: this.record.numHits,
 		},
 	};
+
+	if (Settings.exportPcCustomTitle) {
+		msgData.data.title = makeTitle(convertObj(this.record));
+	}
+
 	localStorage.setItem('JR_message_pandacrazy', JSON.stringify(msgData));
 
 	this.die();
