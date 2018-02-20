@@ -4107,7 +4107,7 @@ function convertObj(hit) {
 
 	const newObj = {
 		title: hit.title,
-		pay: hit.pay + (/bonus/i.test(hit.title) ? '+' : ''), // check if bonus in title
+		pay: '$' + hit.pay + (/bonus/i.test(hit.title) ? '+' : ''), // check if bonus in title
 		time: hit.timeStr,
 		timeMS: hit.time * 1000, // hit.time is in seconds; x1000 to get ms
 		formattedPostDate: dateStr,
