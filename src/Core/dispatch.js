@@ -4,21 +4,24 @@ import Interface from '../Interface/index';
 
 export default function (type, src) {
 	switch (type) {
-		case 'external':
+		case 'external': {
 			Interface.Status.hide('retrieving-to');
 			Interface.Status.hide('to-error');
 			this.meld(src);
 			break;
-		case 'internal':
+		}
+		case 'internal': {
 			// if (ENV.HOST === ENV.LEGACY) {
 			// 	const error = src.querySelector('td[class="error_title"]');
 			// 	if (error && /page request/.test(error.textContent)) {
 			// 		return setTimeout(this.fetch.bind(this), 3000, src.documentURI);
 			// 	}
 			// }
+			Interface.Status.hide('correcting-skips');
 			this.scrapeNext(src);
 			break;
-		case 'control':
+		}
+		case 'control': {
 			const numBlocked = state.scraperHistory.filter(v => v.current && v.blocked).length;
 			const _rpp = Settings.user.resultsPerPage;
 			const skiplimit = 5; // max number of pages to skip
@@ -66,5 +69,6 @@ export default function (type, src) {
 				setTimeout(this.fetch.bind(this), 250, src.nextPageURL, src.payload, src.responseType);
 			}
 			break;
+		}
 	}
 }

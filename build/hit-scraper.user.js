@@ -2730,21 +2730,24 @@ var state = {
 
 function dispatch (type, src) {
 	switch (type) {
-		case 'external':
+		case 'external': {
 			Interface$2.Status.hide('retrieving-to');
 			Interface$2.Status.hide('to-error');
 			this.meld(src);
 			break;
-		case 'internal':
+		}
+		case 'internal': {
 			// if (ENV.HOST === ENV.LEGACY) {
 			// 	const error = src.querySelector('td[class="error_title"]');
 			// 	if (error && /page request/.test(error.textContent)) {
 			// 		return setTimeout(this.fetch.bind(this), 3000, src.documentURI);
 			// 	}
 			// }
+			Interface$2.Status.hide('correcting-skips');
 			this.scrapeNext(src);
 			break;
-		case 'control':
+		}
+		case 'control': {
 			const numBlocked = state.scraperHistory.filter(v => v.current && v.blocked).length;
 			const _rpp = Settings$1.user.resultsPerPage;
 			const skiplimit = 5; // max number of pages to skip
@@ -2792,6 +2795,7 @@ function dispatch (type, src) {
 				setTimeout(this.fetch.bind(this), 250, src.nextPageURL, src.payload, src.responseType);
 			}
 			break;
+		}
 	}
 }
 
@@ -4342,33 +4346,32 @@ class ScraperCache extends Cache {
 }
 
 function exportData(hit) {
-	if (Settings$1.user.exportExternal) {
-		if (Settings$1.user.externalNoBlocked && hit.blocked) return;
+	if (!Settings$1.user.exportExternal) return;
+	if (Settings$1.user.externalNoBlocked && hit.blocked) return;
 
-		const hitData = {
-			title: hit.title,
-			groupID: hit.groupId,
-			requesterName: hit.requester.name,
-			requesterID: hit.requester.id,
-			description: hit.desc,
-			quals: hit.quals,
-			pay: hit.payRaw,
-			time: hit.time,
-			timeStr: hit.timeStr,
-			TO: hit.TO === null ? {} : hit.TO,
-			qualified: hit.qualified,
-			masters: hit.masters,
-			numHITs: hit.numHits,
-			blocked: hit.blocked,
-			ignored: hit.ignored,
-			included: hit.included,
-		};
+	const hitData = {
+		title: hit.title,
+		groupID: hit.groupId,
+		requesterName: hit.requester.name,
+		requesterID: hit.requester.id,
+		description: hit.desc,
+		quals: hit.quals,
+		pay: hit.payRaw,
+		time: hit.time,
+		timeStr: hit.timeStr,
+		TO: hit.TO === null ? {} : hit.TO,
+		qualified: hit.qualified,
+		masters: hit.masters,
+		numHITs: hit.numHits,
+		blocked: hit.blocked,
+		ignored: hit.ignored,
+		included: hit.included,
+	};
 
-		window.postMessage({
-			from: 'hit-scraper',
-			hitData,
-		}, '*');
-	}
+	window.postMessage({
+		from: 'hit-scraper',
+		hitData,
+	}, '*');
 }
 
 console.log('HS hook');
