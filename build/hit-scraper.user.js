@@ -64,8 +64,8 @@ const ENV = Object.freeze({
 	ISFF: Boolean(window.sidebar),
 	VERSION: '4.2.1',
 });
-const INCLUDE_KEY = 'new_scraper_scraper_include_list';
-const IGNORE_KEY = 'new_scraper_scraper_ignore_list';
+const INCLUDE_KEY = 'new_scraper_include_list';
+const IGNORE_KEY = 'new_scraper_ignore_list';
 const SETTINGS_KEY = 'new_scraper_settings';
 
 

@@ -6,8 +6,8 @@ export const ENV = Object.freeze({
 	ISFF: Boolean(window.sidebar),
 	VERSION: '4.2.1',
 });
-export const INCLUDE_KEY = 'new_scraper_scraper_include_list';
-export const IGNORE_KEY = 'new_scraper_scraper_ignore_list';
+export const INCLUDE_KEY = 'new_scraper_include_list';
+export const IGNORE_KEY = 'new_scraper_ignore_list';
 export const SETTINGS_KEY = 'new_scraper_settings';
 
 export const URL_SELF = 'https://greasyfork.org/en/scripts/10615-hit-scraper-with-export#ugTop';
