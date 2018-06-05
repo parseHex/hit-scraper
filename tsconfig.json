@@ -6,7 +6,11 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"moduleResolution": "node",
-		"outDir": "./build"
+		"outDir": "./build",
+		"lib": [
+			"dom",
+			"es2015"
+		]
 	},
 	"include": [
 		"./src/index.ts"
