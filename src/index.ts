@@ -24,25 +24,30 @@ export default function initialize() {
 	state.scraperHistory = new ScraperCache(650);
 }
 
-function tomouseover(e) {
-	const tt = e.target.parentElement.querySelector('.tooltip');
-	tt.style.display = 'block';
-	const rect = tt.getBoundingClientRect();
+function tomouseover(e: MouseEvent) {
+	const target = <HTMLElement>e.target;
+
+	const tooltip: HTMLElement = target.parentElement.querySelector('.tooltip');
+	tooltip.style.display = 'block';
+	const rect = <DOMRect>tooltip.getBoundingClientRect();
+
 	if (rect.height > (window.innerHeight - e.clientY)) {
-		tt.style.transform = 'translateY(calc(-100% + 22px))';
+		tooltip.style.transform = 'translateY(calc(-100% + 22px))';
 	}
+
 	if (rect.x < 0) {
-		const width = +tt.style.width.replace('px', '') - 3;
-		tt.style.width = (width + rect.x) + 'px';
+		const width = +tooltip.style.width.replace('px', '') - 3;
+		tooltip.style.width = (width + rect.x) + 'px';
 	} else {
-		tt.style.width = '300px';
+		tooltip.style.width = '300px';
 	}
 }
 
-function tomouseout(e) {
-	const tt = e.target.parentElement.querySelector('.tooltip');
-	if (!tt) return;
+function tomouseout(e: MouseEvent) {
+	const target = <HTMLElement>e.target;
+	const tooltip: HTMLElement = target.parentElement.querySelector('.tooltip');
+	if (!tooltip) return;
 
-	tt.style.transform = '';
-	tt.style.display = 'none';
+	tooltip.style.transform = '';
+	tooltip.style.display = 'none';
 }
