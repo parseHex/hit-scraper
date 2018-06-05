@@ -93,8 +93,6 @@ function exportData(hit) {
 		included: hit.included,
 	};
 
-	window.postMessage({
-		from: 'hit-scraper',
-		hitData,
-	}, '*');
+	const exportEvt = new CustomEvent('hit-scraper-export', { detail: hitData });
+	window.dispatchEvent(exportEvt);
 }
