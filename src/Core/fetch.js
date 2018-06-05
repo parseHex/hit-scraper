@@ -1,6 +1,7 @@
 import { ENV } from '../lib/constants';
 import Settings from '../Settings/index';
 import Interface from '../Interface/index';
+import { entries } from '../lib/util';
 
 export default function (url, payload, responseType, inline = true) {
 	const enc = window.encodeURIComponent;
@@ -9,13 +10,13 @@ export default function (url, payload, responseType, inline = true) {
 	if (payload) {
 		const key = ENV.HOST === ENV.NEXT ? 'next' : 'legacy';
 		payload = payload[key];
-		url += '?' + Object.entries(payload).map(stringify).join('&');
+		url += '?' + entries(payload).map(stringify).join('&');
 	}
 
 	const isTO = url.split('?')[0].includes('turkopticon');
 
 	function stringify(v) {
-		const predicate = typeof v[1] !== 'string' && !(v[1] instanceof Array) ? Object.entries(v[1]) : '';
+		const predicate = typeof v[1] !== 'string' && !(v[1] instanceof Array) ? entries(v[1]) : '';
 		if (predicate.length)
 			return predicate.map(vp => (vp[0] = enc(`${v[0]}[${vp[0]}]`)) && vp) // 0 = o[i] => o%5Bi%5D
 				.map(stringify)
