@@ -4373,6 +4373,7 @@ function exportData(hit) {
 		requesterName: hit.requester.name,
 		requesterID: hit.requester.id,
 		description: hit.desc,
+		discovery: hit.discovery,
 		quals: hit.quals,
 		pay: hit.payRaw,
 		time: hit.time,
