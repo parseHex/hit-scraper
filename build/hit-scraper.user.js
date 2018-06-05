@@ -161,7 +161,7 @@ const defaults = {
 			background: '#222222',
 			accent: '#94704D',
 			bodytable: '#000000',
-			cpBackground: '#131313',
+			cpBackground: '#222222',
 			toHigh: '#66CC66',
 			toGood: '#ADFF2F',
 			toAverage: '#FFD700',
