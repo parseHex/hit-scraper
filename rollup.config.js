@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const typescript = require('rollup-plugin-typescript2');
 
 function header(section, name) {
 	return new Promise(function (resolve) {
@@ -14,15 +15,17 @@ function header(section, name) {
 }
 
 export default {
-	input: 'src/index.js',
+	input: 'src/index.ts',
 	output: {
 		file: 'build/hit-scraper.user.js',
 		format: 'iife',
 	},
 	banner: header(),
-	// sourcemap: 'inline',
 	watch: {
 		exclude: ['node_modules/**']
 	},
 	name: 'hit_scraper',
+	plugins: [
+		typescript(/*{ plugin options }*/),
+	],
 };
