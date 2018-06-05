@@ -100,7 +100,7 @@ export const defaults = {
 		},
 		classic: {
 			highlight: '#30302F',
-			background: '#131313',
+			background: '#222222',
 			accent: '#94704D',
 			bodytable: '#000000',
 			cpBackground: '#131313',
@@ -114,7 +114,7 @@ export const defaults = {
 			unqualified: '#9F9F9F',
 			reqmaster: '#551A8B',
 			nomaster: '#0066CC',
-			defaultText: '#94704D',
+			defaultText: 'white',
 			inputText: '#000000',
 			secondText: '#997553',
 			link: '#0000FF',
