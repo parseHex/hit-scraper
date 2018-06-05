@@ -2,3 +2,5 @@ node_modules
 .DS_STORE
 .rpt2_cache
 build/*
+
+build/hit-scraper.user.js
