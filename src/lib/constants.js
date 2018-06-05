@@ -114,7 +114,7 @@ export const defaults = {
 			unqualified: '#9F9F9F',
 			reqmaster: '#551A8B',
 			nomaster: '#0066CC',
-			defaultText: 'white',
+			defaultText: '#94704D',
 			inputText: '#000000',
 			secondText: '#997553',
 			link: '#0000FF',
