@@ -218,82 +218,6 @@ const defaults = {
 
 const kb = { ESC: 27, ENTER: 13 };
 
-var defaults$1 = {
-	themes: { name: 'classic', colors: defaults.themes },
-
-	colorType: 'sim',
-	sortType: 'adj',
-	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
-	asyncTO: false,
-	cacheTO: false,
-	toTimeout: 6,
-
-	exportVb: true,
-	exportIrc: true,
-	exportHwtf: true,
-	exportPcp: false,
-	exportPco: false,
-	exportPcCustomTitle: false,
-	exportExternal: false,
-	externalNoBlocked: false,
-
-	notifySound: [false, 'ding'],
-	notifyBlink: false,
-	notifyTaskbar: false,
-	volume: { ding: 1, squee: 1 },
-	wildblocks: true,
-	showCheckboxes: true,
-	hitColor: 'link',
-	fontSize: 11,
-	shineOffset: 1,
-
-	blockColumn: true,
-	requesterColumn: true,
-	availableColumn: true,
-	durationColumn: false,
-	topayColumn: true,
-	mastersColumn: true,
-	notqualifiedColumn: true,
-
-	pcQueue: false,
-	pcQueueMin: 1,
-
-	refresh: 0,
-	pages: 1,
-	skips: false,
-	resultsPerPage: 50,
-	batch: 0,
-	reward: 0,
-	qual: true,
-	monly: false,
-	mhide: false,
-	searchBy: 0,
-	invert: false,
-	shine: 300,
-	minTOPay: 0,
-	hideNoTO: false,
-	onlyViable: false,
-	disableTO: false,
-	sortPay: false,
-	sortAll: false,
-	search: '',
-	hideBlock: true,
-	onlyIncludes: false,
-	shineInc: true,
-	sortAsc: false,
-	sortDsc: true,
-	gbatch: false,
-	bubbleNew: false,
-	hidePanel: false,
-
-	vbTemplate: defaults.vbTemplate,
-	vbSym: '\u2605' // star
-}
-
-function save () {
-	localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
-}
-
 function sectionTitle(text) {
 	return `<span class="sec-title">${text}</span>`;
 }
@@ -1189,7 +1113,7 @@ function advanced () {
 	`;
 }
 
-function main () {
+function htmlGenerator () {
 	return cleanTemplate(`
 		<div style="top:0;left:0;margin:0;text-align:right;padding:0px;border:none;width:100%">
 			<label id="settingsClose" class="close" title="Close">
@@ -1237,13 +1161,76 @@ function main () {
 	`);
 }
 
-function draw () {
-	const _main = main.apply(this);
+var defaults$1 = {
+	themes: { name: 'classic', colors: defaults.themes },
 
-	this.main = document.body.appendChild(document.createElement('DIV'));
-	this.main.id = 'settingsMain';
-	this.main.innerHTML = _main;
-	return this;
+	colorType: 'sim',
+	sortType: 'adj',
+	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
+	asyncTO: false,
+	cacheTO: false,
+	toTimeout: 6,
+
+	exportVb: true,
+	exportIrc: true,
+	exportHwtf: true,
+	exportPcp: false,
+	exportPco: false,
+	exportPcCustomTitle: false,
+	exportExternal: false,
+	externalNoBlocked: false,
+
+	notifySound: [false, 'ding'],
+	notifyBlink: false,
+	notifyTaskbar: false,
+	volume: { ding: 1, squee: 1 },
+	wildblocks: true,
+	showCheckboxes: true,
+	hitColor: 'link',
+	fontSize: 11,
+	shineOffset: 1,
+
+	blockColumn: true,
+	requesterColumn: true,
+	availableColumn: true,
+	durationColumn: false,
+	topayColumn: true,
+	mastersColumn: true,
+	notqualifiedColumn: true,
+
+	pcQueue: false,
+	pcQueueMin: 1,
+
+	refresh: 0,
+	pages: 1,
+	skips: false,
+	resultsPerPage: 50,
+	batch: 0,
+	reward: 0,
+	qual: true,
+	monly: false,
+	mhide: false,
+	searchBy: 0,
+	invert: false,
+	shine: 300,
+	minTOPay: 0,
+	hideNoTO: false,
+	onlyViable: false,
+	disableTO: false,
+	sortPay: false,
+	sortAll: false,
+	search: '',
+	hideBlock: true,
+	onlyIncludes: false,
+	shineInc: true,
+	sortAsc: false,
+	sortDsc: true,
+	gbatch: false,
+	bubbleNew: false,
+	hidePanel: false,
+
+	vbTemplate: defaults.vbTemplate,
+	vbSym: '\u2605' // star
 }
 
 function generateCSS(theme, mode) {
@@ -1409,7 +1396,7 @@ class FileHandler {
 	}
 	static imports(e) {
 		var f = e.target.files,
-			invalid = () => Settings$1.main.querySelector('#eisStatus').textContent = 'Invalid file.';
+			invalid = () => Settings$1.mainEl.querySelector('#eisStatus').textContent = 'Invalid file.';
 		if (!f.length) return;
 		if (!f[0].name.includes('json')) return invalid();
 		var reader = new FileReader();
@@ -1690,20 +1677,32 @@ function init () {
 	get('#fsimport').onchange = FileHandler.imports;
 }
 
-function die () {
-	Interface$2.toggleOverflow('off');
-	this.main.remove();
-}
-
 class Settings {
 	constructor() {
 		this.defaults = defaults$1;
 		this.user = {};
+		this.mainEl = null;
 
-		this.save = save.bind(this);
-		this.draw = draw.bind(this);
 		this.init = init.bind(this);
-		this.die = die.bind(this);
+	}
+
+	die() {
+		Interface$2.toggleOverflow('off');
+		this.mainEl.remove();
+	}
+
+	draw() {
+		const html = htmlGenerator.apply(this);
+
+		this.mainEl = document.body.appendChild(document.createElement('DIV'));
+		this.mainEl.id = 'settingsMain';
+		this.mainEl.innerHTML = html;
+
+		return this;
+	}
+
+	save() {
+		localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
 	}
 }
 var Settings$1 = new Settings();
@@ -2607,7 +2606,7 @@ function body () {
 	// NOTE: the above commented-out column is the HITDB column
 }
 
-function draw$1 () {
+function draw () {
 	var user = this.user = Settings$1.user,
 		fCss =
 			`#resultsTable tbody {font-size:${user.fontSize}px;}` +
@@ -3846,7 +3845,7 @@ class Interface$1 {
 
 		this.resetTitle = resetTitle.bind(this);
 		this.toggleOverflow = toggleOverflow.bind(this);
-		this.draw = draw$1.bind(this);
+		this.draw = draw.bind(this);
 		this.init = init$1.bind(this);
 	}
 }

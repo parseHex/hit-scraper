@@ -1,18 +1,36 @@
+import Interface from '../Interface/index';
+import htmlGenerator from './html/main';
+import { SETTINGS_KEY } from '../lib/constants';
+
 import defaults from './defaults';
-import save from './save';
-import draw from './draw';
 import init from './init';
-import die from './die';
 
 class Settings {
 	constructor() {
 		this.defaults = defaults;
 		this.user = {};
+		this.mainEl = null;
 
-		this.save = save.bind(this);
-		this.draw = draw.bind(this);
 		this.init = init.bind(this);
-		this.die = die.bind(this);
+	}
+
+	die() {
+		Interface.toggleOverflow('off');
+		this.mainEl.remove();
+	}
+
+	draw() {
+		const html = htmlGenerator.apply(this);
+
+		this.mainEl = document.body.appendChild(document.createElement('DIV'));
+		this.mainEl.id = 'settingsMain';
+		this.mainEl.innerHTML = html;
+
+		return this;
+	}
+
+	save() {
+		localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
 	}
 }
 export default new Settings();

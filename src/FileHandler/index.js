@@ -18,7 +18,7 @@ export default class FileHandler {
 	}
 	static imports(e) {
 		var f = e.target.files,
-			invalid = () => Settings.main.querySelector('#eisStatus').textContent = 'Invalid file.';
+			invalid = () => Settings.mainEl.querySelector('#eisStatus').textContent = 'Invalid file.';
 		if (!f.length) return;
 		if (!f[0].name.includes('json')) return invalid();
 		var reader = new FileReader();
