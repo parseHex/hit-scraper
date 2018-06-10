@@ -1,19 +1,20 @@
+import * as ifc from '../../ifc';
 import { cleanTemplate } from '../../lib/util';
 
-export function sectionTitle(text) {
+export function sectionTitle(text: string) {
 	return `<span class="sec-title">${text}</span>`;
 }
-export function descriptionTitle(text) {
+export function descriptionTitle(text: string) {
 	return `<span class="dsc-title">${text}</span>`;
 }
 
-export function label(text, htmlFor) {
+export function label(text: string, htmlFor?: string) {
 	if (htmlFor) htmlFor = `for="${htmlFor}"`;
 
 	return `<label ${htmlFor}>${text}</label>`;
 }
 
-export function select(options, value) {
+export function select(options: { text: string, value: string }[], value: string) {
 	let html = '<select>';
 
 	options.forEach(function (opt) {
@@ -32,7 +33,7 @@ export function select(options, value) {
 	return html;
 }
 
-export function input(type, opts) {
+export function input(type: string, opts: ifc.BasicObject) {
 	return cleanTemplate(`
 		<input &nbsp;
 			type="${type}"
@@ -42,7 +43,7 @@ export function input(type, opts) {
 }
 
 
-function parseAttr(attrs) {
+function parseAttr(attrs: ifc.BasicObject) {
 	let returnAttr = '';
 	Object.keys(attrs).forEach(function (key) {
 		if (attrs[key] === false) return;
