@@ -82,5 +82,7 @@ export interface SettingsConfig {
 
 	vbTemplate: string;
 	vbSym: string;
+
+	[index: string]: any;
 }
 export type SoundName = 'ding' | 'squee';

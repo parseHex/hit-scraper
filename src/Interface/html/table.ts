@@ -40,9 +40,9 @@ export default function () {
 	`;
 }
 
-export function hidden(settingName, force) {
+export function hidden(settingName: string, force?: boolean) {
 	if (force) return 'hidden';
 
-	if (Settings.user[settingName + 'Column']) return '';
+	if (<boolean>Settings.user[settingName + 'Column']) return '';
 	return 'hidden';
 }
