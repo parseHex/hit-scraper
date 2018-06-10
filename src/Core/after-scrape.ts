@@ -39,8 +39,7 @@ export default function (this: Core, info: ScrapeInfo) {
 				!this.active ||
 				!info.nextPageURL ||
 				info.page >= pagelimit ||
-				(pagelimit - Settings.user.pages) >= skiplimit ||
-				(Interface.isLoggedout && info.page === 20)
+				(pagelimit - Settings.user.pages) >= skiplimit
 			) {
 				// we're done scraping
 				Interface.Status.hide('processing');

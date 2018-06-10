@@ -15,7 +15,6 @@ export class Interface {
 	blackhole: { // TODO what is this?
 		blink: number;
 	};
-	readonly isLoggedout = false; // can't be logged out on new site
 	panel: ifc.BasicObject;
 	buttons: ifc.InterfaceButtons;
 	Status: StatusManager;
