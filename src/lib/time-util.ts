@@ -3,30 +3,31 @@ import { pad } from './util';
 export const months = [
 	'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
-export function timeToMS(time) {
+export function timeToMS(time: string) {
 	if (time === null) return;
 
-	let days = time.match(/(\d+) days?/);
-	let hours = time.match(/(\d+) hours?/);
-	let minutes = time.match(/(\d+) minutes?/);
-	let seconds = time.match(/(\d+) seconds?/);
+	const daysMatch = time.match(/(\d+) days?/);
+	const hoursMatch = time.match(/(\d+) hours?/);
+	const minutesMatch = time.match(/(\d+) minutes?/);
+	const secondsMatch = time.match(/(\d+) seconds?/);
+	let days: number, hours: number, minutes: number, seconds: number;
 
 	let total = 0;
 
-	if (days) {
-		days = +days[1];
+	if (daysMatch) {
+		days = +daysMatch[1];
 		total += days * 86400000;
 	}
-	if (hours) {
-		hours = +hours[1];
+	if (hoursMatch) {
+		hours = +hoursMatch[1];
 		total += hours * 3600000;
 	}
-	if (minutes) {
-		minutes = +minutes[1];
+	if (minutesMatch) {
+		minutes = +minutesMatch[1];
 		total += minutes * 60000;
 	}
-	if (seconds) {
-		seconds = +seconds[1];
+	if (secondsMatch) {
+		seconds = +secondsMatch[1];
 		total += seconds * 1000;
 	}
 
@@ -34,7 +35,7 @@ export function timeToMS(time) {
 		// time might not have time units, assume number is seconds
 		total += (+time) * 1000;
 
-		time = (time / 60) + ' minutes';
+		time = (+time / 60) + ' minutes';
 	}
 
 	if (Number.isNaN(total)) {
@@ -46,7 +47,7 @@ export function timeToMS(time) {
 
 	return total;
 }
-export function time12to24(time12h) {
+export function time12to24(time12h: string) {
 	const [time, modifier] = time12h.split(' ');
 	let [hours, minutes] = time.split(':');
 
@@ -54,15 +55,15 @@ export function time12to24(time12h) {
 		hours = '00';
 	}
 	if (modifier === 'PM') {
-		hours = parseInt(hours, 10) + 12;
+		hours = parseInt(hours, 10) + 12 + '';
 	}
 
 	return hours + ':' + minutes;
 }
-export function time24To12(hours) {
+export function time24To12(hours: number) {
 	return ((hours + 11) % 12 + 1);
 }
-export function amORpm(hour) {
+export function amORpm(hour: number) {
 	if (hour >= 12) return 'PM';
 
 	return 'AM';
@@ -71,7 +72,7 @@ export function amORpm(hour) {
 /**
  * Returns a formatted date
  */
-export function formatDate(dateStr) {
+export function formatDate(dateStr: string) {
 	for (let k = 0; k < months.length; k++) {
 		dateStr = dateStr.replace(months[k], pad(2, k + 1));
 	}
@@ -92,9 +93,10 @@ export function formatDate(dateStr) {
 
 	dateStr = dateStr.replace(dayRegex, `${month}-${day}-${year}`);
 
-	let hour = dateStr.match(/(\D)(\d)(\:\d\d [ap]m$)/i);
-	if (hour !== null) {
-		hour = pad(2, hour[2]);
+	const hourMatch = dateStr.match(/(\D)(\d)(\:\d\d [ap]m$)/i);
+	let hour: string;
+	if (hourMatch !== null) {
+		hour = pad(2, +hourMatch[2]);
 		dateStr = dateStr.replace(/(\D)(\d)(\:\d\d [ap]m$)/i, '$1' + hour + '$3');
 	}
 
@@ -105,15 +107,16 @@ export function formatDate(dateStr) {
 	return dateStr;
 }
 
-export function getWeek(date) {
-	var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+export function getWeek(date: Date) {
+	// not going to rewrite this to not subtract dates
+	var d: any = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
 	var dayNum = d.getUTCDay() || 7;
 	d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-	var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+	var yearStart: any = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
 	return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
-export function diffInMinutes(dateString1, dateString2) {
+export function diffInMinutes(dateString1: string, dateString2: string) {
 	// https://stackoverflow.com/a/3224854
 	const date1 = new Date(dateString1);
 	const date2 = new Date(dateString2);

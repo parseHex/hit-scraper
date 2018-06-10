@@ -5,4 +5,4 @@ export default {
 		REWARD: 2,
 		TITLE: 3,
 	},
-}
+};

@@ -1,9 +1,22 @@
+import * as ifc from '../ifc';
 import Settings from '../Settings/index';
-import Interface from '../Interface/index';
 import { ENV } from './constants';
 import { cleanTemplate } from './util';
 
-export default function createTooltip(type, opts) {
+interface Options {
+	data?: {
+		name?: string;
+		reviews?: string;
+		tos_flags?: number;
+		desc?: string;
+		quals?: string[];
+		attrs?: ifc.TOAttributes;
+	};
+	loading?: boolean;
+	error: boolean;
+}
+
+export default function createTooltip(type: string, opts: Options) {
 	let html;
 	let reason;
 	if (opts.data) {
@@ -35,7 +48,7 @@ export default function createTooltip(type, opts) {
 					<br />
 					Reviews: ${opts.data.reviews} | TOS Flags: ${opts.data.tos_flags}
 				</p>
-				${genMeters(opts.data)}
+				${genMeters(opts.data.attrs)}
 			</div>
 		`);
 		/*<table style="margin-top:6px;width:100%;font-size:10px"><tr><td>Adjusted Pay</td><td>${obj.attrs.adjPay}</td>
@@ -57,21 +70,23 @@ export default function createTooltip(type, opts) {
 
 	return html;
 }
-function bullet(li) {
+function bullet(li: string) {
 	return `<ul><li>${li}</li></ul>`;
 }
-function genMeters(obj) {
-	var attrmap = { comm: 'Communicativity', pay: 'Generosity', fair: 'Fairness', fast: 'Promptness' };
-	var html = [];
+function genMeters(attrs: ifc.TOAttributes) {
+	const attrmap: { [index: string]: string } = {
+		comm: 'Communicativity', pay: 'Generosity', fair: 'Fairness', fast: 'Promptness',
+	};
+	var html: string[] = [];
 	for (var k in attrmap) {
 		if (attrmap.hasOwnProperty(k)) {
-			html.push(`<meter min="0.8" low="2.5" high="3.4" optimum="5" max="5" value=${obj.attrs[k]} data-attr=${attrmap[k]}></meter>`);
+			html.push(`<meter min="0.8" low="2.5" high="3.4" optimum="5" max="5" value=${attrs[k]} data-attr=${attrmap[k]}></meter>`);
 		}
 	}
 	if (ENV.ISFF) { // firefox is shitty and doesn't support ::after/::before pseudo-elements on meter elements
 		html.forEach((v, i, a) => a[i] = '<div style="position:relative">' + v +
 			`<span class="ffmb">${attrmap[Object.keys(attrmap)[i]]}</span>` +
-			`<span class="ffma">${obj.attrs[Object.keys(attrmap)[i]]}</span></div>`);
+			`<span class="ffma">${attrs[Object.keys(attrmap)[i]]}</span></div>`);
 	}
 
 	return html.join('');

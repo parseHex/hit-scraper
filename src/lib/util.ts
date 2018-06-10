@@ -1,14 +1,10 @@
-// helpers
-type EventHandler = (e: Event) => void;
-type BasicObject = {
-	[index: string]: any;
-};
+import * as ifc from '../ifc';
 
-export function on(target: HTMLElement, eventType: string, handler: EventHandler) {
+export function on(target: HTMLElement, eventType: string, handler: ifc.EventHandler) {
 	target.addEventListener(eventType, handler);
 }
 
-export function delegate(target: HTMLElement, selector: string, eventType: string, handler: EventHandler) {
+export function delegate(target: HTMLElement, selector: string, eventType: string, handler: ifc.EventHandler) {
 	function dispatcher(event: Event) {
 		const targets = target.querySelectorAll(selector);
 		let i = targets.length;
@@ -24,7 +20,7 @@ export function delegate(target: HTMLElement, selector: string, eventType: strin
 	on(target, eventType, dispatcher);
 }
 
-export function entries(obj: BasicObject) {
+export function entries(obj: ifc.BasicObject): [string, any][] {
 	const props = Object.keys(obj);
 	let i = props.length;
 	const objArray = new Array(i);
@@ -33,7 +29,7 @@ export function entries(obj: BasicObject) {
 }
 
 // TODO should be a TemplateOptions type
-export function cleanTemplate(str: string, opts: BasicObject = {}) {
+export function cleanTemplate(str: string, opts: ifc.BasicObject = {}) {
 	str = str.trim(); // remove whitespace from beginning and end
 	str = str.replace(/^[\t ]+/gm, ''); // remove indents
 	if (!opts.ignoreNewline) {
@@ -43,8 +39,7 @@ export function cleanTemplate(str: string, opts: BasicObject = {}) {
 
 	return str;
 }
-export function pad(width: number, val: number, padWith: string) {
-	padWith = padWith || '0';
+export function pad(width: number, val: number, padWith: string = '0') {
 	let valStr = val + '';
-	return valStr.length >= width ? val : new Array(width - valStr.length + 1).join(padWith) + val;
+	return valStr.length >= width ? val + '' : new Array(width - valStr.length + 1).join(padWith) + val;
 }

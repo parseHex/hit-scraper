@@ -1,9 +1,9 @@
+import * as ifc from '../ifc';
 import * as util from './util';
 import * as timeUtil from './time-util';
 
-export default function makeTitle(hit) {
+export default function makeTitle(hit: ifc.BasicObject) {
 	let deleteTime = '';
-	let time = '';
 
 	if (hit.time) {
 		const now = new Date();
