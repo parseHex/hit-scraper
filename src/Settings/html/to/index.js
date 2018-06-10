@@ -5,9 +5,9 @@ import other from './other';
 
 export default function () {
 	return `
-		${colorType.apply(this.user)}
-		${sortType.apply(this.user)}
-		${toWeights.apply(this.user)}
-		${other.apply(this.user)}
+		${colorType.call(this.user)}
+		${sortType.call(this.user)}
+		${toWeights.call(this.user)}
+		${other.call(this.user)}
 	`;
 }

@@ -2,6 +2,6 @@ import importExport from './import-export';
 
 export default function () {
 	return `
-		${importExport.apply(this.user)}
+		${importExport.call(this.user)}
 	`;
 }

@@ -345,28 +345,28 @@ export default function () {
 			</p>
 		</div>
 		<div id="controlbuttons" class="controlpanel" style="margin-top:5px">
-			<button id="btnMain">
+			<button id="main">
 				Start
 			</button>
-			<button id="btnHide">
+			<button id="hide">
 				${phB}
 			</button>
-			<button id="btnBlocks">
+			<button id="blocks">
 				Edit Blocklist
 			</button>
-			<button id="btnIncs">
+			<button id="incs">
 				Edit Includelist
 			</button>
-			<button id="btnIgnores">
+			<button id="ignores">
 				Toggle Ignored HITs
 			</button> &nbsp;
-			<button id="btnSettings">
+			<button id="settings">
 				Settings
 			</button>
 		</div>
 		<div id="loggedout" style="font-size:11px;margin-left:10px;text-transform:uppercase"></div>
 		${status}
-		${table.apply(this)}
+		${table.call(this)}
 	`);
 	// NOTE: the above commented-out column is the HITDB column
 }

@@ -17,7 +17,7 @@ export default `
 		</p>
 		<p id="status-to-error" class="hidden">
 			Error retrieving TO data. &nbsp;
-			<button id="btnRetryTO">
+			<button id="retryTO">
 				Retry
 			</button>
 		</p>
@@ -27,7 +27,7 @@ export default `
 		</p>
 		<p id="status-queue-wait" class="hidden">
 			Queue not empty. Waiting to Auto-Refresh. &nbsp;
-			<button id="btnRetryQueue">
+			<button id="retryQueue">
 				Retry
 			</button>
 		</p>
@@ -35,6 +35,12 @@ export default `
 			Scraping again in &nbsp;
 			<span>0</span>
 			&nbsp; seconds
+		</p>
+		<p id="status-scrape-error" class="hidden">
+			Error scrapng MTurk.
+		</p>
+		<p id="status-scrape-error-disabled-search" class="hidden">
+			Error scrapng MTurk.
 		</p>
 	</div>
 `;

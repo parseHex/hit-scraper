@@ -5,9 +5,9 @@ import tableColumns from './table-columns';
 
 export default function () {
 	return `
-		${exportButtons.apply(this.user)}
-		${bubbleNewHITs.apply(this.user)}
-		${alertVolume.apply(this.user)}
-		${tableColumns.apply(this.user)}
+		${exportButtons.call(this.user)}
+		${bubbleNewHITs.call(this.user)}
+		${alertVolume.call(this.user)}
+		${tableColumns.call(this.user)}
 	`;
 }

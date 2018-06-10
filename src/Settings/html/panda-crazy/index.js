@@ -11,7 +11,7 @@ export default function () {
 				must be running for these options to work!
 			</b>
 		</p>
-		${addJobButtons.apply(this.user)}
-		${pauseWithQueue.apply(this.user)}
+		${addJobButtons.call(this.user)}
+		${pauseWithQueue.call(this.user)}
 	`;
 }

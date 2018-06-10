@@ -30,28 +30,28 @@ export default function () {
 		</div>
 		<div id="panelContainer" style="margin-left:10px;border:none;overflow:auto;width:auto;height:92%">
 			<div id="settings-general" class="settingsPanel">
-				${general.apply(this)}
+				${general.call(this)}
 			</div>
 			<div id="settings-to" class="settingsPanel">
-				${to.apply(this)}
+				${to.call(this)}
 			</div>
 			<div id="settings-pc" class="settingsPanel">
-				${pandaCrazy.apply(this)}
+				${pandaCrazy.call(this)}
 			</div>
 			<div id="settings-appearance" class="settingsPanel">
-				${appearance.apply(this)}
+				${appearance.call(this)}
 			</div>
 			<div id="settings-blocklist" class="settingsPanel">
-				${blocks.apply(this)}
+				${blocks.call(this)}
 			</div>
 			<div id="settings-notify" class="settingsPanel">
-				${notify.apply(this)}
+				${notify.call(this)}
 			</div>
 			<div id="settings-utils" class="settingsPanel">
-				${utils.apply(this)}
+				${utils.call(this)}
 			</div>
 			<div id="settings-advanced" class="settingsPanel">
-				${advanced.apply(this)}
+				${advanced.call(this)}
 			</div>
 		</div>
 	`);

@@ -5,9 +5,9 @@ import fontSize from './font-size';
 
 export default function () {
 	return `
-		${displayCheckboxes.apply(this.user)}
-		${themes.apply(this.user)}
-		${hitColoring.apply(this.user)}
-		${fontSize.apply(this.user)}
+		${displayCheckboxes.call(this.user)}
+		${themes.call(this.user)}
+		${hitColoring.call(this.user)}
+		${fontSize.call(this.user)}
 	`;
 }
