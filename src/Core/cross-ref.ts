@@ -1,5 +1,5 @@
 import Settings from '../Settings/index';
-import Editor from '../Editor';
+import { EditorDefault } from '../Editor';
 import { INCLUDE_KEY, IGNORE_KEY } from '../lib/constants';
 
 export default function (...needles: string[]): [boolean, boolean] {
@@ -18,7 +18,7 @@ export default function (...needles: string[]): [boolean, boolean] {
 		}
 	} else {
 		if (localStorage.getItem(IGNORE_KEY) === null) {
-			new Editor().setDefaultBlocks();
+			EditorDefault.setDefaultBlocks();
 		}
 
 		const blist = (localStorage.getItem(IGNORE_KEY) || '').toLowerCase().split('^');

@@ -13,7 +13,7 @@ function setDefaultBlocks() {
 		'crowdsource^we-pay-you-fast^turk experiment^jon brelig^p9r^scoutit');
 }
 
-export const EditorDefault = { // TODO is this even used by anything?
+export const EditorDefault = {
 	setDefaultBlocks,
 };
 
