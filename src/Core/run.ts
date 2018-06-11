@@ -15,18 +15,12 @@ export default function (this: Core, skipToggle?: boolean) {
 		Interface.Status.edit('processing', '1');
 		Interface.Status.show('processing');
 
-		// TODO handle (promise) response
 		this.fetch({
-			url: '/',
+			url: 'https://worker.mturk.com/',
 			responseType: 'json',
 			payload: this.getPayload(),
-		}).then(this.scrape.bind(this), () => {
-			Interface.Status.show('scrape-error');
-
-			if (this.cruising) {
-				Interface.Status.show('scrape-error-disabled-search');
-				this.cruising = false;
-			}
-		});
+		})
+			.then(this.scrape.bind(this))
+			.catch(this.scrapeError.bind(this));
 	}
 }

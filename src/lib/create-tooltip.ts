@@ -4,19 +4,16 @@ import { ENV } from './constants';
 import { cleanTemplate } from './util';
 
 interface Options {
-	data?: {
-		name?: string;
-		reviews?: string;
-		tos_flags?: number;
-		desc?: string;
-		quals?: string[];
-		attrs?: ifc.TOAttributes;
-	};
+	data?: ifc.HITData | ifc.ReviewData;
 	loading?: boolean;
-	error: boolean;
+	error?: boolean;
 }
 
-export default function createTooltip(type: string, opts: Options) {
+function isReviewData(data: ifc.HITData | ifc.ReviewData): data is ifc.ReviewData {
+	return data.hasOwnProperty('tos_flags') && data.hasOwnProperty('reviews');
+}
+
+export default function createTooltip(opts: Options) {
 	let html;
 	let reason;
 	if (opts.data) {
@@ -40,7 +37,7 @@ export default function createTooltip(type: string, opts: Options) {
 				</p>
 			</div>
 		`);
-	} else if (type === 'to') {
+	} else if (isReviewData(opts.data)) {
 		html = cleanTemplate(`
 			<div class="tooltip" style="width:260px">
 				<p style="padding-left:5px">

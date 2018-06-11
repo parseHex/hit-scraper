@@ -2,7 +2,7 @@ import Interface from '../Interface/index';
 import Settings from '../Settings/index';
 import { Core } from '.';
 
-export default function (this: Core, firstTick: boolean, tryAgain: boolean) {
+export default function (this: Core, firstTick: boolean, tryAgain?: boolean) {
 	if (!this.active) return;
 
 	if (!firstTick && !tryAgain) this.cooldown--;
@@ -22,7 +22,7 @@ export default function (this: Core, firstTick: boolean, tryAgain: boolean) {
 		Interface.Status.hide('queue-wait');
 		this.run(true);
 	} else {
-		Interface.Status.edit('scraping-again', this.cooldown);
+		Interface.Status.edit('scraping-again', this.cooldown + '');
 		Interface.Status.show('scraping-again');
 
 		this.timer = setTimeout(this.cruise.bind(this), 1000);

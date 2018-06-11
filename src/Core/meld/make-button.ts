@@ -1,7 +1,14 @@
+import * as ifc from '../../ifc';
 import Settings from '../../Settings/index';
 import { cleanTemplate } from '../../lib/util';
 
-export default function makeButton(settingName: string, shortName: string, longName: string, data = {}, label = shortName) {
+export default function makeButton(
+	settingName: string,
+	shortName: string,
+	longName: string,
+	data: ifc.BasicObject = {},
+	label = shortName
+) {
 	const settingHidden = Settings.user['export' + settingName] ? '' : 'hidden';
 
 	const className = `ex ${shortName.toLowerCase()} ${settingHidden}`;

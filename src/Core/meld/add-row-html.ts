@@ -6,17 +6,20 @@ import { hidden } from '../../Interface/html/table';
 
 import makeButton from './make-button';
 
-// TODO add param for row, hitRow should become "hit: ifc.HITData"
-export default function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoading) {
+export default function addRowHTML(
+	hitRow: ifc.HITData,
+	shouldHide: boolean,
+	reviewsError: boolean,
+	reviewsLoading: boolean,
+	rowColor: string
+) {
 	const center = 'text-align:center;';
 
-	let trClass = hitRow.rowColor;
+	let trClass = rowColor;
 	if (hitRow.included) trClass += ' includelisted';
 	if (shouldHide) trClass += ' ignored hidden';
 	if (hitRow.blocked) trClass += ' blocklisted';
 	if (hitRow.shine) trClass += ' shine';
-
-	const previewTitle = `Description:  ${hitRow.desc.replace(/"/g, '&quot;')}\n\nQualifications:  ${hitRow.quals.join('; ')}`;
 
 	let pandaHref = '';
 	if (hitRow.hit.panda) pandaHref = `href="${hitRow.hit.panda}"`;
@@ -67,7 +70,7 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoad
 				</div>
 				<div>
 					<a target="_blank" class="static hit-title" href="${hitRow.hit.preview}">
-						${hitRow.title + createTooltip('hit', titleTooltipData)}
+						${hitRow.title + createTooltip(titleTooltipData)}
 					</a>
 				</div>
 			</td>
@@ -84,7 +87,7 @@ export default function addRowHTML(hitRow, shouldHide, reviewsError, reviewsLoad
 			</td>
 			<td class="topay-tc ${hidden('topay')}" style="${center}">
 				<a class="static toLink" target="_blank" data-rid="${hitRow.requester.id || 'null'}" ${requesterHref}>
-					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip('to', toTooltipData)}
+					${(hitRow.TO ? hitRow.TO.attrs.pay : 'n/a') + createTooltip(toTooltipData)}
 				</a>
 			</td>
 			<td style="${center}" class="${hitRow.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">

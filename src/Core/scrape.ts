@@ -51,6 +51,7 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 			qualified: v.caller_meets_requirements,
 			viable: !~v.project_requirements.findIndex(q => q.caller_meets_requirement === false && q.qualification_type.is_requestable === false),
 			shine: false,
+			isNew: true,
 		};
 
 		const listsxr = this.crossRef(data.requester.name, data.title, data.groupId); // checks block/include lists
@@ -75,7 +76,7 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 
 	const info: ScrapeInfo = {
 		page: src.page_number,
-		nextPageURL: src.num_results < Settings.user.resultsPerPage ? null : '/',
+		nextPageURL: src.num_results < Settings.user.resultsPerPage ? null : 'https://worker.mturk.com/',
 		payload: this.getPayload(src.page_number + 1),
 		responseType: 'json',
 	};

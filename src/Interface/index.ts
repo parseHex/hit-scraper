@@ -1,12 +1,10 @@
 import * as ifc from '../ifc';
 import Settings from '../Settings/index';
 import { DOC_TITLE } from '../lib/constants';
+import { StatusManager } from './status-manager';
 
 import draw from './draw';
 import init from './init';
-import bindButtons from './bind-buttons';
-import bindCheckboxes from './bind-checkboxes';
-import { StatusManager } from './status-manager';
 
 export class Interface {
 	user: ifc.SettingsConfig;
@@ -29,21 +27,6 @@ export class Interface {
 			blink: null,
 		};
 		this.panel = {};
-		this.Status = new StatusManager();
-
-		this.buttons = {
-			main: document.querySelector('button#main'),
-			retryTO: document.querySelector('button#retryTO'),
-			retryQueue: document.querySelector('button#retryQueue'),
-			hide: document.querySelector('button#hide'),
-			blocks: document.querySelector('button#blocks'),
-			incs: document.querySelector('button#incs'),
-			ignores: document.querySelector('button#ignores'),
-			settings: document.querySelector('button#settings'),
-		};
-
-		bindButtons.call(this);
-		bindCheckboxes.call(this);
 
 		document.body.onblur = () => this.focused = false;
 		document.body.onfocus = () => {

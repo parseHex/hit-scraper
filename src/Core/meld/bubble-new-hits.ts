@@ -1,8 +1,7 @@
 import * as ifc from '../../ifc';
 
-// TODO
-export default function bubbleNewHits(results: any) {
-	const _old = [];
+export default function bubbleNewHits(results: ifc.HITData[]) {
+	const _old: ifc.HITData[] = [];
 	const _new = results.filter(function (hitRow) {
 		if (hitRow.shine) return true;
 

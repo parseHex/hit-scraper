@@ -4,12 +4,14 @@ import run from './run';
 import cruise from './cruise';
 import afterScrape from './after-scrape';
 import scrapeNext, { ScrapeInfo } from './scrape';
-import meld from './meld/index';
+import meld, { HITCounts } from './meld/index';
 import getHash from './get-hash';
 import fetch, { FetchRequest } from './fetch';
 import crossRef from './cross-ref';
 import notify from './notify';
 import getTO from './get-to';
+import Interface from '../Interface';
+import Settings from '../Settings';
 
 export class Core {
 	active: boolean;
@@ -18,22 +20,19 @@ export class Core {
 	reviewsLoading: boolean;
 	canRetryTO: boolean;
 	_cruising: boolean;
-
-	// TODO
-	cooldown: any;
-	lastScrape: any;
+	cooldown: number;
+	lastScrape: number;
 
 	getPayload: (page?: number) => ifc.MTSearchPayload;
 	run: (this: Core, skipToggle?: boolean) => void;
-	cruise: (this: Core, firstTick: boolean, tryAgain: boolean) => void;
+	cruise: (this: Core, firstTick: boolean, tryAgain?: boolean) => void;
 	afterScrape: (this: Core, info: ScrapeInfo) => void;
-	scrape: (this: Core, src: ifc.MTSearchResponse) => void; // TODO rename to scrape
+	scrape: (this: Core, src: ifc.MTSearchResponse) => void;
 	meld: (this: Core) => void;
 	getHash: (str: string) => void; // TODO safe to remove? (can't find anything using it)
-	// TODO return type
 	fetch: (this: Core, opts: FetchRequest) => Promise<any>;
 	crossRef: (...needles: string[]) => [boolean, boolean];
-	notify: (counts, loading: boolean) => void;
+	notify: (counts: HITCounts, loading: boolean) => void; // TODO
 	getTO: (this: Core) => void;
 
 	constructor() {
@@ -58,9 +57,31 @@ export class Core {
 		this.notify = notify.bind(this);
 		this.getTO = getTO.bind(this);
 	}
+
 	get cruising() { return this._cruising; }
 	set cruising(newValue) {
 		this._cruising = newValue;
+	}
+
+	finishedSearch() {
+		if (this.active) {
+			if (this.cooldown === 0) {
+				Interface.buttons.main.click();
+			} else if (!this.timer && Settings.user.asyncTO) {
+				this.cruise(true);
+			}
+		}
+	}
+
+	scrapeError(err?: any) {
+		if (err) console.error(err);
+
+		if (this.cruising) {
+			Interface.Status.show('scrape-error-disabled-search');
+			Interface.buttons.main.click();
+		} else {
+			Interface.Status.show('scrape-error');
+		}
 	}
 }
 export default new Core();

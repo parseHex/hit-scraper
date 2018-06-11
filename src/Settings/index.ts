@@ -33,8 +33,8 @@ export class Settings {
 		this.mainEl = document.body.appendChild(document.createElement('DIV'));
 		this.mainEl.id = 'settingsMain';
 		this.mainEl.innerHTML = html;
-		this.get = this.mainEl.querySelector;
-		this.getAll = this.mainEl.querySelectorAll;
+		this.get = this.mainEl.querySelector.bind(this.mainEl);
+		this.getAll = this.mainEl.querySelectorAll.bind(this.mainEl);
 
 		return this;
 	}

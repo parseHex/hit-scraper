@@ -12,11 +12,8 @@ export const SETTINGS_KEY = 'new_scraper_settings';
 
 export const URL_SELF = 'https://greasyfork.org/en/scripts/10615-hit-scraper-with-export#ugTop';
 export const DOC_TITLE = 'HIT Scraper';
-export const TO_BASE = 'https://turkopticon.ucsd.edu/';
-export const TO_REPORTS = TO_BASE + 'reports?id=';
-export const TO_API = TO_BASE + 'api/multi-attrs.php?ids=';
 
-export { ico, audio0, audio1 } from './constants-data';
-export { defaults } from './constants-defaults';
+export * from './constants-data';
+export * from './constants-defaults';
 
 export const kb = { ESC: 27, ENTER: 13 };

@@ -60,14 +60,14 @@ export default function (this: Settings, e: Event) {
 					}
 
 					if (name === 'TOW') {
-						this.user.toWeights[id] = value;
+						this.user.toWeights[id] = +value;
 					} else {
 						this.user[name] = value;
 					}
 					break;
 				}
 				case 'range': {
-					this.user.volume[name] = value;
+					this.user.volume[<ifc.SoundName>name] = +value;
 					const audio = <HTMLAudioElement>document.querySelector(`#${name}`);
 					audio.volume = +value;
 					audio.play();

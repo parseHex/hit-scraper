@@ -14,29 +14,44 @@ export default function (this: Core) {
 		return a.indexOf(v) === i;
 	}).join();
 
-	if (ids.length === 0) return this.meld();
+	if (ids.length === 0) {
+		// no reviews to get
+		this.meld();
+		this.finishedSearch();
+		return;
+	}
 
 	if (Settings.user.asyncTO) {
-		// go ahead and show the results, will re-meld once reviews are loaded
 		this.reviewsLoading = true;
-		this.meld();
 	}
 
 	Interface.Status.show('retrieving-to');
+
+	const lastScrape = this.lastScrape;
 
 	this.fetch({
 		url: TO_API + ids,
 		responseType: 'json',
 		timeout: Settings.user.toTimeout * 1000,
 	}).then((reviews) => {
+		this.reviewsLoading = false;
 		state.scraperHistory.updateTOData(prepReviews(reviews));
 	}).catch(err => {
 		console.warn(err);
 
-		Interface.Status.hide('retrieving-to');
 		Interface.Status.show('to-error');
 		this.reviewsError = true;
+		this.reviewsLoading = false;
+	}).then(() => {
+		if (lastScrape !== this.lastScrape) {
+			// we don't want to trigger a rerender if there's been a scrape since we started the request
+			// the reviews will still be added to cache (if enabled)
+			return;
+		}
 
+		// meld new state regardless whether error or success
+		Interface.Status.hide('retrieving-to');
 		this.meld();
+		this.finishedSearch();
 	});
 }

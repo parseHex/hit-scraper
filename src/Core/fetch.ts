@@ -48,7 +48,7 @@ export default function (this: Core, opts: FetchRequest) {
 const enc = encodeURIComponent;
 function stringify(v: [string, any]): string {
 	const predicate = typeof v[1] !== 'string' && !(v[1] instanceof Array) ? entries(v[1]) : null;
-	if (predicate.length) {
+	if (predicate !== null && predicate.length > 0) {
 		return predicate.map(vp => (vp[0] = enc(`${v[0]}[${vp[0]}]`)) && vp) // 0 = o[i] => o%5Bi%5D
 			.map(stringify)
 			.join('&');

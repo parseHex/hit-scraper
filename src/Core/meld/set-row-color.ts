@@ -1,13 +1,13 @@
+import * as ifc from '../../ifc';
 import Settings from '../../Settings/index';
 
-export default function setRowColor(hitRow) {
+export default function setRowColor(hit: ifc.HITData) {
 	var ct = Settings.user.colorType;
-	if (!hitRow.TO || (ct === 'adj' && hitRow.TO.reviews < 5)) {
+	if (!hit.TO || (ct === 'adj' && hit.TO.reviews < 5)) {
 		// if using adjusted color type, require at least 5 reviews
-		hitRow.rowColor = 'toNone';
-		return;
+		return 'toNone';
 	}
-	hitRow.rowColor = getClassFromValue(ct === 'sim' ? hitRow.TO.attrs.qual : hitRow.TO.attrs.adjQual, ct);
+	return getClassFromValue(+(ct === 'sim' ? hit.TO.attrs.qual : hit.TO.attrs.adjQual), ct);
 }
 
 // TODO sim/adj type

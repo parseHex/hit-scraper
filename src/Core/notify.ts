@@ -1,10 +1,9 @@
-import * as ifc from '../ifc';
 import Interface from '../Interface/index';
 import Settings from '../Settings/index';
 import { DOC_TITLE } from '../lib/constants';
+import { HITCounts } from './meld';
 
-// TODO type c
-export default function (counts: ifc.BasicObject, loading: boolean) {
+export default function (counts: HITCounts, loading: boolean) {
 	var s = [];
 	s.push(counts.total > 0 ? `${counts.total} HIT${counts.total > 1 ? 's' : ''}` : '<b>No HITs found.</b>');
 	if (counts.new) s.push(`<i></i>${counts.new} new`);
@@ -31,7 +30,7 @@ export default function (counts: ifc.BasicObject, loading: boolean) {
 			: DOC_TITLE, 1000);
 	// TODO remove cast to any once typescript is at 3.0
 	if (Settings.user.notifyTaskbar && (<any>Notification).permission === 'granted') {
-		var inc = counts.incNew ? ` (${counts.incNew} from includelist)` : '',
+		var inc = counts.includedNew ? ` (${counts.includedNew} from includelist)` : '',
 			n = new Notification('HITScraper found ' + counts.newVis + ' new HITs' + inc);
 		n.onclick = n.close;
 		setTimeout(n.close.bind(n), 5000);

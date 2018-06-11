@@ -8,11 +8,10 @@ export default function () {
 	const { user } = Settings;
 
 	const _cb = user.showCheckboxes ? '' : 'hidden';
-	const ph = Settings.user.hidePanel ? 'hiddenpanel' : '';
-	const phB = Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel';
+	const panelhideClass = Settings.user.hidePanel ? 'hiddenpanel' : '';
 
 	return cleanTemplate(`
-		<div id="controlpanel" class="controlpanel cpdefault ${ph}">
+		<div id="controlpanel" class="controlpanel cpdefault ${panelhideClass}">
 			<p>
 				Auto-refresh delay: &nbsp;
 				<input &nbsp;

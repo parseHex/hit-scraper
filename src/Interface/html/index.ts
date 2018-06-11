@@ -9,16 +9,12 @@ import table from './table';
 import status from './status';
 
 export default function () {
-	const { user } = Settings;
-
-	const _cb = user.showCheckboxes ? '' : 'hidden';
 	const _u0 = new Uint8Array(Array.prototype.map.call(window.atob(audio0), (v: string) => v.charCodeAt(0)));
 	const _u1 = new Uint8Array(Array.prototype.map.call(window.atob(audio1), (v: string) => v.charCodeAt(0)));
 	const ding = URL.createObjectURL(new Blob([_u0], { type: 'audio/ogg' }));
 	const squee = URL.createObjectURL(new Blob([_u1], { type: 'audio/mp3' }));
 
-	const ph = Settings.user.hidePanel ? 'hiddenpanel' : '';
-	const phB = Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel';
+	const panelhideText = Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel';
 
 	return cleanTemplate(`
 		<audio id="ding">
@@ -34,7 +30,7 @@ export default function () {
 				Start
 			</button>
 			<button id="hide">
-				${phB}
+				${panelhideText}
 			</button>
 			<button id="blocks">
 				Edit Blocklist
