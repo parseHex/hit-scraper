@@ -25,6 +25,7 @@ export interface HITData {
 	index: number;
 	viable: boolean;
 	hit: URLObject;
+	isNew: boolean;
 }
 export interface TOAttributes {
 	// these are all numbers as strings since TO does that for some reason
