@@ -78,6 +78,7 @@ export interface SettingsConfig {
 	sortDsc: boolean;
 	gbatch: boolean;
 	bubbleNew: boolean;
+
 	hidePanel: boolean;
 
 	vbTemplate: string;
