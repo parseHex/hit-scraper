@@ -4,3 +4,6 @@ node_modules
 build/*
 
 build/hit-scraper.user.js
+
+# may or may not add this
+src/PersistentState.ts
