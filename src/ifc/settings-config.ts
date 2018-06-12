@@ -61,7 +61,7 @@ export interface SettingsConfig {
 	qual: boolean;
 	monly: boolean;
 	mhide: boolean;
-	searchBy: number;
+	searchBy: 0 | 1 | 2 | 3;
 	invert: boolean;
 	shine: number;
 	minTOPay: number;
