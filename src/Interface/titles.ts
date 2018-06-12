@@ -13,7 +13,7 @@ export default {
 	batch: 'Enter minimum HITs for batch search (must be searching by Most Available).',
 	gbatch: "Apply the 'Minimum batch size' filter to all search options.",
 	reward: 'Enter the minimum desired pay per HIT (e.g. 0.10).',
-	qual: "Only show HITs you're currently qualified for (must be logged in).",
+	qual: "Only show HITs you're currently qualified for.",
 	monly: 'Only show HITs that require Masters qualifications.',
 	mhide: title(`Remove masters hits from the results if selected,
 								otherwise display both masters and non-masters HITS.
