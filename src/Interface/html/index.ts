@@ -25,7 +25,7 @@ export default function () {
 		</audio>
 		<div id="curtain" style="position:fixed;width:100%;height:100%;display:none;z-index:10"></div>
 		${controlpanel.call(this)}
-		<div id="controlbuttons" class="controlpanel" style="margin-top:5px">
+		<div id="controlbuttons" class="controlpanel">
 			<button id="main">
 				Start
 			</button>
