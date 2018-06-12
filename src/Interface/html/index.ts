@@ -45,7 +45,6 @@ export default function () {
 				Settings
 			</button>
 		</div>
-		<div id="loggedout" style="font-size:11px;margin-left:10px;text-transform:uppercase"></div>
 		${status}
 		${table.call(this)}
 	`);
