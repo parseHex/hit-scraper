@@ -1,2 +1,9 @@
 node_modules
 .DS_STORE
+.rpt2_cache
+build/*
+
+build/hit-scraper.user.js
+
+# may or may not add this
+src/PersistentState.ts

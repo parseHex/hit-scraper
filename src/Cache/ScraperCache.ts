@@ -1,0 +1,115 @@
+import * as ifc from '../ifc';
+import Cache from './Cache';
+import TOCache from './TOCache';
+import Core from '../Core/index';
+import Settings from '../Settings/index';
+
+export default class ScraperCache extends Cache<ifc.HITData> {
+	private toCache: TOCache;
+
+	constructor(limit = 500) {
+		super(limit);
+		this.toCache = new TOCache();
+	}
+
+	set(key: string, value: ifc.HITData) {
+		if (
+			Settings.user.cacheTO &&
+			!value.TO &&
+			value.requester.id &&
+			this.toCache.has(value.requester.id)
+		) {
+			value.TO = this.toCache.get(value.requester.id);
+		}
+
+		exportData(value);
+
+		const isFirstScrape = !Core.lastScrape;
+		if (this.get(key)) { // exists
+			const age = Math.floor((Date.now() - this.cache[key].discovery) / 1000);
+			const obj = {
+				isNew: false,
+				shine: this.cache[key].shine && age < Settings.user.shine && !isFirstScrape,
+			};
+
+			value.discovery = this.cache[key].discovery;
+			return (this.cache[key] = Object.assign(value, obj));
+		} else { // new
+			const obj = {
+				isNew: !isFirstScrape,
+				shine: !isFirstScrape,
+			};
+
+			return this.update(key, Object.assign(value, obj));
+		}
+	}
+
+	filter(callback: (v: ifc.HITData, k: string, c: ifc.ListOfHITs) => boolean) {
+		const results: ifc.HITData[] = [];
+		const keys = Object.keys(this.cache);
+
+		keys.forEach((key) => {
+			const val = this.get(key);
+
+			if (callback(val, key, this.cache)) {
+				results.push(val);
+			}
+		});
+
+		return results;
+	}
+	filterRIDs(callback: (v: ifc.HITData, k: string, c: ifc.ListOfHITs) => boolean) {
+		const results: string[] = [];
+		const keys = Object.keys(this.cache);
+
+		keys.forEach((key) => {
+			const val = this.get(key);
+
+			if (callback(val, key, this.cache)) {
+				results.push(val.requester.id);
+			}
+		});
+
+		return results;
+	}
+
+	updateTOData(reviews: ifc.ListOfReviews) {
+		this.toCache.setBatch(reviews);
+
+		this.filter(v => v.current && v.TO === null).forEach((group) => {
+			if (this.toCache.has(group.requester.id)) {
+				this.cache[group.groupId].TO = this.toCache.get(group.requester.id);
+
+				exportData(this.cache[group.groupId]);
+			}
+		});
+	}
+}
+
+function exportData(hit: ifc.HITData) {
+	if (!Settings.user.exportExternal) return;
+	if (Settings.user.externalNoBlocked && hit.blocked) return;
+
+	const hitData = {
+		title: hit.title,
+		groupID: hit.groupId,
+		requesterName: hit.requester.name,
+		requesterID: hit.requester.id,
+		description: hit.desc,
+		discovery: hit.discovery,
+		quals: hit.quals,
+		pay: hit.payRaw,
+		time: hit.time,
+		timeStr: hit.timeStr,
+		TO: hit.TO === null ? {} : hit.TO,
+		qualified: hit.qualified,
+		masters: hit.masters,
+		numHITs: hit.numHits,
+		blocked: hit.blocked,
+		ignored: hit.ignored,
+		included: hit.included,
+	};
+
+	const exportEvt = new CustomEvent('hit-scraper-export', { detail: hitData });
+	window.dispatchEvent(exportEvt);
+}
