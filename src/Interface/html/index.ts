@@ -14,8 +14,6 @@ export default function () {
 	const ding = URL.createObjectURL(new Blob([_u0], { type: 'audio/ogg' }));
 	const squee = URL.createObjectURL(new Blob([_u1], { type: 'audio/mp3' }));
 
-	const panelhideText = Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel';
-
 	return cleanTemplate(`
 		<audio id="ding">
 			<source src="${ding}">
@@ -30,7 +28,7 @@ export default function () {
 				Start
 			</button>
 			<button id="hide">
-				${panelhideText}
+				${Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel'}
 			</button>
 			<button id="blocks">
 				Edit Blocklist
