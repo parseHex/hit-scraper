@@ -28,14 +28,19 @@ export function entries(obj: ifc.BasicObject): [string, any][] {
 	return objArray;
 }
 
-// TODO should be a TemplateOptions type
-export function cleanTemplate(str: string, opts: ifc.BasicObject = {}) {
+interface TemplateOptions {
+	preformatted?: boolean; // leaves newlines untouched
+	titleMode?: boolean; // replace newlines with &#013;
+}
+export function cleanTemplate(str: string, opts: TemplateOptions = {}) {
 	str = str.trim(); // remove whitespace from beginning and end
 	str = str.replace(/^[\t ]+/gm, ''); // remove indents
-	if (!opts.ignoreNewline) {
+	if (opts.titleMode) {
+		str = str.replace(/\n/g, '&#013;');
+	} else if (!opts.preformatted) {
 		str = str.replace(/\n/g, '').replace(/\r/g, ''); // remove newlines
 	}
-	str = str.replace(/&nbsp;/g, ''); // remove &nbsp; (helps to add spaces to end of lines)
+	str = str.replace(/&nbsp;/g, ''); // remove &nbsp; (used to add spaces to end of lines)
 
 	return str;
 }
