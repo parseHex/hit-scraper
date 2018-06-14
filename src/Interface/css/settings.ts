@@ -1,5 +1,4 @@
 export default `
-	/* settings */
 	#settingsMain {
 		z-index: 20;
 		position: fixed;

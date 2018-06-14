@@ -14,8 +14,6 @@ export default function () {
 	const ding = URL.createObjectURL(new Blob([_u0], { type: 'audio/ogg' }));
 	const squee = URL.createObjectURL(new Blob([_u1], { type: 'audio/mp3' }));
 
-	const panelhideText = Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel';
-
 	return cleanTemplate(`
 		<audio id="ding">
 			<source src="${ding}">
@@ -25,12 +23,12 @@ export default function () {
 		</audio>
 		<div id="curtain" style="position:fixed;width:100%;height:100%;display:none;z-index:10"></div>
 		${controlpanel.call(this)}
-		<div id="controlbuttons" class="controlpanel" style="margin-top:5px">
+		<div id="controlbuttons" class="controlpanel">
 			<button id="main">
 				Start
 			</button>
 			<button id="hide">
-				${panelhideText}
+				${Settings.user.hidePanel ? 'Show Panel' : 'Hide Panel'}
 			</button>
 			<button id="blocks">
 				Edit Blocklist
@@ -44,8 +42,15 @@ export default function () {
 			<button id="settings">
 				Settings
 			</button>
+			&nbsp; | &nbsp;
+			Rotator: &nbsp;
+			<button id="rotatorMain">
+				Start
+			</button>
+			<button id="rotatorSettings">
+				Settings
+			</button>
 		</div>
-		<div id="loggedout" style="font-size:11px;margin-left:10px;text-transform:uppercase"></div>
 		${status}
 		${table.call(this)}
 	`);
