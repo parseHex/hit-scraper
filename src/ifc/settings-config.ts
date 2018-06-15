@@ -25,8 +25,6 @@ export interface SettingsConfig {
 	exportPcp: boolean;
 	exportPco: boolean;
 	exportPcCustomTitle: boolean;
-	exportExternal: boolean;
-	externalNoBlocked: boolean;
 
 	notifySound: [boolean, SoundName];
 	notifyBlink: boolean;

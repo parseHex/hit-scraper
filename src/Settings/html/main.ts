@@ -7,7 +7,6 @@ import to from './to/index';
 import blocks from './blocks/index';
 import notify from './notify/index';
 import utils from './utils/index';
-import advanced from './advanced/index';
 
 export default function () {
 	return cleanTemplate(`
@@ -49,9 +48,6 @@ export default function () {
 			</div>
 			<div id="settings-utils" class="settingsPanel">
 				${utils.call(this)}
-			</div>
-			<div id="settings-advanced" class="settingsPanel">
-				${advanced.call(this)}
 			</div>
 		</div>
 	`);

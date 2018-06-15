@@ -17,8 +17,6 @@ const defaultConfig: ifc.SettingsConfig = {
 	exportPcp: false,
 	exportPco: false,
 	exportPcCustomTitle: false,
-	exportExternal: false,
-	externalNoBlocked: false,
 
 	notifySound: [false, 'ding'],
 	notifyBlink: false,

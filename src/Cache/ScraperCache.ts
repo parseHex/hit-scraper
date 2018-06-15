@@ -22,8 +22,6 @@ export default class ScraperCache extends Cache<ifc.HITData> {
 			value.TO = this.toCache.get(value.requester.id);
 		}
 
-		exportData(value);
-
 		const isFirstScrape = !Core.lastScrape;
 		if (this.get(key)) { // exists
 			const age = Math.floor((Date.now() - this.cache[key].discovery) / 1000);
@@ -79,37 +77,7 @@ export default class ScraperCache extends Cache<ifc.HITData> {
 		this.filter(v => v.current && v.TO === null).forEach((group) => {
 			if (this.toCache.has(group.requester.id)) {
 				this.cache[group.groupId].TO = this.toCache.get(group.requester.id);
-
-				exportData(this.cache[group.groupId]);
 			}
 		});
 	}
-}
-
-function exportData(hit: ifc.HITData) {
-	if (!Settings.user.exportExternal) return;
-	if (Settings.user.externalNoBlocked && hit.blocked) return;
-
-	const hitData = {
-		title: hit.title,
-		groupID: hit.groupId,
-		requesterName: hit.requester.name,
-		requesterID: hit.requester.id,
-		description: hit.desc,
-		discovery: hit.discovery,
-		quals: hit.quals,
-		pay: hit.payRaw,
-		time: hit.time,
-		timeStr: hit.timeStr,
-		TO: hit.TO === null ? {} : hit.TO,
-		qualified: hit.qualified,
-		masters: hit.masters,
-		numHITs: hit.numHits,
-		blocked: hit.blocked,
-		ignored: hit.ignored,
-		included: hit.included,
-	};
-
-	const exportEvt = new CustomEvent('hit-scraper-export', { detail: hitData });
-	window.dispatchEvent(exportEvt);
 }
