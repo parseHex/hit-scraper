@@ -42,14 +42,6 @@ export default function () {
 			<button id="settings">
 				Settings
 			</button>
-			&nbsp; | &nbsp;
-			Rotator: &nbsp;
-			<button id="rotatorMain">
-				Start
-			</button>
-			<button id="rotatorSettings">
-				Settings
-			</button>
 		</div>
 		${status}
 		${table.call(this)}
