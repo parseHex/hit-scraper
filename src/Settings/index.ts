@@ -16,6 +16,7 @@ export class Settings {
 	mainEl: HTMLElement;
 	get: (s: string) => HTMLElement;
 	getAll: (s: string) => NodeListOf<HTMLElement>;
+	autosave: boolean = true;
 
 	constructor() {
 		this.defaults = defaults;
@@ -40,6 +41,8 @@ export class Settings {
 	}
 
 	save() {
+		if (!this.autosave) return;
+
 		localStorage.setItem(SETTINGS_KEY, JSON.stringify(this.user));
 	}
 
