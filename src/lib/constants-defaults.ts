@@ -1,4 +1,4 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
 
 export const TO_BASE = 'https://turkopticon.ucsd.edu/';
 export const TO_REPORTS = TO_BASE + 'reports?id=';

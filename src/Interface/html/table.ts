@@ -1,4 +1,4 @@
-import Settings from '../../Settings/index';
+import Settings from 'Settings';
 
 export default function () {
 	return `

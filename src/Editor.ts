@@ -1,10 +1,10 @@
-import * as ifc from './ifc';
-import Interface from './Interface/index';
-import Settings from './Settings/index';
-import Themes from './Themes/index';
-import { Exporter } from './Exporter/index';
-import { cleanTemplate } from './lib/util';
-import { IGNORE_KEY } from './lib/constants';
+import * as ifc from 'ifc';
+import Interface from 'Interface';
+import Settings from 'Settings';
+import Themes from 'Themes';
+import { Exporter } from 'Exporter';
+import { cleanTemplate } from 'lib/util';
+import { IGNORE_KEY } from 'lib/constants';
 
 function setDefaultBlocks() {
 	// TODO seems like this should go under Settings? (make static method for it)

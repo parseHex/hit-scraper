@@ -1,5 +1,5 @@
-import * as ifc from '../ifc';
-import Settings from '../Settings/index';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
 
 export default function (page = 1) {
 	const { user } = Settings;

@@ -1,6 +1,6 @@
-import * as ifc from '../ifc';
-import Interface from '../Interface/index';
-import state from '../lib/state';
+import * as ifc from 'ifc';
+import Interface from 'Interface';
+import state from 'lib/state';
 
 import hwtf from './hwtf';
 import vb from './vb';

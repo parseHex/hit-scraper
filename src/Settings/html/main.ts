@@ -1,12 +1,12 @@
-import { cleanTemplate } from '../../lib/util';
+import { cleanTemplate } from 'lib/util';
 
-import general from './general/index';
-import appearance from './appearance/index';
-import pandaCrazy from './panda-crazy/index';
-import to from './to/index';
-import blocks from './blocks/index';
-import notify from './notify/index';
-import utils from './utils/index';
+import general from './general';
+import appearance from './appearance';
+import pandaCrazy from './panda-crazy';
+import to from './to';
+import blocks from './blocks';
+import notify from './notify';
+import utils from './utils';
 
 export default function () {
 	return cleanTemplate(`

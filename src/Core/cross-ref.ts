@@ -1,6 +1,6 @@
-import Settings from '../Settings/index';
-import { EditorDefault } from '../Editor';
-import { INCLUDE_KEY, IGNORE_KEY } from '../lib/constants';
+import Settings from 'Settings';
+import { EditorDefault } from 'Editor';
+import { INCLUDE_KEY, IGNORE_KEY } from 'lib/constants';
 
 export default function (...needles: string[]): [boolean, boolean] {
 	var found: [boolean, boolean] = [false, false]

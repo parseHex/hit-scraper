@@ -1,6 +1,7 @@
-import Interface from '../Interface/index';
-import Settings from '../Settings/index';
-import { Core } from '.';
+import Interface from 'Interface';
+import Settings from 'Settings';
+
+import { Core } from './index';
 
 export default function (this: Core, firstTick: boolean, tryAgain?: boolean) {
 	if (!this.active) return;

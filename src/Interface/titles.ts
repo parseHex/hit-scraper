@@ -1,4 +1,4 @@
-import { cleanTemplate } from "../lib/util";
+import { cleanTemplate } from 'lib/util';
 
 const title = (t: string) => cleanTemplate(t, { titleMode: true });
 

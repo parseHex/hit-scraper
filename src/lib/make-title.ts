@@ -1,4 +1,5 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
+
 import * as util from './util';
 import * as timeUtil from './time-util';
 

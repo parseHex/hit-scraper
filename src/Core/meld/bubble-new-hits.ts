@@ -1,4 +1,4 @@
-import * as ifc from '../../ifc';
+import * as ifc from 'ifc';
 
 export default function bubbleNewHits(results: ifc.HITData[]) {
 	const _old: ifc.HITData[] = [];

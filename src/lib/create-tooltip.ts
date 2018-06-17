@@ -1,5 +1,6 @@
-import * as ifc from '../ifc';
-import Settings from '../Settings/index';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+
 import { ENV } from './constants';
 import { cleanTemplate } from './util';
 

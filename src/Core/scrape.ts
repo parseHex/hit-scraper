@@ -1,10 +1,11 @@
-import * as ifc from '../ifc';
-import { ENV } from '../lib/constants';
-import Settings from '../Settings/index';
-import state from '../lib/state';
-import fixTime from '../lib/fix-time';
-import enums from '../lib/enums';
-import { Core } from '.';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+import { ENV } from 'lib/constants';
+import state from 'lib/state';
+import fixTime from 'lib/fix-time';
+import enums from 'lib/enums';
+
+import { Core } from './index';
 
 export interface ScrapeInfo {
 	page: number;

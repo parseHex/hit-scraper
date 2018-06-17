@@ -1,10 +1,11 @@
-import * as ifc from '../ifc';
-import Interface from '../Interface/index';
-import Settings from '../Settings/index';
-import state from '../lib/state';
-import { TO_API } from '../lib/constants';
-import { Core } from '.';
-import prepReviews from '../lib/prep-reviews';
+import * as ifc from 'ifc';
+import Interface from 'Interface';
+import Settings from 'Settings';
+import state from 'lib/state';
+import { TO_API } from 'lib/constants';
+import prepReviews from 'lib/prep-reviews';
+
+import { Core } from './index';
 
 // it would be a litle too complicated to have "empty" reviews so just keep track of which IDs have no reviews
 const noReviewIDs: string[] = [];

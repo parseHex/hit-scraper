@@ -1,8 +1,9 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
+import Core from 'Core';
+import Settings from 'Settings';
+
 import Cache from './Cache';
 import TOCache from './TOCache';
-import Core from '../Core/index';
-import Settings from '../Settings/index';
 
 export default class ScraperCache extends Cache<ifc.HITData> {
 	private toCache: TOCache;

@@ -1,8 +1,8 @@
-import * as ifc from '../ifc';
-import Settings from '../Settings/index';
-import { DOC_TITLE } from '../lib/constants';
-import { StatusManager } from './status-manager';
+import * as ifc from 'ifc';
+import Settings from 'Settings/index';
+import { DOC_TITLE } from 'lib/constants';
 
+import { StatusManager } from './status-manager';
 import draw from './draw';
 import init from './init';
 

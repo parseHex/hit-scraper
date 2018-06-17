@@ -1,4 +1,4 @@
-import { label, input, descriptionTitle } from "../_dom";
+import { label, input, descriptionTitle } from '../_dom';
 
 export default function () {
 	return `

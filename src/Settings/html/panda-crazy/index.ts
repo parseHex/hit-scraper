@@ -1,5 +1,5 @@
-import addJobButtons from "./add-job-buttons";
-import pauseWithQueue from "./pause-with-queue";
+import addJobButtons from './add-job-buttons';
+import pauseWithQueue from './pause-with-queue';
 
 export default function () {
 	return `

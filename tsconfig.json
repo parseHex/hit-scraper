@@ -10,9 +10,10 @@
 		"lib": [
 			"dom",
 			"es2015"
-		]
+		],
+		"baseUrl": "./src"
 	},
-	"include": [
+	"files": [
 		"./src/index.ts"
 	]
 }

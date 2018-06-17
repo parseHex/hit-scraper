@@ -1,7 +1,8 @@
-import state from '../lib/state';
-import Settings from '../Settings/index';
-import Interface from '../Interface/index';
-import { Core } from '.';
+import state from 'lib/state';
+import Settings from 'Settings';
+import Interface from 'Interface';
+
+import { Core } from './index';
 import { ScrapeInfo } from './scrape';
 
 export default function (this: Core, info: ScrapeInfo) {

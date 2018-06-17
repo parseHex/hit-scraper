@@ -1,4 +1,5 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
+
 import Cache from './Cache';
 
 export default class TOCache extends Cache<ifc.ReviewData> {

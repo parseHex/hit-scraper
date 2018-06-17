@@ -1,4 +1,4 @@
-import ScraperCache from '../Cache/ScraperCache';
+import ScraperCache from 'Cache/ScraperCache';
 
 interface State {
 	scraperHistory: ScraperCache;

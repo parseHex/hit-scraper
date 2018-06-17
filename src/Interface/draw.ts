@@ -1,7 +1,7 @@
-import Settings from '../Settings/index';
+import Settings from 'Settings';
 import {
 	DOC_TITLE, ico,
-} from '../lib/constants';
+} from 'lib/constants';
 
 import css from './css/index';
 import body from './html/index';

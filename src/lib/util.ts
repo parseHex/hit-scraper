@@ -1,4 +1,4 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
 
 export function on(target: HTMLElement, eventType: string, handler: ifc.EventHandler) {
 	target.addEventListener(eventType, handler);

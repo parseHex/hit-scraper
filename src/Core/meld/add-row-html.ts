@@ -1,8 +1,8 @@
-import * as ifc from '../../ifc';
-import { TO_REPORTS } from '../../lib/constants';
-import { cleanTemplate } from '../../lib/util';
-import createTooltip from '../../lib/create-tooltip';
-import { hidden } from '../../Interface/html/table';
+import * as ifc from 'ifc';
+import { TO_REPORTS } from 'lib/constants';
+import { cleanTemplate } from 'lib/util';
+import createTooltip from 'lib/create-tooltip';
+import { hidden } from 'Interface/html/table';
 
 import makeButton from './make-button';
 

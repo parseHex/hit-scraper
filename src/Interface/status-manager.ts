@@ -1,5 +1,5 @@
-import * as ifc from '../ifc';
-import * as dom from '../lib/dom-util';
+import * as ifc from 'ifc';
+import * as dom from 'lib/dom-util';
 
 export class StatusManager {
 	node: HTMLElement;

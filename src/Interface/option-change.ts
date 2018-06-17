@@ -1,7 +1,8 @@
-import * as ifc from '../ifc';
-import { Interface } from '.';
-import * as dom from '../lib/dom-util';
-import Settings from '../Settings/index';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+import * as dom from 'lib/dom-util';
+
+import { Interface } from './index';
 import moveSortdirs from './move-sort-dirs';
 
 // TODO make a generic option-change function/class that accepts custom handling

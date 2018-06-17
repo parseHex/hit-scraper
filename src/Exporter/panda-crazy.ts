@@ -1,8 +1,9 @@
-import * as ifc from '../ifc';
-import { pad } from '../lib/util';
-import makeTitle from '../lib/make-title';
-import Settings from '../Settings/index';
-import { Exporter } from '.';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+import { pad } from 'lib/util';
+import makeTitle from 'lib/make-title';
+
+import { Exporter } from './index';
 
 export default function (this: Exporter, type: string) {
 	let msgData = {

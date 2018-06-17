@@ -1,7 +1,8 @@
-import { TO_REPORTS } from '../lib/constants';
-import Core from '../Core/index';
-import { Exporter } from '.';
-import { cleanTemplate } from '../lib/util';
+import Core from 'Core';
+import { TO_REPORTS } from 'lib/constants';
+import { cleanTemplate } from 'lib/util';
+
+import { Exporter } from './index';
 
 export default function (this: Exporter) {
 	// custom MTurk/TO url shortener courtesy of Tjololo

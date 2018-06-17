@@ -1,4 +1,5 @@
-import * as ifc from '../ifc';
+import * as ifc from 'ifc';
+
 import getPayload from './get-payload';
 import run from './run';
 import cruise from './cruise';

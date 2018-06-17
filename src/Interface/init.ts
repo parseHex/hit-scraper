@@ -1,7 +1,8 @@
-import { kb } from '../lib/constants';
-import Themes from '../Themes/index';
-import { Interface } from '.';
-import * as dom from '../lib/dom-util';
+import Themes from 'Themes/index';
+import { kb } from 'lib/constants';
+import * as dom from 'lib/dom-util';
+
+import { Interface } from './index';
 import optionChange from './option-change';
 import titles from './titles';
 import moveSortdirs from './move-sort-dirs';

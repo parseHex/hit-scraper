@@ -1,5 +1,5 @@
-import * as ifc from '../ifc';
-import { defaults } from '../lib/constants';
+import * as ifc from 'ifc';
+import { defaults } from 'lib/constants';
 
 const defaultConfig: ifc.SettingsConfig = {
 	themes: { name: 'classic', colors: defaults.themes },

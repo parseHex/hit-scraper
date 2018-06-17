@@ -1,5 +1,5 @@
-import * as ifc from '../ifc';
-import Settings from '../Settings/index';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
 
 export default function prepReviews(reviews: ifc.ListOfReviews) {
 	const adj = (x: number, n: number) => ((x * n + 15) / (n + 5)) - 1.645 * Math.sqrt((Math.pow(1.0693 * x, 2) - Math.pow(x, 2)) / (n + 5));

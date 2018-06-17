@@ -1,6 +1,6 @@
-import { cleanTemplate } from '../../lib/util';
-import Settings from '../../Settings/index';
-import enums from '../../lib/enums';
+import Settings from 'Settings';
+import { cleanTemplate } from 'lib/util';
+import enums from 'lib/enums';
 
 import titles from '../titles';
 

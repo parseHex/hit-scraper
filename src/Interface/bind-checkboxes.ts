@@ -1,5 +1,6 @@
-import * as dom from '../lib/dom-util';
-import { Interface } from '.';
+import * as dom from 'lib/dom-util';
+
+import { Interface } from './index';
 
 export default function (this: Interface) {
 	dom.get('#disableTO').addEventListener('change', (e) => {

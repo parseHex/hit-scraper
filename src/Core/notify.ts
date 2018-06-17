@@ -1,6 +1,7 @@
-import Interface from '../Interface/index';
-import Settings from '../Settings/index';
-import { DOC_TITLE } from '../lib/constants';
+import Interface from 'Interface';
+import Settings from 'Settings';
+
+import { DOC_TITLE } from 'lib/constants';
 import { HITCounts } from './meld';
 
 export default function (counts: HITCounts, loading: boolean) {

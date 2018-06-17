@@ -1,7 +1,8 @@
-import Settings from '../Settings/index';
-import { TO_BASE } from '../lib/constants';
-import { Exporter } from '.';
-import { Editor } from '../Editor';
+import Settings from 'Settings';
+import { Editor } from 'Editor';
+import { TO_BASE } from 'lib/constants';
+
+import { Exporter } from './index';
 
 /*
 	this seems to be more of a mess than most of the other code, and i don't use this,

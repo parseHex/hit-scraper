@@ -1,4 +1,4 @@
-import { Settings } from '.';
+import { Settings } from './index';
 
 export default function (this: Settings, e: Event) {
 	const target = <HTMLElement>e.target;

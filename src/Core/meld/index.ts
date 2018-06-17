@@ -1,10 +1,11 @@
-import Settings from '../../Settings/index';
-import state from '../../lib/state';
+import Settings from 'Settings';
+import state from 'lib/state';
+
+import { Core } from '../index';
 
 import bubbleNewHits from './bubble-new-hits';
 import setRowColor from './set-row-color';
 import addRowHTML from './add-row-html';
-import { Core } from '..';
 
 export interface HITCounts {
 	total: number;

@@ -1,6 +1,7 @@
-import Settings from './Settings/index';
+import Settings from 'Settings';
+import { IGNORE_KEY, INCLUDE_KEY } from 'lib/constants';
+
 import initialize from './index';
-import { IGNORE_KEY, INCLUDE_KEY } from './lib/constants';
 
 export default class FileHandler {
 	static exports() {

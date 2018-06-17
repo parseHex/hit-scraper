@@ -1,4 +1,4 @@
-import { Themes } from '.';
+import { Themes } from './index';
 
 export default function (this: Themes, theme: string, mode?: string) {
 	const cssNew = URL.createObjectURL(new Blob([this.generateCSS(theme, mode)], { type: 'text/css' }));

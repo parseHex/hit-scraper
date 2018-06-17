@@ -1,11 +1,11 @@
-import { delegate } from './lib/util';
-import { Exporter } from './Exporter/index';
-import Dialogue from './Dialogue';
-import state from './lib/state';
-import Settings from './Settings/index';
-import Interface from './Interface/index';
-import ScraperCache from './Cache/ScraperCache';
-import { SETTINGS_KEY } from './lib/constants';
+import { Exporter } from 'Exporter';
+import Dialogue from 'Dialogue';
+import Settings from 'Settings';
+import Interface from 'Interface';
+import ScraperCache from 'Cache/ScraperCache';
+import state from 'lib/state';
+import { delegate } from 'lib/util';
+import { SETTINGS_KEY } from 'lib/constants';
 
 console.log('HS hook');
 if (!document.getElementById('control_panel')) {

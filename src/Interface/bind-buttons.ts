@@ -1,8 +1,9 @@
-import { Interface } from '.';
-import Core from '../Core';
-import Settings from '../Settings';
-import { Editor } from '../Editor';
-import * as dom from '../lib/dom-util';
+import Core from 'Core';
+import Settings from 'Settings';
+import { Editor } from 'Editor';
+import * as dom from 'lib/dom-util';
+
+import { Interface } from './index';
 
 export default function (this: Interface) {
 	this.buttons.main.addEventListener('click', (e) => {

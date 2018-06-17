@@ -1,6 +1,6 @@
-import * as ifc from '../../ifc';
-import Settings from '../../Settings/index';
-import { cleanTemplate } from '../../lib/util';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+import { cleanTemplate } from 'lib/util';
 
 export default function makeButton(
 	settingName: string,

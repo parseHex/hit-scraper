@@ -1,4 +1,4 @@
-import * as dom from '../lib/dom-util';
+import * as dom from 'lib/dom-util';
 
 export default function moveSortdirs(node: HTMLInputElement) {
 	const sortdirs = dom.get('#sortdirs');

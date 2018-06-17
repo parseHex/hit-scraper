@@ -1,11 +1,11 @@
-import { Editor } from '../Editor';
-import FileHandler from '../FileHandler';
-import Interface from '../Interface/index';
-import * as ifc from '../ifc';
-import { SETTINGS_KEY } from '../lib/constants';
+import * as ifc from 'ifc';
+import { Editor } from 'Editor';
+import FileHandler from 'FileHandler';
+import Interface from 'Interface';
+import { SETTINGS_KEY } from 'lib/constants';
+
 import defaults from './defaults';
 import htmlGenerator from './html/main';
-
 import optionChange from './option-change';
 import sliderChange from './slider-change';
 import sidebarClick from './sidebar-click';

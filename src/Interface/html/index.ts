@@ -1,8 +1,8 @@
-import { cleanTemplate } from '../../lib/util';
-import Settings from '../../Settings/index';
+import Settings from 'Settings';
+import { cleanTemplate } from 'lib/util';
 import {
 	audio0, audio1,
-} from '../../lib/constants';
+} from 'lib/constants';
 
 import controlpanel from './controlpanel';
 import table from './table';

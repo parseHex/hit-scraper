@@ -1,6 +1,7 @@
-import * as ifc from '../ifc';
-import { entries } from '../lib/util';
-import { Core } from '.';
+import * as ifc from 'ifc';
+import { entries } from 'lib/util';
+
+import { Core } from './index';
 
 export interface FetchRequest {
 	url: string;

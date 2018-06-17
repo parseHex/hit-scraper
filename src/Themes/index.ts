@@ -1,5 +1,6 @@
-import * as ifc from '../ifc';
-import { defaults } from '../lib/constants';
+import * as ifc from 'ifc';
+import { defaults } from 'lib/constants';
+
 import generateCSS from './generate-css';
 import tune from './tune';
 import getBrightness from './get-brightness';

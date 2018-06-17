@@ -1,4 +1,4 @@
-import { Themes } from '.';
+import { Themes } from './index';
 
 interface HSVObject {
 	h: number;

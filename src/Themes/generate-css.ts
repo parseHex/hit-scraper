@@ -1,6 +1,7 @@
-import * as ifc from '../ifc';
-import Settings from '../Settings/index';
-import { Themes } from '.';
+import * as ifc from 'ifc';
+import Settings from 'Settings';
+
+import { Themes } from './index';
 
 export default function generateCSS(this: Themes, theme: ifc.ThemeName, mode?: string) {
 	// TODO i think randomize doesn't exist

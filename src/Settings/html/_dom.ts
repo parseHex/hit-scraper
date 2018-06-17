@@ -1,5 +1,5 @@
-import * as ifc from '../../ifc';
-import { cleanTemplate } from '../../lib/util';
+import * as ifc from 'ifc';
+import { cleanTemplate } from 'lib/util';
 
 export function sectionTitle(text: string) {
 	return `<span class="sec-title">${text}</span>`;

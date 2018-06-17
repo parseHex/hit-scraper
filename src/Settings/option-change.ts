@@ -1,6 +1,7 @@
-import * as ifc from '../ifc';
-import { Settings } from '.';
-import Themes from '../Themes/index';
+import * as ifc from 'ifc';
+import Themes from 'Themes';
+
+import { Settings } from './index';
 
 export default function (this: Settings, e: Event) {
 	const target = <HTMLInputElement>e.target;

@@ -1,8 +1,8 @@
-import Interface from './Interface/index';
-import Settings from './Settings/index';
-import { kb, IGNORE_KEY } from './lib/constants';
-import { cleanTemplate } from './lib/util';
-import state from './lib/state';
+import Interface from 'Interface';
+import Settings from 'Settings';
+import { kb, IGNORE_KEY } from 'lib/constants';
+import { cleanTemplate } from 'lib/util';
+import state from 'lib/state';
 
 export default class Dialogue {
 	caller: HTMLInputElement;

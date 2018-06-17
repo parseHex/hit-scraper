@@ -1,6 +1,7 @@
-import { TO_REPORTS } from '../lib/constants';
-import { Exporter } from '.';
-import { cleanTemplate } from '../lib/util';
+import { TO_REPORTS } from 'lib/constants';
+import { cleanTemplate } from 'lib/util';
+
+import { Exporter } from './index';
 
 export default function (this: Exporter) {
 	var _location = 'ICA';

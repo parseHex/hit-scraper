@@ -1,5 +1,6 @@
+import { label, sectionTitle, input } from '../_dom';
+
 import table from './table';
-import { label, sectionTitle, input } from '../_dom'
 
 export default function () {
 	return `

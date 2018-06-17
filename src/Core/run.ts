@@ -1,6 +1,7 @@
-import Settings from '../Settings/index';
-import Interface from '../Interface/index';
-import { Core } from '.';
+import Settings from 'Settings';
+import Interface from 'Interface';
+
+import { Core } from './index';
 
 export default function (this: Core, skipToggle?: boolean) {
 	if (!skipToggle) this.active = !this.active;
