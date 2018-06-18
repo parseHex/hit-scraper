@@ -12,7 +12,8 @@ function getSetting(key: keyof ifc.SettingsConfig) {
 // need hooks for .listen and .hits
 // want .listen to fire for a batch at a time instead of one at a time
 const api: any = {
-	getSetting, setSetting, settingsList,
+	getSetting, setSetting,
+	settingsList: Object.freeze(settingsList),
 	HITs, listenForHITs,
 	start, stop,
 	version: '1.0.0',
