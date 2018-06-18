@@ -4,12 +4,27 @@
 import * as ifc from 'ifc';
 import Settings from 'Settings';
 
-export default function (key: keyof ifc.SettingsConfig, value: any) {
+export const settingsList = [
+	// booleans
+	'asyncTO', 'cacheTO',
+	'skips', 'qual', 'monly',
+	'mhide', 'hideNoTO', 'onlyViable',
+	'disableTO', 'hideBlock', 'onlyIncludes',
+
+	// numbers
+	'toTimeout',
+	'refresh', 'pages', 'resultsPerPage',
+	'batch', 'reward', 'minTOPay',
+
+	// strings
+	'search',
+];
+
+export function setSetting(key: keyof ifc.SettingsConfig, value: any) {
 	// the api is accessible from any script running on the same page as HS
 	// so do type checking at runtime
 	switch (key) {
-		// Settings Panel settings
-		// booleans:
+		// booleans
 		case 'asyncTO':
 		case 'cacheTO': {
 			if (isBoolean(key, value)) Settings.user[key] = value;
@@ -21,8 +36,7 @@ export default function (key: keyof ifc.SettingsConfig, value: any) {
 			break;
 		}
 
-		// Search Config settings
-		// strings:
+		// string:
 		case 'search': {
 			if (isString(key, value)) updateInput(key, value);
 			break;
@@ -49,6 +63,10 @@ export default function (key: keyof ifc.SettingsConfig, value: any) {
 		case 'onlyIncludes': {
 			if (isBoolean(key, value)) updateInput(key, value);
 			break;
+		}
+
+		default: {
+			throw new Error(`${key} is not a settable setting`);
 		}
 	}
 
