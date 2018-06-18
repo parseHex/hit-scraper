@@ -4,7 +4,7 @@ export const ENV = Object.freeze({
 	HOST: window.location.hostname,
 	ORIGIN: window.location.origin,
 	ISFF: Boolean((<any>window).sidebar), // sidebar is a firefox variable
-	VERSION: '4.2.1',
+	VERSION: '5.2.0',
 });
 export const INCLUDE_KEY = 'new_scraper_include_list';
 export const IGNORE_KEY = 'new_scraper_ignore_list';
