@@ -25,9 +25,12 @@ export default `
 	#controlpanel i:after, #status i:after {
 		content: " | ";
 	}
-	#controlpanelbuttons {
-		margin-top: 5px;
+	#controlbuttons {
+		margin-top: 3px;
 		cursor: default;
+	}
+	#controlbuttons button {
+		outline: none;
 	}
 	input[type="checkbox"], input[type="radio"] {
 		vertical-align: middle;
