@@ -23,4 +23,5 @@ Object.defineProperty(api, 'autosave', {
 	set: (v: boolean) => Settings.autosave = v,
 });
 
-(<any>window).HS_API = Object.freeze(api);
+// @ts-ignore
+unsafeWindow.HS_API = Object.freeze(api);
