@@ -6,6 +6,7 @@ import ScraperCache from 'Cache/ScraperCache';
 import state from 'lib/state';
 import { delegate } from 'lib/util';
 import { SETTINGS_KEY } from 'lib/constants';
+import 'api';
 
 console.log('HS hook');
 if (!document.getElementById('control_panel')) {

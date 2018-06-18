@@ -6,6 +6,7 @@ import { TO_API } from 'lib/constants';
 import prepReviews from 'lib/prep-reviews';
 
 import { Core } from './index';
+import { updateHits } from 'api/listen';
 
 // it would be a litle too complicated to have "empty" reviews so just keep track of which IDs have no reviews
 const noReviewIDs: string[] = [];
@@ -48,7 +49,8 @@ export default function (this: Core) {
 	}).then((reviews) => {
 		this.reviewsLoading = false;
 		blacklistEmpties(reviews);
-		state.scraperHistory.updateTOData(prepReviews(reviews));
+		const updatedHits = state.scraperHistory.updateTOData(prepReviews(reviews));
+		updateHits(updatedHits);
 	}).catch(err => {
 		console.warn(err);
 

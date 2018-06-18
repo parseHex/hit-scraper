@@ -4,6 +4,7 @@ import { ENV } from 'lib/constants';
 import state from 'lib/state';
 import fixTime from 'lib/fix-time';
 import enums from 'lib/enums';
+import { addHits } from 'api/listen';
 
 import { Core } from './index';
 
@@ -15,6 +16,8 @@ export interface ScrapeInfo {
 }
 
 export default function (this: Core, src: ifc.MTSearchResponse) {
+	const addedHits: ifc.HITData[] = [];
+
 	Object.keys(state.scraperHistory.cache).forEach(function (gid) {
 		// set all hits to .current = false
 		// (any hits in results will go back to .current = true below)
@@ -72,8 +75,12 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 			Settings.user.onlyViable && !data.viable
 		) return;
 
+		addedHits.push(data);
+
 		state.scraperHistory.set(data.groupId, data);
 	}, this);
+
+	addHits(addedHits);
 
 	const info: ScrapeInfo = {
 		page: src.page_number,

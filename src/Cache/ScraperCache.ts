@@ -73,12 +73,17 @@ export default class ScraperCache extends Cache<ifc.HITData> {
 	}
 
 	updateTOData(reviews: ifc.ListOfReviews) {
+		const updated: ifc.HITData[] = [];
+
 		this.toCache.setBatch(reviews);
 
 		this.filter(v => v.current && v.TO === null).forEach((group) => {
 			if (this.toCache.has(group.requester.id)) {
 				this.cache[group.groupId].TO = this.toCache.get(group.requester.id);
+				updated.push(this.cache[group.groupId]);
 			}
 		});
+
+		return updated;
 	}
 }

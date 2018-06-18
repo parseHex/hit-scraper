@@ -41,7 +41,7 @@ export default function addRowHTML(
 	};
 
 	return cleanTemplate(`
-		<tr class="${trClass}" data-HITdata="${encodeURIComponent(JSON.stringify(hit))}">
+		<tr class="${trClass}">
 			<td class="block-tc ${hidden('block', hit.blocked)}">
 				<button name="block" value="${hit.requester.name}" class="block" title="Block this requester">
 					R
