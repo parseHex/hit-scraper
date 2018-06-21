@@ -25,14 +25,19 @@ export default function (counts: HITCounts, loading: boolean) {
 	if (!counts.newVis || Interface.focused || loading) return;
 
 	document.title = `[${counts.newVis} new]` + DOC_TITLE;
-	if (Settings.user.notifyBlink) Interface.blackhole.blink =
-		setInterval(() => document.title = /scraper/i.test(document.title)
-			? `${counts.newVis} new HITs`
-			: DOC_TITLE, 1000);
+	if (Settings.user.notifyBlink) {
+		Interface.blackhole.blink = window.setInterval(() => {
+			if (/scraper/i.test(document.title)) {
+				document.title = `${counts.newVis} new HITs`;
+			} else {
+				document.title = DOC_TITLE;
+			}
+		}, 1000);
+	}
 	// TODO remove cast to any once typescript is at 3.0
 	if (Settings.user.notifyTaskbar && (<any>Notification).permission === 'granted') {
-		var inc = counts.includedNew ? ` (${counts.includedNew} from includelist)` : '',
-			n = new Notification('HITScraper found ' + counts.newVis + ' new HITs' + inc);
+		var inc = counts.includedNew ? ` (${counts.includedNew} from includelist)` : '';
+		var n = new Notification('HITScraper found ' + counts.newVis + ' new HITs' + inc);
 		n.onclick = n.close;
 		setTimeout(n.close.bind(n), 5000);
 	}
