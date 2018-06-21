@@ -4,7 +4,7 @@ const typescript = require('rollup-plugin-typescript2');
 
 function header(section, name) {
 	return new Promise(function (resolve) {
-		fs.readFile(path.resolve(__dirname, 'src/_header.js'), {
+		fs.readFile(path.resolve(__dirname, 'src/_header.ts'), {
 			encoding: 'utf-8',
 		}, function (err, data) {
 			if (err) throw err;
