@@ -32,6 +32,9 @@ export default `
 	#controlbuttons button {
 		outline: none;
 	}
+	button#settings {
+		margin-right: 5px;
+	}
 	input[type="checkbox"], input[type="radio"] {
 		vertical-align: middle;
 	}
