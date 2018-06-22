@@ -21,7 +21,7 @@ export default function (this: Core, opts: FetchRequest) {
 		// good for debugging (errors immediately, set to https otherwise):
 		// url = 'http://httpstat.us/200?sleep=50000';
 
-		const timeout = opts.timeout !== undefined ? opts.timeout : 3 * 1000;
+		const timeout = typeof opts.timeout !== 'undefined' ? opts.timeout : 3 * 1000;
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', opts.url, true);
