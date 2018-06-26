@@ -6,5 +6,5 @@
 // @include     /^https://w(ww|orker).mturk.com/.*hit[-_]?scraper$/
 // @version     5.2.0
 // @grant       unsafeWindow
-// @run-at      document-start
+// @run-at      document-end
 // ==/UserScript==
