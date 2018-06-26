@@ -37,10 +37,10 @@ export default `
 			&nbsp; seconds
 		</p>
 		<p id="status-scrape-error" class="hidden">
-			Error scrapng MTurk. Check console for details.
+			Error scraping MTurk. Check console for details.
 		</p>
 		<p id="status-scrape-error-disabled-search" class="hidden">
-			Error scrapng MTurk. Check console for details. Turned off Auto-Refresh.
+			Error scraping MTurk. Check console for details. Turned off Auto-Refresh.
 		</p>
 	</div>
 `;
