@@ -3,7 +3,7 @@ const path = require('path');
 const typescript = require('rollup-plugin-typescript2');
 
 function header(section, name) {
-	fs.readFileSync(path.resolve(__dirname, 'src/_header.ts'), {
+	return fs.readFileSync(path.resolve(__dirname, 'src/_header.ts'), {
 		encoding: 'utf-8',
 	});
 }
