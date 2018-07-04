@@ -81,6 +81,7 @@ export class Core {
 			Interface.Status.show('scrape-error-disabled-search');
 			Interface.buttons.main.click();
 		} else {
+			Interface.Status.clear();
 			Interface.Status.show('scrape-error');
 		}
 	}
