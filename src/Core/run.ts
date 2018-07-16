@@ -12,6 +12,7 @@ export default function (this: Core, skipToggle?: boolean) {
 	Interface.resetTitle();
 
 	if (this.active) {
+		this.reviewsError = false;
 		Interface.Status.clear();
 		Interface.Status.edit('processing', '1');
 		Interface.Status.show('processing');
