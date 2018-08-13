@@ -18,6 +18,7 @@ export interface HIT_Scraper_API {
 		listen: (handler: SearchListener) => void;
 		start: () => void;
 		stop: () => void;
+		isCruising: () => boolean;
 	};
 	ui: {
 		createSection: (type: SectionType) => Section;
