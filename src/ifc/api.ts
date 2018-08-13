@@ -1,3 +1,5 @@
+import { SectionType, Section } from 'api/ui/Section';
+
 import { SettingsConfig } from './settings-config';
 import { HITData } from './data';
 
@@ -16,6 +18,9 @@ export interface HIT_Scraper_API {
 		listen: (handler: SearchListener) => void;
 		start: () => void;
 		stop: () => void;
+	};
+	ui: {
+		createSection: (type: SectionType) => Section;
 	};
 	version: string;
 }
