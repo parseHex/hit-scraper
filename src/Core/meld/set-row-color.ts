@@ -7,11 +7,13 @@ export default function setRowColor(hit: ifc.HITData) {
 		// if using adjusted color type, require at least 5 reviews
 		return 'toNone';
 	}
-	return getClassFromValue(+(ct === 'sim' ? hit.TO.attrs.qual : hit.TO.attrs.adjQual), ct);
+
+	const toVal = ct === 'sim' ? hit.TO.attrs.qual : hit.TO.attrs.adjQual;
+
+	return getClassFromValue(+toVal, ct);
 }
 
-// TODO sim/adj type
-function getClassFromValue(toVal: number, type: string) {
+function getClassFromValue(toVal: number, type: 'sim' | 'adj') {
 	if (type === 'sim') {
 		if (toVal > 4) {
 			return 'toHigh';

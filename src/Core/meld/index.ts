@@ -17,7 +17,7 @@ export interface HITCounts {
 	includedNew: number;
 };
 
-// TODO this function should ONLY render the current state, nthing else
+// TODO this function should ONLY render the current state, nothing else
 export default function (this: Core) {
 	const table = (<HTMLTableElement>document.querySelector('#resultsTable')).tBodies[0];
 	const html = [];

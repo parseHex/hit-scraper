@@ -33,7 +33,7 @@ export class Core {
 	getHash: (str: string) => void; // TODO safe to remove? (can't find anything using it)
 	fetch: (this: Core, opts: FetchRequest) => Promise<any>;
 	crossRef: (...needles: string[]) => [boolean, boolean];
-	notify: (counts: HITCounts, loading: boolean) => void; // TODO
+	notify: (counts: HITCounts, loading: boolean) => void;
 	getTO: (this: Core) => void;
 
 	constructor() {
