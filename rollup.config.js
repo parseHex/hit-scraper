@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const typescript = require('rollup-plugin-typescript2');
+const nodeResolve = require('rollup-plugin-node-resolve');
 
 function header(section, name) {
 	return fs.readFileSync(path.resolve(__dirname, 'src/_header.ts'), {
@@ -20,6 +21,7 @@ export default {
 		exclude: ['node_modules/**']
 	},
 	plugins: [
-		typescript(/*{ plugin options }*/),
+		nodeResolve(),
+		typescript(),
 	],
 };
