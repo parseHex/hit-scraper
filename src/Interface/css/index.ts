@@ -62,44 +62,6 @@ export default `
 		margin: auto;
 		padding: 2px;
 	}
-	button.disabled:not(#btnRetryTO) {
-		position: relative;
-	}
-	button.disabled:not(#btnRetryTO):before {
-		content: "";
-		display: none;
-		z-index: 5;
-		position: absolute;
-		top: -7px;
-		left: 50%;
-		width: 0;
-		height: 0;
-		border-left: 6px solid transparent;
-		border-right: 6px solid transparent;
-		border-top: 6px solid black;
-		transform: translateX(-50%);
-	}
-	button.disabled:not(#btnRetryTO):after {
-		content: "Exports are disabled while logged out.";
-		display: none;
-		z-index: 5;
-		position: absolute;
-		top: -7px;
-		left: 50%;
-		color: white;
-		background: black;
-		width: 230px;
-		padding: 2px;
-		transform: translate(-50%,-100%);
-		box-shadow: 0px 0px 6px 1px #fff;
-		font-size: 12px;
-	}
-	button.disabled:not(#btnRetryTO):focus:before {
-		display: block;
-	}
-	button.disabled:not(#btnRetryTO):focus:after {
-		display: block;
-	}
 
 	${editorsExporters}
 	${settings}
