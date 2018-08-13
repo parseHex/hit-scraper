@@ -6,7 +6,7 @@ import { TO_API } from 'lib/constants';
 import prepReviews from 'lib/prep-reviews';
 
 import { Core } from './index';
-import { updateHits } from 'api/listen';
+import { updateHits } from 'api/search/listen';
 
 // it would be a litle too complicated to have "empty" reviews so just keep track of which IDs have no reviews
 const noReviewIDs: string[] = [];

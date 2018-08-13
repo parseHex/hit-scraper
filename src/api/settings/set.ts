@@ -1,28 +1,9 @@
-/**
- * NOTE: this is going to be a mess
- */
 import * as ifc from 'ifc';
 import Settings from 'Settings';
 
-export const settingsList = [
-	// booleans
-	'asyncTO', 'cacheTO',
-	'skips', 'qual', 'monly',
-	'mhide', 'hideNoTO', 'onlyViable',
-	'disableTO', 'hideBlock', 'onlyIncludes',
-
-	// numbers
-	'toTimeout',
-	'refresh', 'pages', 'resultsPerPage',
-	'batch', 'reward', 'minTOPay',
-
-	// strings
-	'search',
-];
-
-export function setSetting(key: keyof ifc.SettingsConfig, value: any) {
+export default function (key: keyof ifc.SettingsConfig, value: any) {
 	// the api is accessible from any script running on the same page as HS
-	// so do type checking at runtime
+	// so do runtime type checking
 	switch (key) {
 		// booleans
 		case 'asyncTO':

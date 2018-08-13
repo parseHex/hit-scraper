@@ -4,7 +4,7 @@ import { ENV } from 'lib/constants';
 import state from 'lib/state';
 import fixTime from 'lib/fix-time';
 import enums from 'lib/enums';
-import { addHits } from 'api/listen';
+import { addHits } from 'api/search/listen';
 
 import { Core } from './index';
 
