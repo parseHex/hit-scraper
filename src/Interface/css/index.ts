@@ -29,8 +29,11 @@ export default `
 		margin-top: 3px;
 		cursor: default;
 	}
-	#controlbuttons button {
+	#controlbuttons button:focus, #plugins button:focus {
 		outline: none;
+	}
+	#plugins {
+		margin-top: 6px;
 	}
 	button#settings {
 		margin-right: 5px;

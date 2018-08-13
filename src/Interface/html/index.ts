@@ -43,6 +43,7 @@ export default function () {
 				Settings
 			</button>
 		</div>
+		<div id="plugins"></div>
 		${status}
 		${table.call(this)}
 	`);
