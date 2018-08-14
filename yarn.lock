@@ -111,6 +111,12 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
+humanize-duration-ts@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/humanize-duration-ts/-/humanize-duration-ts-2.0.0.tgz#280d5e3b2f0c7e4941b82ba9b70dc100e7b8707e"
+  dependencies:
+    tslib "^1.7.1"
+
 is-buffer@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
@@ -302,7 +308,7 @@ rollup@^0.64.0:
     "@types/estree" "0.0.39"
     "@types/node" "*"
 
-tslib@1.9.3:
+tslib@1.9.3, tslib@^1.7.1:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 

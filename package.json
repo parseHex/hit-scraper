@@ -14,5 +14,8 @@
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-typescript2": "^0.16.0",
 		"typescript": "^3.0.0"
+	},
+	"dependencies": {
+		"humanize-duration-ts": "^2.0.0"
 	}
 }

@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"allowJs": true,
 		"target": "es6",
 		"noImplicitAny": true,
 		"noUnusedLocals": true,

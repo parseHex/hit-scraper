@@ -2,7 +2,7 @@ import * as ifc from 'ifc';
 import Settings from 'Settings';
 import { ENV } from 'lib/constants';
 import state from 'lib/state';
-import fixTime from 'lib/fix-time';
+import { HumanizeDuration, HumanizeDurationLanguage } from 'humanize-duration-ts';
 import enums from 'lib/enums';
 import { addHits } from 'api/search/listen';
 
@@ -14,6 +14,9 @@ export interface ScrapeInfo {
 	payload: ifc.MTSearchPayload;
 	responseType: 'json';
 }
+
+const lang = new HumanizeDurationLanguage();
+const fixTime = new HumanizeDuration(lang).humanize;
 
 export default function (this: Core, src: ifc.MTSearchResponse) {
 	const addedHits: ifc.HITData[] = [];
