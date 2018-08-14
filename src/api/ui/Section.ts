@@ -1,4 +1,5 @@
 import { Button } from "./Button";
+import { Text } from "./Text";
 
 export type SectionType = 'block' | 'inline';
 
@@ -26,8 +27,11 @@ export class Section {
 		this.titleEl.title = 'HIT Scraper Plugin';
 		this.divEl.appendChild(this.titleEl);
 	}
-
-	public updateTitle(newTitle: string) {
+	public get title() {
+		// trim off ':' at the end
+		return this.titleEl.textContent.substr(0, -1);
+	}
+	public set title(newTitle: string) {
 		this.titleEl.textContent = newTitle + ':';
 	}
 
@@ -35,5 +39,10 @@ export class Section {
 		const btn = new Button();
 		this.divEl.appendChild(btn.element);
 		return btn;
+	}
+	public addText() {
+		const text = new Text();
+		this.divEl.appendChild(text.element);
+		return text;
 	}
 }

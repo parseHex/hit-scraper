@@ -1,9 +1,11 @@
 export class Button {
 	public element: HTMLButtonElement;
+	public style: CSSStyleDeclaration;
 
 	constructor() {
 		this.element = document.createElement('button');
 		this.element.type = 'button';
+		this.style = this.element.style;
 	}
 
 	public get text() {
