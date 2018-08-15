@@ -16,7 +16,9 @@ if (!document.getElementById('control_panel')) {
 	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseover', tomouseover);
 	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseout', tomouseout);
 	delegate(rt, 'tr:not(hidden) .ex', 'click', e => new Exporter(e));
-	delegate(rt, 'tr:not(hidden) button[name=block]', 'click', ({ target }) => new Dialogue(<HTMLInputElement>target));
+	delegate(rt, 'tr:not(hidden) button[name=block]', 'click', ({ target }) => {
+		new Dialogue(<HTMLInputElement>target);
+	});
 }
 
 export default function initialize() {
