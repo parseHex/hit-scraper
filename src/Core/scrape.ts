@@ -16,7 +16,8 @@ export interface ScrapeInfo {
 }
 
 const lang = new HumanizeDurationLanguage();
-const fixTime = new HumanizeDuration(lang).humanize;
+const h = new HumanizeDuration(lang);
+const fixTime = h.humanize.bind(h);
 
 export default function (this: Core, src: ifc.MTSearchResponse) {
 	const addedHits: ifc.HITData[] = [];
