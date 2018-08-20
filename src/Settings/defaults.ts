@@ -1,5 +1,4 @@
 import * as ifc from 'ifc';
-import { defaults } from 'lib/constants';
 
 const defaultConfig: ifc.SettingsConfig = {
 	colorType: 'sim',
@@ -9,9 +8,6 @@ const defaultConfig: ifc.SettingsConfig = {
 	cacheTO: false,
 	toTimeout: 6,
 
-	exportVb: true,
-	exportIrc: true,
-	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
 	exportPcCustomTitle: false,
@@ -62,10 +58,8 @@ const defaultConfig: ifc.SettingsConfig = {
 	sortDsc: true,
 	gbatch: false,
 	bubbleNew: false,
-	hidePanel: false,
 
-	vbTemplate: defaults.vbTemplate,
-	vbSym: '\u2605', // star
+	hidePanel: false,
 };
 
 export default defaultConfig;

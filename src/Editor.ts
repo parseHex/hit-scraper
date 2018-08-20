@@ -20,7 +20,7 @@ export class Editor {
 	type: string;
 	caller: HTMLElement;
 
-	constructor(type: 'include' | 'ignore' | 'vbTemplate', caller?: HTMLElement) {
+	constructor(type: 'include' | 'ignore', caller?: HTMLElement) {
 		Interface.toggleOverflow('on');
 		this.node = document.body.appendChild(document.createElement('DIV'));
 		this.node.classList.add('pop');
@@ -77,28 +77,6 @@ export class Editor {
 				this.node.querySelector('#edSave').addEventListener('click', () => {
 					localStorage.setItem(IGNORE_KEY.replace('ignore', type), this.node.querySelector('textarea').value.trim());
 					this.die();
-				});
-				break;
-			}
-			// TODO remove
-			case 'vbTemplate': {
-				this.node.innerHTML = '<b>VBULLETIN TEMPLATE</b><div style="float:right;margin-bottom:5px">Ratings Symbol: ' +
-					`<input style="text-align:center" type="text" size="1" maxlength="1" value="${Settings.user.vbSym}" /></div>` +
-					'<textarea style="display:block;height:200px;width:500px;font:12px monospace">' +
-					Settings.user.vbTemplate + '</textarea>' +
-					'<button id="edSave" style="margin:5px auto;width:33%;color:white;background:black">Save</button>' +
-					'<button id="edDefault" style="margin:5px auto;width:33%;color:white;background:black">Restore Default</button>' +
-					'<button id="edCancel" style="margin:5px auto;width:33%;color:white;background:black">Cancel</button>';
-				this.node.querySelector('#edDefault').addEventListener('click', () => {
-					this.node.querySelector('textarea').value = Settings.defaults.vbTemplate;
-					(<HTMLButtonElement>this.node.querySelector('#edSave')).click();
-				});
-				this.node.querySelector('#edSave').addEventListener('click', () => {
-					Settings.user.vbTemplate = this.node.querySelector('textarea').value.trim();
-					Settings.user.vbSym = this.node.querySelector('input').value;
-					Settings.save();
-					this.die();
-					new Exporter(<any>{ target: this.caller });
 				});
 				break;
 			}

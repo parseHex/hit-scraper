@@ -9,6 +9,7 @@ export default function makeButton(
 	data: ifc.BasicObject = {},
 	label = shortName
 ) {
+	// TODO rewrite this to be shorter since we only have 2 export buttons
 	const settingHidden = Settings.user['export' + settingName] ? '' : 'hidden';
 
 	const className = `ex ${shortName.toLowerCase()} ${settingHidden}`;

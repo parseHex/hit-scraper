@@ -62,9 +62,6 @@ export default function addRowHTML(
 			</td>
 			<td class="title-tc">
 				<div>
-					${makeButton('Vb', 'vB', 'vBulletin', expData)}
-					${makeButton('Irc', 'IRC', 'IRC', expData)}
-					${makeButton('Hwtf', 'HWTF', '/r/hitsworthturkingfor', expData)}
 					${makeButton('Pcp', 'PC-P', 'Panda Crazy (Panda)', expData, 'PC Panda')}
 					${makeButton('Pco', 'PC-O', 'Panda Crazy (Once)', expData, 'PC Once')}
 				</div>

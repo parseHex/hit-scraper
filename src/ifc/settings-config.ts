@@ -12,9 +12,6 @@ export interface SettingsConfig {
 	cacheTO: boolean;
 	toTimeout: number;
 
-	exportVb: boolean;
-	exportIrc: boolean;
-	exportHwtf: boolean;
 	exportPcp: boolean;
 	exportPco: boolean;
 	exportPcCustomTitle: boolean;
@@ -70,9 +67,6 @@ export interface SettingsConfig {
 	bubbleNew: boolean;
 
 	hidePanel: boolean;
-
-	vbTemplate: string;
-	vbSym: string;
 
 	[index: string]: any;
 }
