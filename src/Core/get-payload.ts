@@ -17,18 +17,22 @@ export default function (page = 1) {
 	};
 	const sort = user.invert ? 'asc' : 'desc';
 	switch (user.searchBy) {
-		case 0:
+		case 0: {
 			payload.sort = 'updated_' + sort;
 			break;
-		case 1:
+		}
+		case 1: {
 			payload.sort = 'num_hits_' + sort;
 			break;
-		case 2:
+		}
+		case 2: {
 			payload.sort = 'reward_' + sort;
 			break;
-		case 3:
+		}
+		case 3: {
 			payload.sort = 'title_' + sort;
 			break;
+		}
 	}
 	return payload;
 };
