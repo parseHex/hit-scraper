@@ -28,7 +28,6 @@ export interface SettingsConfig {
 	};
 	wildblocks: boolean;
 	showCheckboxes: boolean;
-	hitColor: 'link' | 'cell';
 	fontSize: number;
 	shineOffset: number;
 

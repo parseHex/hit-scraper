@@ -22,7 +22,6 @@ const defaultConfig: ifc.SettingsConfig = {
 	volume: { ding: 1, squee: 1 },
 	wildblocks: true,
 	showCheckboxes: true,
-	hitColor: 'link',
 	fontSize: 11,
 	shineOffset: 1,
 
