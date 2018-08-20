@@ -1,0 +1,70 @@
+@import 'variables';
+@import 'cell-fix';
+@import 'editor-exporter';
+@import 'interface';
+@import 'results-table';
+@import 'settings';
+@import 'status';
+
+* {
+	box-sizing: border-box;
+}
+body {
+	font-family: Verdana, Arial;
+	font-size: 14px;
+	margin: 0;
+	color: $defaultText;
+	background-color: $background;
+}
+p {
+	margin: 8px auto;
+}
+.cpdefault {
+	display: inline-block;
+	visibility: visible;
+	overflow: hidden;
+	padding: 8px 5px 1px 5px;
+	transition: all 0.3s;
+}
+input[type="checkbox"], input[type="radio"] {
+	vertical-align: middle;
+}
+input[type="number"] {
+	width: 50px;
+	text-align: center;
+}
+label {
+	padding: 2px;
+}
+.hiddenpanel {
+	width: 0px;
+	height: 0px;
+	visibility: hidden;
+}
+.hidden {
+	display: none;
+}
+button {
+	border: 1px solid;
+}
+textarea {
+	font-family: inherit;
+	font-size: 11px;
+	margin: auto;
+	padding: 2px;
+}
+#curtain {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	display: none;
+	z-index: 10;
+	opacity: 0.5;
+	background: $background;
+}
+thead, caption, a {
+	color: $defaultText;
+}
+tbody a {
+	color: $link;
+}

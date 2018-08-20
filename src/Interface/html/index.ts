@@ -21,7 +21,7 @@ export default function () {
 		<audio id="squee">
 			<source src="${squee}">
 		</audio>
-		<div id="curtain" style="position:fixed;width:100%;height:100%;display:none;z-index:10"></div>
+		<div id="curtain"></div>
 		${controlpanel.call(this)}
 		<div id="controlbuttons" class="controlpanel">
 			<button id="main">

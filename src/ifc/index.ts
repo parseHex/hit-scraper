@@ -3,7 +3,6 @@ export * from './data';
 export * from './generics';
 export * from './http';
 export * from './settings-config';
-export * from './theme';
 
 export type StatusMessageID = 'stopped' | 'processing' | 'correcting-skips' |
 	'retrieving-to' | 'to-error' | 'scrape-complete' |

@@ -1,5 +1,4 @@
 import * as ifc from 'ifc';
-import { Editor } from 'Editor';
 import FileHandler from 'FileHandler';
 import Interface from 'Interface';
 import { SETTINGS_KEY } from 'lib/constants';
@@ -52,10 +51,6 @@ export class Settings {
 		Array.from(this.getAll('#settingsSidebar span')).forEach(v => v.onclick = sidebarClick.bind(this));
 		Array.from(this.getAll('input:not([type=file]),select')).forEach(v => v.onchange = optionChange.bind(this));
 		Array.from(this.getAll('input[type=range]')).forEach(v => v.oninput = sliderChange);
-		this.get('#thedit').onclick = () => {
-			this.die.call(this);
-			new Editor('theme');
-		};
 		this.get('#sexport').onclick = FileHandler.exports;
 		this.get('#simport').onclick = () => {
 			(<HTMLInputElement>this.get('#fsimport')).value = '';

@@ -27,6 +27,7 @@ export default function initialize() {
 	state.scraperHistory = new ScraperCache(650);
 }
 
+// tooltips
 function tomouseover(e: MouseEvent) {
 	const target = <HTMLElement>e.target;
 
@@ -46,6 +47,7 @@ function tomouseover(e: MouseEvent) {
 	}
 }
 
+// tooltips
 function tomouseout(e: MouseEvent) {
 	const target = <HTMLElement>e.target;
 	const tooltip: HTMLElement = target.parentElement.querySelector('.tooltip');

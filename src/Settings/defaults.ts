@@ -2,8 +2,6 @@ import * as ifc from 'ifc';
 import { defaults } from 'lib/constants';
 
 const defaultConfig: ifc.SettingsConfig = {
-	themes: { name: 'classic', colors: defaults.themes },
-
 	colorType: 'sim',
 	sortType: 'adj',
 	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },

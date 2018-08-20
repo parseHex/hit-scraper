@@ -1,11 +1,4 @@
-import { ThemeColors, ThemeName } from './theme';
-
 export interface SettingsConfig {
-	themes: {
-		name: ThemeName;
-		colors: { [T in ThemeName]: ThemeColors };
-	};
-
 	colorType: 'sim' | 'adj';
 	sortType: 'sim' | 'adj';
 	toWeights: {

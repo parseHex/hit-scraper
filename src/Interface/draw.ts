@@ -3,7 +3,7 @@ import {
 	DOC_TITLE, ico,
 } from 'lib/constants';
 
-import css from './css/index';
+import css from '../../build/style.css';
 import body from './html/index';
 import { Interface } from '.';
 

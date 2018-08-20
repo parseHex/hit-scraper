@@ -1,4 +1,3 @@
-import Themes from 'Themes/index';
 import { kb } from 'lib/constants';
 import * as dom from 'lib/dom-util';
 
@@ -15,8 +14,6 @@ export default function (this: Interface) {
 
 	(<HTMLAudioElement>dom.get(`#ding`)).volume = this.user.volume.ding;
 	(<HTMLAudioElement>dom.get(`#squee`)).volume = this.user.volume.squee;
-
-	Themes.apply(this.user.themes.name);
 
 	// this must run after this.draw
 	this.buttons = {
