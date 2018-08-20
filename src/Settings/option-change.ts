@@ -8,11 +8,6 @@ export default function (this: Settings, e: Event) {
 		isChecked = target.checked, name = target.name, value = target.value;
 
 	switch (tag) {
-		case 'SELECT': {
-			// this.user.themes.name = <ifc.ThemeName>value;
-			// Themes.apply(value, this.user.hitColor);
-			break;
-		}
 		case 'INPUT': {
 			switch (type) {
 				case 'radio': {
@@ -32,11 +27,7 @@ export default function (this: Settings, e: Event) {
 						Array.from(document.querySelectorAll(`button.${value}`))
 							.forEach((v: HTMLElement) => v.style.display = isChecked ? 'inline' : 'none');
 					}
-					/*
-						typescript 2.9 has an incorrect definition for Notifcation
-						TODO remove the cast to any once 3.0 lands
-					*/
-					if (id === 'notifyTaskbar' && isChecked && (<any>Notification).permission === 'default') {
+					if (id === 'notifyTaskbar' && isChecked && Notification.permission === 'default') {
 						Notification.requestPermission();
 					}
 					if (name === 'tableColumn') {

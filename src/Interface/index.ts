@@ -10,7 +10,7 @@ export class Interface {
 	user: ifc.SettingsConfig;
 	time: number;
 	focused: boolean = true;
-	blackhole: { // TODO what is this?
+	blackhole: {
 		blink: number;
 	};
 	panel: ifc.BasicObject;

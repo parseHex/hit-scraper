@@ -35,7 +35,11 @@ export default function (this: Interface) {
 		// TODO figure this out
 		this.panel[k] = document.getElementById(k);
 		this.panel[k].onchange = optionChange.bind(this);
-		if (k === 'pay' || k === 'search') this.panel[k].addEventListener('keydown', kdFn);
-		if ((k === 'sortPay' || k === 'sortAll') && this.panel[k].checked) moveSortdirs(this.panel[k]);
+		if (k === 'pay' || k === 'search') {
+			this.panel[k].addEventListener('keydown', kdFn);
+		}
+		if ((k === 'sortPay' || k === 'sortAll') && this.panel[k].checked) {
+			moveSortdirs(this.panel[k]);
+		}
 	}
 }
