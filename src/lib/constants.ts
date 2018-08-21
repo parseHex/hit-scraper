@@ -13,7 +13,16 @@ export const SETTINGS_KEY = 'new_scraper_settings';
 export const URL_SELF = 'https://greasyfork.org/en/scripts/10615-hit-scraper-with-export#ugTop';
 export const DOC_TITLE = 'HIT Scraper';
 
-export * from './constants-data';
 export * from './constants-defaults';
 
 export const kb = { ESC: 27, ENTER: 13 };
+
+const local = location.hostname === 'localhost';
+const prefix = local ? 'http://localhost:8080' : 'https://parsehex.gitlab.io/hit-scraper';
+
+export const res = {
+	css: prefix + '/assets/style.css',
+	icon: prefix + '/assets/icon.png',
+	ding: prefix + '/assets/ding.ogg',
+	squee: prefix + '/assets/squee.mp3',
+};

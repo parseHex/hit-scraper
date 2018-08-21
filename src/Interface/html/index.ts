@@ -1,25 +1,19 @@
 import Settings from 'Settings';
 import { cleanTemplate } from 'lib/util';
-import {
-	audio0, audio1,
-} from 'lib/constants';
 
 import controlpanel from './controlpanel';
 import table from './table';
 import status from './status';
+import { res } from 'lib/constants';
 
 export default function () {
-	const _u0 = new Uint8Array(Array.prototype.map.call(window.atob(audio0), (v: string) => v.charCodeAt(0)));
-	const _u1 = new Uint8Array(Array.prototype.map.call(window.atob(audio1), (v: string) => v.charCodeAt(0)));
-	const ding = URL.createObjectURL(new Blob([_u0], { type: 'audio/ogg' }));
-	const squee = URL.createObjectURL(new Blob([_u1], { type: 'audio/mp3' }));
-
+	// TODO update URLs
 	return cleanTemplate(`
-		<audio id="ding">
-			<source src="${ding}">
+		<audio id="ding" preload="auto">
+			<source src="${res.ding}" type="audio/ogg">
 		</audio>
-		<audio id="squee">
-			<source src="${squee}">
+		<audio id="squee" preload="auto">
+			<source src="${res.squee}" type="audio/mp3">
 		</audio>
 		<div id="curtain"></div>
 		${controlpanel.call(this)}

@@ -1,6 +1,4 @@
 import Interface from 'Interface';
-import Settings from 'Settings';
-import { Exporter } from 'Exporter';
 import { cleanTemplate } from 'lib/util';
 import { IGNORE_KEY } from 'lib/constants';
 
