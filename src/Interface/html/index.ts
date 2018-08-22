@@ -7,7 +7,6 @@ import status from './status';
 import { res } from 'lib/constants';
 
 export default function () {
-	// TODO update URLs
 	return cleanTemplate(`
 		<audio id="ding" preload="auto">
 			<source src="${res.ding}" type="audio/ogg">
@@ -17,7 +16,7 @@ export default function () {
 		</audio>
 		<div id="curtain"></div>
 		${controlpanel.call(this)}
-		<div id="controlbuttons" class="controlpanel">
+		<div id="controlbuttons">
 			<button id="main">
 				Start
 			</button>

@@ -11,7 +11,7 @@ export default function () {
 	const panelhideClass = Settings.user.hidePanel ? 'hiddenpanel' : '';
 
 	return cleanTemplate(`
-		<div id="controlpanel" class="controlpanel cpdefault ${panelhideClass}">
+		<div id="controlpanel" class="cpdefault ${panelhideClass}">
 			<p>
 				Auto-refresh delay: &nbsp;
 				<input &nbsp;
