@@ -31,8 +31,8 @@ export default function createTooltip(opts: Options) {
 
 	if (reason) {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:260px;">
-				<p style="padding-left:5px">
+			<div class="tooltip">
+				<p>
 					Turkopticon data unavailable:
 					${reason}
 				</p>
@@ -40,8 +40,8 @@ export default function createTooltip(opts: Options) {
 		`);
 	} else if (isReviewData(opts.data)) {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:260px">
-				<p style="padding-left:5px">
+			<div class="tooltip">
+				<p>
 					<b>${opts.data.name}</b>
 					<br />
 					Reviews: ${opts.data.reviews} | TOS Flags: ${opts.data.tos_flags}
@@ -51,7 +51,7 @@ export default function createTooltip(opts: Options) {
 		`);
 	} else {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:300px">
+			<div class="tooltip desc">
 				<dl>
 					<dt>description</dt>
 					<dd>${opts.data.desc}</dd>
@@ -88,7 +88,7 @@ function genMeters(attrs: ifc.TOAttributes) {
 			const name = attrmap[key];
 
 			html[i] = cleanTemplate(`
-				<div style="position:relative">
+				<div class="meter-container">
 					${html[i]}
 					<span class="ffmb">${name}</span>
 					<span class="ffma">${value}</span>

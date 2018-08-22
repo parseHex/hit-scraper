@@ -1,6 +1,4 @@
 import Interface from 'Interface';
-import Settings from 'Settings';
-import { Exporter } from 'Exporter';
 import { cleanTemplate } from 'lib/util';
 import { IGNORE_KEY } from 'lib/constants';
 
@@ -23,6 +21,7 @@ export class Editor {
 	constructor(type: 'include' | 'ignore', caller?: HTMLElement) {
 		Interface.toggleOverflow('on');
 		this.node = document.body.appendChild(document.createElement('DIV'));
+		this.node.id = 'editor';
 		this.node.classList.add('pop');
 		this.type = type;
 		this.caller = caller || null;
@@ -31,8 +30,6 @@ export class Editor {
 			case 'include':
 			case 'ignore': {
 				if (type === 'ignore' && !localStorage.getItem(IGNORE_KEY)) setDefaultBlocks();
-
-				const btnStyle = 'margin:5px auto;width:50%;color:white;background:black;';
 
 				const blocklist = cleanTemplate(`
 					<b>BLOCKLIST</b> - &nbsp;
@@ -48,23 +45,23 @@ export class Editor {
 				const includelist = cleanTemplate(`
 					<b>INCLUDELIST</b> - &nbsp;
 					Focus the results on your favorite requesters. &nbsp;
-					Separate requester names and HIT titles with the ' +
-					'<code>^</code> character. When the "Restrict to includelist" option is selected, ' +
-					'HIT Scraper only shows results matching the includelist.'
+					Separate requester names and HIT titles with the &nbsp;
+					<code>^</code> character. When the "Restrict to includelist" option is selected, &nbsp;
+					HIT Scraper only shows results matching the includelist.
 				`);
 				var titleText = type === 'ignore' ? blocklist : includelist;
 
 				this.node.innerHTML = cleanTemplate(`
-					<div style="width:500px">
+					<div id="editor-title">
 						${titleText}
 					</div>
-					<textarea style="display:block;height:200px;width:500px;font:12px monospace" placeholder="nothing here yet">
+					<textarea placeholder="nothing here yet">
 						${localStorage.getItem(IGNORE_KEY.replace('ignore', type)) || ''}
 					</textarea>
-					<button id="edSave" style="${btnStyle}">
+					<button id="edSave">
 						Save
 					</button>
-					<button id="edCancel" style="${btnStyle}">
+					<button id="edCancel">
 						Cancel
 					</button>
 				`);

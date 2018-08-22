@@ -17,7 +17,7 @@ export class Interface {
 	buttons: ifc.InterfaceButtons;
 	Status: StatusManager;
 
-	draw: (this: Interface) => this;
+	draw: (this: Interface) => void;
 	init: (this: Interface) => void;
 
 	constructor() {

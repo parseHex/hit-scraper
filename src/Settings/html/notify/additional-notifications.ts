@@ -25,7 +25,7 @@ export default function () {
 					which appears over the taskbar for 10 seconds.
 				</section>
 			</div>
-			<p style="clear:both">
+			<p class="clearfix">
 				<b>Note:</b> &nbsp;
 				These notification options will only apply when the page does not have active focus.
 			</p>

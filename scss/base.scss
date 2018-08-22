@@ -5,6 +5,9 @@
 @import 'results-table';
 @import 'settings';
 @import 'status';
+@import 'dialogue';
+@import 'editor';
+@import 'tooltip';
 
 * {
 	box-sizing: border-box;
@@ -44,6 +47,9 @@ label {
 .hidden {
 	display: none;
 }
+.clearfix {
+	clear: both;
+}
 button {
 	border: 1px solid;
 }
@@ -67,4 +73,7 @@ thead, caption, a {
 }
 tbody a {
 	color: $link;
+}
+#eisStatus {
+	margin-top: 10px;
 }

@@ -1,7 +1,44 @@
-#resultsTable button.block {
-	padding: 1px 4px;
-	margin-right: 1px;
+#resultsTable {
+	width: 100%;
+
+	button {
+		border-radius: 3px;
+		font-size: 0.75em;
+		border: 1px solid;
+		padding: 0;
+		background: transparent;
+	}
+	button.ex {
+		padding: 0 9px;
+	}
+	button.pc-p, button.pc-o {
+		background-color: rgba(0, 50, 150, 0.75);
+		color: white;
+	}
+	button.block {
+		padding: 1px 4px;
+		margin-right: 1px;
+	}
+	caption {
+		font-weight: 800;
+		line-height: 1.25em;
+		font-size: 1.5em;
+	}
 }
+#resultsTable thead tr {
+	font-weight: 800;
+	font-size: 0.87em;
+	text-align: center;
+}
+#resultsTable tbody td > div {
+	display: table-cell;
+}
+#resultsTable tbody td > div:first-child {
+	padding-right: 2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
 .toLink, .hit-title {
 	position: relative;
 
@@ -23,71 +60,7 @@
 		display: block;
 	}
 }
-.tooltip {
-	z-index: 5;
-	position: absolute;
-	top: 0;
-	right: calc(100% + 6px);
-	text-align: left;
-	transform: translateY(-20%);
-	padding: 5px;
-	font-weight: normal;
-	font-size: 11px;
-	line-height: 1;
-	display: none;
-	background: black;
-	color: white;
-	box-shadow: 0px 0px 6px 1px #fff;
-}
-meter {
-	width: 100%;
-	position: relative;
-	height: 15px;
 
-	// ffmb and ffma are used in place of :before/:after on firefox
-	// (firefox doesn't support :before/:after on <meter>s
-	&:before, & + .ffmb {
-		display: block;
-		font-size: 10px;
-		font-weight: bold;
-		color: black;
-		content: attr(data-attr);
-		position: absolute;
-		top: 1px;
-	}
-	&:after, & + .ffma {
-		display: block;
-		font-size: 10px;
-		font-weight: bold;
-		color: black;
-		content: attr(value);
-		position: absolute;
-		top: 1px;
-		right: 0;
-	}
-}
-#resultsTable button {
-	border-radius: 3px;
-	font-size: 0.75em;
-	border: 1px solid;
-	padding: 0;
-	background: transparent;
-}
-#resultsTable .ex {
-	padding: 0 9px;
-}
-#resultsTable .pc-p, #resultsTable .pc-o {
-	background-color: rgba(0, 50, 150, 0.75);
-	color: white;
-}
-#resultsTable tbody td > div {
-	display: table-cell;
-}
-#resultsTable tbody td > div:first-child {
-	padding-right: 2px;
-	vertical-align: middle;
-	white-space: nowrap;
-}
 .ignored td {
 	border:2px solid #00E5FF;
 }
@@ -104,7 +77,9 @@ meter {
 #resultsTable thead td:not(:last-of-type) {
 	border-right: 1px solid;
 }
-#resultsTable td { padding: 0 3px; }
+#resultsTable td {
+	padding: 0 3px;
+}
 .block-tc { width: 65px; text-align: center; }
 // .requester-tc {  }
 // .title-tc {  }
@@ -114,6 +89,10 @@ meter {
 .topay-tc { width: 30px; }
 .masters-tc { width: 15px; }
 .notqualified-tc { width: 15px; }
+
+.rewardpanda-tc, .available-tc, .duration-tc, .topay-tc, .masters-tc, .notqualified-tc {
+	text-align: center;
+}
 
 .nohitDB {
 	color: #000;

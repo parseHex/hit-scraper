@@ -12,12 +12,14 @@
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
 }
-#settingsMain > div {
-	margin: 5px;
-	padding: 3px;
-	position: relative;
-	border: 1px solid grey;
-	line-height: initial;
+#settingsMain {
+	#settingsSidebar, #panelContainer {
+		margin: 5px;
+		padding: 3px;
+		position: relative;
+		border: 1px solid grey;
+		line-height: initial;
+	}
 }
 .close {
 	position: relative;
@@ -112,4 +114,23 @@
 .column.opts > p:not(.no-align) > input[type="number"] {
 	position: absolute;
 	right: 10px;
+}
+#settings-close-btn-container {
+	top: 0;
+	left: 0;
+	margin: 0;
+	text-align: right;
+	padding: 0px;
+	border: none;
+	width: 100%;
+}
+#panelContainer {
+	margin-left: 10px;
+	border: none;
+	overflow: auto;
+	width: auto;
+	height: 92%;
+}
+#settings-volume p span {
+	padding-left: 10px;
 }
