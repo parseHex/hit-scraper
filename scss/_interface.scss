@@ -1,6 +1,9 @@
 #controlpanel {
 	background: $cpBackground;
 
+	#sortdirs {
+		font-size: 15px;
+	}
 	input {
 		color: $inputText;
 		border: 1px solid;

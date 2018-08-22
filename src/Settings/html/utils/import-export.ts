@@ -26,7 +26,7 @@ export default function () {
 					${descriptionTitle('Import')}
 					Import your settings, block list, and include list from a local file.
 				</section>
-				<div style="margin-top:10px" id="eisStatus"></div>
+				<div id="eisStatus"></div>
 			</div>
 		</div>
 	`;

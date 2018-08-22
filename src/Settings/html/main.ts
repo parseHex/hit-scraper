@@ -7,10 +7,13 @@ import to from './to';
 import blocks from './blocks';
 import notify from './notify';
 import utils from './utils';
+import { SettingsConfig } from 'ifc';
 
-export default function () {
+export default function (user: SettingsConfig) {
+	const self = { user };
+
 	return cleanTemplate(`
-		<div style="top:0;left:0;margin:0;text-align:right;padding:0px;border:none;width:100%">
+		<div id="settings-close-btn-container">
 			<label id="settingsClose" class="close" title="Close">
 				&#160;&#10008;&#160;
 			</label>
@@ -27,27 +30,27 @@ export default function () {
 			<span data-target="utils">Utilities</span>
 			<span data-target="advanced">Advanced</span>
 		</div>
-		<div id="panelContainer" style="margin-left:10px;border:none;overflow:auto;width:auto;height:92%">
+		<div id="panelContainer">
 			<div id="settings-general" class="settingsPanel">
-				${general.call(this)}
+				${general.call(self)}
 			</div>
 			<div id="settings-to" class="settingsPanel">
-				${to.call(this)}
+				${to.call(self)}
 			</div>
 			<div id="settings-pc" class="settingsPanel">
-				${pandaCrazy.call(this)}
+				${pandaCrazy.call(self)}
 			</div>
 			<div id="settings-appearance" class="settingsPanel">
-				${appearance.call(this)}
+				${appearance.call(self)}
 			</div>
 			<div id="settings-blocklist" class="settingsPanel">
-				${blocks.call(this)}
+				${blocks.call(self)}
 			</div>
 			<div id="settings-notify" class="settingsPanel">
-				${notify.call(this)}
+				${notify.call(self)}
 			</div>
 			<div id="settings-utils" class="settingsPanel">
-				${utils.call(this)}
+				${utils.call(self)}
 			</div>
 		</div>
 	`);

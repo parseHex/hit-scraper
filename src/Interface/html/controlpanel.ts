@@ -258,7 +258,7 @@ export default function () {
 					name="sort"
 					${user.sortAll ? 'checked' : ''}
 				/>
-				<div id="sortdirs" style="font-size:15px;display:${user.sortPay || user.sortAll ? 'inline' : 'none'}">
+				<div id="sortdirs" style="display:${user.sortPay || user.sortAll ? 'inline' : 'none'}">
 					<label class="${user.sortAsc ? 'checked' : ''}" for="sortAsc" title="${titles.sortAsc}">
 						&#9650;
 					</label>

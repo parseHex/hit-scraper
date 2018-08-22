@@ -14,18 +14,7 @@ export default class Dialogue {
 		Interface.toggleOverflow('on');
 
 		this.node = document.body.appendChild(document.createElement('DIV'));
-		this.node.style.cssText = cleanTemplate(`
-			position: fixed;
-			z-index: 20;
-			top: 15%;
-			left: 50%;
-			width: 320px;
-			padding: 20px;
-			transform: translate(-50%);
-			background: #000;
-			color: #fff;
-			box-shadow: 0px 0px 6px 1px #fff;
-		`);
+		this.node.id = 'dialogue';
 
 		let blockType;
 		if (this.caller.textContent === 'R') blockType = 'requester';
@@ -39,11 +28,11 @@ export default class Dialogue {
 			<p>
 				"${this.caller.value}"
 			</p>
-      <div style="text-align:right;margin-right:30px;margin-top:10px;padding-top:10px">
-				<button id="confirm" style="font-weight:bold;padding:7px;width:65px">
+      <div id="dialogue-btn-container">
+				<button id="confirm">
 					OK
 				</button>
-				<button id="cancel" style="padding:7px;width:65px;">
+				<button id="cancel">
 					Cancel
 				</button>
 			</div>

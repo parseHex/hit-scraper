@@ -28,15 +28,13 @@ export class Settings {
 	}
 
 	draw() {
-		const html: string = htmlGenerator.call(this);
+		const html = htmlGenerator(this.user);
 
 		this.mainEl = document.body.appendChild(document.createElement('DIV'));
 		this.mainEl.id = 'settingsMain';
 		this.mainEl.innerHTML = html;
 		this.get = this.mainEl.querySelector.bind(this.mainEl);
 		this.getAll = this.mainEl.querySelectorAll.bind(this.mainEl);
-
-		return this;
 	}
 
 	save() {
