@@ -12,12 +12,14 @@
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
 }
-#settingsMain > div {
-	margin: 5px;
-	padding: 3px;
-	position: relative;
-	border: 1px solid grey;
-	line-height: initial;
+#settingsMain {
+	#settingsSidebar, #panelContainer {
+		margin: 5px;
+		padding: 3px;
+		position: relative;
+		border: 1px solid grey;
+		line-height: initial;
+	}
 }
 .close {
 	position: relative;
