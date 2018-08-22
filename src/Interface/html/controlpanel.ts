@@ -11,7 +11,7 @@ export default function () {
 	const panelhideClass = Settings.user.hidePanel ? 'hiddenpanel' : '';
 
 	return cleanTemplate(`
-		<div id="controlpanel" class="controlpanel cpdefault ${panelhideClass}">
+		<div id="controlpanel" class="cpdefault ${panelhideClass}">
 			<p>
 				Auto-refresh delay: &nbsp;
 				<input &nbsp;
@@ -258,7 +258,7 @@ export default function () {
 					name="sort"
 					${user.sortAll ? 'checked' : ''}
 				/>
-				<div id="sortdirs" style="font-size:15px;display:${user.sortPay || user.sortAll ? 'inline' : 'none'}">
+				<div id="sortdirs" style="display:${user.sortPay || user.sortAll ? 'inline' : 'none'}">
 					<label class="${user.sortAsc ? 'checked' : ''}" for="sortAsc" title="${titles.sortAsc}">
 						&#9650;
 					</label>

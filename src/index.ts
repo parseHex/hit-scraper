@@ -9,24 +9,30 @@ import { SETTINGS_KEY } from 'lib/constants';
 import 'api';
 
 console.log('HS hook');
-if (!document.getElementById('control_panel')) {
-	initialize();
+console.time('load');
+(async function () {
+	if (!document.getElementById('control_panel')) {
+		await initialize();
 
-	const rt = document.getElementById('resultsTable');
-	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseover', tomouseover);
-	delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseout', tomouseout);
-	delegate(rt, 'tr:not(hidden) .ex', 'click', e => new Exporter(e));
-	delegate(rt, 'tr:not(hidden) button[name=block]', 'click', ({ target }) => {
-		new Dialogue(<HTMLInputElement>target);
-	});
-}
+		const rt = document.getElementById('resultsTable');
+		delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseover', tomouseover);
+		delegate(rt, 'tr:not(hidden) .toLink, tr:not(hidden) .hit-title', 'mouseout', tomouseout);
+		delegate(rt, 'tr:not(hidden) .ex', 'click', e => new Exporter(e));
+		delegate(rt, 'tr:not(hidden) button[name=block]', 'click', ({ target }) => {
+			new Dialogue(<HTMLInputElement>target);
+		});
+		console.timeEnd('load');
+	}
+})();
 
 export default function initialize() {
 	Settings.user = Object.assign({}, Settings.defaults, JSON.parse(localStorage.getItem(SETTINGS_KEY)));
-	Interface.draw().init();
+	Interface.draw();
+	Interface.init();
 	state.scraperHistory = new ScraperCache(650);
 }
 
+// tooltips
 function tomouseover(e: MouseEvent) {
 	const target = <HTMLElement>e.target;
 
@@ -46,6 +52,7 @@ function tomouseover(e: MouseEvent) {
 	}
 }
 
+// tooltips
 function tomouseout(e: MouseEvent) {
 	const target = <HTMLElement>e.target;
 	const tooltip: HTMLElement = target.parentElement.querySelector('.tooltip');

@@ -13,8 +13,6 @@ export default function addRowHTML(
 	reviewsLoading: boolean,
 	rowColor: string
 ) {
-	const center = 'text-align:center;';
-
 	let trClass = rowColor;
 	if (hit.included) trClass += ' includelisted';
 	if (shouldHide) trClass += ' ignored hidden';
@@ -62,9 +60,6 @@ export default function addRowHTML(
 			</td>
 			<td class="title-tc">
 				<div>
-					${makeButton('Vb', 'vB', 'vBulletin', expData)}
-					${makeButton('Irc', 'IRC', 'IRC', expData)}
-					${makeButton('Hwtf', 'HWTF', '/r/hitsworthturkingfor', expData)}
 					${makeButton('Pcp', 'PC-P', 'Panda Crazy (Panda)', expData, 'PC Panda')}
 					${makeButton('Pco', 'PC-O', 'Panda Crazy (Once)', expData, 'PC Once')}
 				</div>
@@ -74,23 +69,23 @@ export default function addRowHTML(
 					</a>
 				</div>
 			</td>
-			<td class="rewardpanda-tc" style="${center}">
+			<td class="rewardpanda-tc">
 				<a target="_blank" ${pandaHref}>
 					${hit.pay}
 				</a>
 			</td>
-			<td class="available-tc ${hidden('available')}" style="${center}">
+			<td class="available-tc ${hidden('available')}">
 				${hit.numHits}
 			</td>
-			<td class="duration-tc ${hidden('duration')}" style="${center}">
+			<td class="duration-tc ${hidden('duration')}">
 				${hit.timeStr}
 			</td>
-			<td class="topay-tc ${hidden('topay')}" style="${center}">
+			<td class="topay-tc ${hidden('topay')}">
 				<a class="static toLink" target="_blank" data-rid="${hit.requester.id || 'null'}" ${requesterHref}>
 					${(hit.TO ? hit.TO.attrs.pay : 'n/a') + createTooltip(toTooltipData)}
 				</a>
 			</td>
-			<td style="${center}" class="${hit.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">
+			<td class="${hit.masters ? 'reqmaster' : 'nomaster'} masters-tc ${hidden('masters')}"">
 				${hit.masters ? 'Y' : 'N'}
 			</td>
 			<td class="tooweak notqualified-tc ${hidden('notqualified', hit.qualified)}" title="Not qualified to work on this HIT">

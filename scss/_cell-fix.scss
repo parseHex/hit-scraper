@@ -1,0 +1,41 @@
+// the functions getBrightness and tune from Themes are re-implemented here
+// the original functions are here:
+// https://gitlab.com/parsehex/hit-scraper/blob/3a232c0a4dead4581526ac1ab0f6ae955eab3b40/src/Themes
+
+@function getBrightness($c) {
+	$r: red($c);
+	$g: green($c);
+	$b: blue($c);
+	@return (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+}
+
+@function tune($fg, $bg) {
+	$cbg: getBrightness($bg);
+
+	@while (abs(getBrightness($fg) - $cbg) < 90) {
+		@if $cbg >= 128 {
+			$fg: darken($fg, 5%);
+		} @else {
+			$fg: lighten($fg, 5%);
+		}
+	}
+
+	@return $fg;
+}
+
+@mixin toThing ($name, $toColor) {
+	.to#{$name} {
+		background: $toColor;
+		color: tune($bodytable, $toColor);
+
+		button { color: tune($export, $toColor); }
+		a:not(.static):visited { color: tune($vlink, $toColor); }
+	}
+}
+
+@include toThing('High', $toHigh);
+@include toThing('Good', $toGood);
+@include toThing('Average', $toAverage);
+@include toThing('Low', $toLow);
+@include toThing('Poor', $toPoor);
+@include toThing('None', $toNone);

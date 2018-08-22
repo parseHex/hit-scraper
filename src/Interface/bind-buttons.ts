@@ -53,6 +53,7 @@ export default function (this: Interface) {
 	});
 	this.buttons.settings.addEventListener('click', () => {
 		this.toggleOverflow('on');
-		Settings.draw().init();
+		Settings.draw();
+		Settings.init();
 	});
 }

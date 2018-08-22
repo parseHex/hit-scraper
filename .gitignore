@@ -3,3 +3,5 @@ node_modules
 .rpt2_cache
 build/*
 *.log
+assets/style.css
+assets/style.css.map

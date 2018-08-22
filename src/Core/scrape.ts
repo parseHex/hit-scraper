@@ -28,7 +28,7 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 		state.scraperHistory.get(gid).current = false;
 	});
 
-	src.results.forEach((v) => {
+	src.results.forEach((v, i) => {
 		// url .json fix
 		v.requester_url = v.requester_url.replace('.json', '');
 		v.project_tasks_url = v.project_tasks_url.replace('.json', '');
@@ -37,9 +37,7 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 		const data: ifc.HITData = {
 			discovery: Date.now(),
 			title: v.title,
-			// TODO why was the index padded?
-			// index: src.page_number + ('00' + i).slice(-2),
-			index: src.page_number,
+			index: getIndex(src.page_number, i),
 			requester: { name: v.requester_name, id: v.requester_id, link: ENV.ORIGIN + v.requester_url },
 			pay: '$' + v.monetary_reward.amount_in_dollars.toFixed(2),
 			payRaw: v.monetary_reward.amount_in_dollars,
@@ -96,4 +94,10 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 }
 function getQuals(qual: ifc.MTSearchResultRequirement) {
 	return `${qual.qualification_type.name} ${qual.comparator} ${qual.qualification_values.join()}`;
+}
+function getIndex(page: number, index: number) {
+	// pad the index so that we don't get duplicates
+	const indexPadded = ('00' + index).slice(-2);
+
+	return +(page + indexPadded);
 }

@@ -1,0 +1,115 @@
+#resultsTable {
+	width: 100%;
+
+	button {
+		border-radius: 3px;
+		font-size: 0.75em;
+		border: 1px solid;
+		padding: 0;
+		background: transparent;
+	}
+	button.ex {
+		padding: 0 9px;
+	}
+	button.pc-p, button.pc-o {
+		background-color: rgba(0, 50, 150, 0.75);
+		color: white;
+	}
+	button.block {
+		padding: 1px 4px;
+		margin-right: 1px;
+	}
+	caption {
+		font-weight: 800;
+		line-height: 1.25em;
+		font-size: 1.5em;
+	}
+}
+#resultsTable thead tr {
+	font-weight: 800;
+	font-size: 0.87em;
+	text-align: center;
+}
+#resultsTable tbody td > div {
+	display: table-cell;
+}
+#resultsTable tbody td > div:first-child {
+	padding-right: 2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.toLink, .hit-title {
+	position: relative;
+
+	&:before {
+		content: "";
+		display: none;
+		z-index: 5;
+		position: absolute;
+		top: 0;
+		left: -6px;
+		width: 0;
+		height: 0;
+		border-top: 6px solid transparent;
+		border-bottom: 6px solid transparent;
+		border-left: 6px solid black;
+	}
+
+	&:hover:before {
+		display: block;
+	}
+}
+
+.ignored td {
+	border:2px solid #00E5FF;
+}
+.includelisted td {
+	border:2px dashed #008800;
+}
+.blocklisted td {
+	border:2px solid #cc0000;
+}
+
+#resultsTable thead td:first-of-type {
+	border-left: 1px solid;
+}
+#resultsTable thead td:not(:last-of-type) {
+	border-right: 1px solid;
+}
+#resultsTable td {
+	padding: 0 3px;
+}
+.block-tc { width: 65px; text-align: center; }
+// .requester-tc {  }
+// .title-tc {  }
+.rewardpanda-tc { width: 70px; }
+.available-tc { width: 35px; }
+.duration-tc { width: 67px; }
+.topay-tc { width: 30px; }
+.masters-tc { width: 15px; }
+.notqualified-tc { width: 15px; }
+
+.rewardpanda-tc, .available-tc, .duration-tc, .topay-tc, .masters-tc, .notqualified-tc {
+	text-align: center;
+}
+
+.nohitDB {
+	color: #000;
+	background: $nohitDB;
+}
+.hitDB {
+	color: #000;
+	background: $hitDB;
+}
+.reqmaster {
+	color: #000;
+	background: $reqmaster;
+}
+.nomaster {
+	color: #000;
+	background: $nomaster;
+}
+.tooweak {
+	background: $unqualified;
+}

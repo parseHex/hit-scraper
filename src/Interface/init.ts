@@ -1,4 +1,3 @@
-import Themes from 'Themes/index';
 import { kb } from 'lib/constants';
 import * as dom from 'lib/dom-util';
 
@@ -15,8 +14,6 @@ export default function (this: Interface) {
 
 	(<HTMLAudioElement>dom.get(`#ding`)).volume = this.user.volume.ding;
 	(<HTMLAudioElement>dom.get(`#squee`)).volume = this.user.volume.squee;
-
-	Themes.apply(this.user.themes.name);
 
 	// this must run after this.draw
 	this.buttons = {
@@ -38,7 +35,11 @@ export default function (this: Interface) {
 		// TODO figure this out
 		this.panel[k] = document.getElementById(k);
 		this.panel[k].onchange = optionChange.bind(this);
-		if (k === 'pay' || k === 'search') this.panel[k].addEventListener('keydown', kdFn);
-		if ((k === 'sortPay' || k === 'sortAll') && this.panel[k].checked) moveSortdirs(this.panel[k]);
+		if (k === 'pay' || k === 'search') {
+			this.panel[k].addEventListener('keydown', kdFn);
+		}
+		if ((k === 'sortPay' || k === 'sortAll') && this.panel[k].checked) {
+			moveSortdirs(this.panel[k]);
+		}
 	}
 }

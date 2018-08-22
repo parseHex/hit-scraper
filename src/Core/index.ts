@@ -6,7 +6,6 @@ import cruise from './cruise';
 import afterScrape from './after-scrape';
 import scrapeNext, { ScrapeInfo } from './scrape';
 import meld, { HITCounts } from './meld/index';
-import getHash from './get-hash';
 import fetch, { FetchRequest } from './fetch';
 import crossRef from './cross-ref';
 import notify from './notify';
@@ -30,7 +29,6 @@ export class Core {
 	afterScrape: (this: Core, info: ScrapeInfo) => void;
 	scrape: (this: Core, src: ifc.MTSearchResponse) => void;
 	meld: (this: Core) => void;
-	getHash: (str: string) => void; // TODO safe to remove? (can't find anything using it)
 	fetch: (this: Core, opts: FetchRequest) => Promise<any>;
 	crossRef: (...needles: string[]) => [boolean, boolean];
 	notify: (counts: HITCounts, loading: boolean) => void;
@@ -52,7 +50,6 @@ export class Core {
 		this.afterScrape = afterScrape.bind(this);
 		this.scrape = scrapeNext.bind(this);
 		this.meld = meld.bind(this);
-		this.getHash = getHash.bind(this);
 		this.fetch = fetch.bind(this);
 		this.crossRef = crossRef.bind(this);
 		this.notify = notify.bind(this);

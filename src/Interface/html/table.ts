@@ -3,12 +3,12 @@ import Settings from 'Settings';
 export default function () {
 	return `
 		<div id="results">
-			<table id="resultsTable" style="width:100%">
-				<caption style="font-weight:800;line-height:1.25em;font-size:1.5em;">
+			<table id="resultsTable">
+				<caption>
 					HIT Scraper Results
 				</caption>
 				<thead>
-					<tr style="font-weight:800;font-size:0.87em;text-align:center">
+					<tr>
 						<td class="block-tc ${hidden('block')}">Block</td>
 						<td class="requester-tc ${hidden('requester')}">
 							Requester

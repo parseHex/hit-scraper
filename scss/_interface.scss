@@ -1,0 +1,41 @@
+#controlpanel {
+	background: $cpBackground;
+
+	#sortdirs {
+		font-size: 15px;
+	}
+	input {
+		color: $inputText;
+		border: 1px solid;
+		background: #fff;
+	}
+	label {
+		color: $defaultText;
+		background: $cpBackground;
+
+		&.checked {
+			color: $secondText;
+			background: $highlight;
+		}
+		&:hover {
+			background: $hover;
+		}
+	}
+	i:after {
+		content: " | ";
+		color: $accent;
+	}
+}
+#controlbuttons {
+	margin-top: 3px;
+	cursor: default;
+}
+#controlbuttons button:focus, #plugins button:focus {
+	outline: none;
+}
+#plugins {
+	margin-top: 6px;
+}
+button#settings {
+	margin-right: 5px;
+}

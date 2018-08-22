@@ -34,8 +34,8 @@ export default function (counts: HITCounts, loading: boolean) {
 			}
 		}, 1000);
 	}
-	// TODO remove cast to any once typescript is at 3.0
-	if (Settings.user.notifyTaskbar && (<any>Notification).permission === 'granted') {
+
+	if (Settings.user.notifyTaskbar && Notification.permission === 'granted') {
 		var inc = counts.includedNew ? ` (${counts.includedNew} from includelist)` : '';
 		var n = new Notification('HITScraper found ' + counts.newVis + ' new HITs' + inc);
 		n.onclick = n.close;

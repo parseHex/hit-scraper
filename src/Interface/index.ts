@@ -10,14 +10,14 @@ export class Interface {
 	user: ifc.SettingsConfig;
 	time: number;
 	focused: boolean = true;
-	blackhole: { // TODO what is this?
+	blackhole: {
 		blink: number;
 	};
 	panel: ifc.BasicObject;
 	buttons: ifc.InterfaceButtons;
 	Status: StatusManager;
 
-	draw: (this: Interface) => this;
+	draw: (this: Interface) => void;
 	init: (this: Interface) => void;
 
 	constructor() {

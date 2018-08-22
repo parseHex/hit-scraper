@@ -1,9 +1,6 @@
 import * as ifc from 'ifc';
-import { defaults } from 'lib/constants';
 
 const defaultConfig: ifc.SettingsConfig = {
-	themes: { name: 'classic', colors: defaults.themes },
-
 	colorType: 'sim',
 	sortType: 'adj',
 	toWeights: { comm: 1, pay: 3, fair: 3, fast: 1 },
@@ -11,9 +8,6 @@ const defaultConfig: ifc.SettingsConfig = {
 	cacheTO: false,
 	toTimeout: 6,
 
-	exportVb: true,
-	exportIrc: true,
-	exportHwtf: true,
 	exportPcp: false,
 	exportPco: false,
 	exportPcCustomTitle: false,
@@ -24,7 +18,6 @@ const defaultConfig: ifc.SettingsConfig = {
 	volume: { ding: 1, squee: 1 },
 	wildblocks: true,
 	showCheckboxes: true,
-	hitColor: 'link',
 	fontSize: 11,
 	shineOffset: 1,
 
@@ -65,10 +58,8 @@ const defaultConfig: ifc.SettingsConfig = {
 	sortDsc: true,
 	gbatch: false,
 	bubbleNew: false,
-	hidePanel: false,
 
-	vbTemplate: defaults.vbTemplate,
-	vbSym: '\u2605', // star
+	hidePanel: false,
 };
 
 export default defaultConfig;

@@ -31,8 +31,8 @@ export default function createTooltip(opts: Options) {
 
 	if (reason) {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:260px;">
-				<p style="padding-left:5px">
+			<div class="tooltip">
+				<p>
 					Turkopticon data unavailable:
 					${reason}
 				</p>
@@ -40,8 +40,8 @@ export default function createTooltip(opts: Options) {
 		`);
 	} else if (isReviewData(opts.data)) {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:260px">
-				<p style="padding-left:5px">
+			<div class="tooltip">
+				<p>
 					<b>${opts.data.name}</b>
 					<br />
 					Reviews: ${opts.data.reviews} | TOS Flags: ${opts.data.tos_flags}
@@ -49,13 +49,9 @@ export default function createTooltip(opts: Options) {
 				${genMeters(opts.data.attrs)}
 			</div>
 		`);
-		/*<table style="margin-top:6px;width:100%;font-size:10px"><tr><td>Adjusted Pay</td><td>${obj.attrs.adjPay}</td>
-		<td>${getClassFromValue(obj.attrs.adjPay, 'adj').slice(2)}</td></tr><tr><td>Weighted Score</td><td>${obj.attrs.qual}</td>
-		<td>${getClassFromValue(obj.attrs.qual, 'sim').slice(2)}</td></tr><tr><td>Adjusted Score</td><td>${obj.attrs.adjQual}</td>
-		<td>${getClassFromValue(obj.attrs.adjQual, 'adj').slice(2)}</td></tr></table></div>;*/
 	} else {
 		html = cleanTemplate(`
-			<div class="tooltip" style="width:300px">
+			<div class="tooltip desc">
 				<dl>
 					<dt>description</dt>
 					<dd>${opts.data.desc}</dd>
@@ -71,20 +67,34 @@ export default function createTooltip(opts: Options) {
 function bullet(li: string) {
 	return `<ul><li>${li}</li></ul>`;
 }
+
+const attrmap: { [index: string]: string } = {
+	comm: 'Communicativity', pay: 'Generosity', fair: 'Fairness', fast: 'Promptness',
+};
+const attrKeys = Object.keys(attrmap);
 function genMeters(attrs: ifc.TOAttributes) {
-	const attrmap: { [index: string]: string } = {
-		comm: 'Communicativity', pay: 'Generosity', fair: 'Fairness', fast: 'Promptness',
-	};
-	var html: string[] = [];
-	for (var k in attrmap) {
-		if (attrmap.hasOwnProperty(k)) {
-			html.push(`<meter min="0.8" low="2.5" high="3.4" optimum="5" max="5" value=${attrs[k]} data-attr=${attrmap[k]}></meter>`);
-		}
+	const html: string[] = [];
+	for (let i = 0; i < attrKeys.length; i++) {
+		const key = attrKeys[i];
+		const value = attrs[key];
+		const name = attrmap[key];
+		html.push(`<meter min="0.8" low="2.5" high="3.4" optimum="5" max="5" value=${value} data-attr=${name}></meter>`);
 	}
-	if (ENV.ISFF) { // firefox is shitty and doesn't support ::after/::before pseudo-elements on meter elements
-		html.forEach((v, i, a) => a[i] = '<div style="position:relative">' + v +
-			`<span class="ffmb">${attrmap[Object.keys(attrmap)[i]]}</span>` +
-			`<span class="ffma">${attrs[Object.keys(attrmap)[i]]}</span></div>`);
+	if (ENV.ISFF) {
+		// firefox doesn't support :before/:after on <meter>s
+		for (let i = 0; i < html.length; i++) {
+			const key = attrKeys[i];
+			const value = attrs[key];
+			const name = attrmap[key];
+
+			html[i] = cleanTemplate(`
+				<div class="meter-container">
+					${html[i]}
+					<span class="ffmb">${name}</span>
+					<span class="ffma">${value}</span>
+				</div>
+			`);
+		}
 	}
 
 	return html.join('');

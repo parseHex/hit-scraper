@@ -1,11 +1,4 @@
-import { ThemeColors, ThemeName } from './theme';
-
 export interface SettingsConfig {
-	themes: {
-		name: ThemeName;
-		colors: { [T in ThemeName]: ThemeColors };
-	};
-
 	colorType: 'sim' | 'adj';
 	sortType: 'sim' | 'adj';
 	toWeights: {
@@ -19,9 +12,6 @@ export interface SettingsConfig {
 	cacheTO: boolean;
 	toTimeout: number;
 
-	exportVb: boolean;
-	exportIrc: boolean;
-	exportHwtf: boolean;
 	exportPcp: boolean;
 	exportPco: boolean;
 	exportPcCustomTitle: boolean;
@@ -35,7 +25,6 @@ export interface SettingsConfig {
 	};
 	wildblocks: boolean;
 	showCheckboxes: boolean;
-	hitColor: 'link' | 'cell';
 	fontSize: number;
 	shineOffset: number;
 
@@ -78,9 +67,6 @@ export interface SettingsConfig {
 	bubbleNew: boolean;
 
 	hidePanel: boolean;
-
-	vbTemplate: string;
-	vbSym: string;
 
 	[index: string]: any;
 }

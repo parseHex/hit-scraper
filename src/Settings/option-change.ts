@@ -1,5 +1,4 @@
 import * as ifc from 'ifc';
-import Themes from 'Themes';
 
 import { Settings } from './index';
 
@@ -9,22 +8,17 @@ export default function (this: Settings, e: Event) {
 		isChecked = target.checked, name = target.name, value = target.value;
 
 	switch (tag) {
-		case 'SELECT': {
-			//get('#thedit').textContent = value === 'random' ? 'Re-roll!' : 'Edit Current Theme';
-			this.user.themes.name = <ifc.ThemeName>value;
-			Themes.apply(value, this.user.hitColor);
-			break;
-		}
 		case 'INPUT': {
 			switch (type) {
 				case 'radio': {
 					if (name === 'checkbox') {
 						this.user.showCheckboxes = (value === 'true');
-						Array.from(document.querySelectorAll('#controlpanel input[type=checkbox],#controlpanel input[type=radio]'))
+						const selector = '#controlpanel input[type=checkbox],#controlpanel input[type=radio]';
+						Array.from(document.querySelectorAll(selector))
 							.forEach(v => v.classList.toggle('hidden'));
 					}
 					else this.user[name] = value;
-					if (name === 'hitColor') Themes.apply(this.user.themes.name, value);
+
 					break;
 				}
 				case 'checkbox': {
@@ -33,11 +27,7 @@ export default function (this: Settings, e: Event) {
 						Array.from(document.querySelectorAll(`button.${value}`))
 							.forEach((v: HTMLElement) => v.style.display = isChecked ? 'inline' : 'none');
 					}
-					/*
-						typescript 2.9 has an incorrect definition for Notifcation
-						TODO remove the cast to any once 3.0 lands
-					*/
-					if (id === 'notifyTaskbar' && isChecked && (<any>Notification).permission === 'default') {
+					if (id === 'notifyTaskbar' && isChecked && Notification.permission === 'default') {
 						Notification.requestPermission();
 					}
 					if (name === 'tableColumn') {

@@ -1,5 +1,4 @@
 import * as ifc from 'ifc';
-import { Editor } from 'Editor';
 import FileHandler from 'FileHandler';
 import Interface from 'Interface';
 import { SETTINGS_KEY } from 'lib/constants';
@@ -29,15 +28,13 @@ export class Settings {
 	}
 
 	draw() {
-		const html: string = htmlGenerator.call(this);
+		const html = htmlGenerator(this.user);
 
 		this.mainEl = document.body.appendChild(document.createElement('DIV'));
 		this.mainEl.id = 'settingsMain';
 		this.mainEl.innerHTML = html;
 		this.get = this.mainEl.querySelector.bind(this.mainEl);
 		this.getAll = this.mainEl.querySelectorAll.bind(this.mainEl);
-
-		return this;
 	}
 
 	save() {
@@ -52,10 +49,6 @@ export class Settings {
 		Array.from(this.getAll('#settingsSidebar span')).forEach(v => v.onclick = sidebarClick.bind(this));
 		Array.from(this.getAll('input:not([type=file]),select')).forEach(v => v.onchange = optionChange.bind(this));
 		Array.from(this.getAll('input[type=range]')).forEach(v => v.oninput = sliderChange);
-		this.get('#thedit').onclick = () => {
-			this.die.call(this);
-			new Editor('theme');
-		};
 		this.get('#sexport').onclick = FileHandler.exports;
 		this.get('#simport').onclick = () => {
 			(<HTMLInputElement>this.get('#fsimport')).value = '';
