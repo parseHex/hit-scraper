@@ -38,24 +38,35 @@ export default function (this: Core, src: ifc.MTSearchResponse) {
 			discovery: Date.now(),
 			title: v.title,
 			index: getIndex(src.page_number, i),
-			requester: { name: v.requester_name, id: v.requester_id, link: ENV.ORIGIN + v.requester_url },
+			requester: {
+				name: v.requester_name,
+				id: v.requester_id,
+				link: ENV.ORIGIN + v.requester_url,
+			},
 			pay: '$' + v.monetary_reward.amount_in_dollars.toFixed(2),
 			payRaw: v.monetary_reward.amount_in_dollars,
 			time: v.assignment_duration_in_seconds,
 			timeStr: fixTime(v.assignment_duration_in_seconds * 1000).replace(',', ''),
 			desc: v.description,
 			quals: v.project_requirements.length ? v.project_requirements.map(getQuals) : ['None'],
-			hit: { preview: ENV.ORIGIN + v.project_tasks_url, panda: ENV.ORIGIN + v.accept_project_task_url },
+			hit: {
+				preview: ENV.ORIGIN + v.project_tasks_url,
+				panda: ENV.ORIGIN + v.accept_project_task_url,
+			},
 			groupId: v.hit_set_id,
 			TO: null,
-			masters: !!~v.project_requirements.findIndex(q => q.qualification_type_id === '2F1QJWKUDD8XADTFD2Q0G6UTO95ALH'),
+			masters: !!~v.project_requirements.findIndex((q) => {
+				return q.qualification_type_id === '2F1QJWKUDD8XADTFD2Q0G6UTO95ALH';
+			}),
 			numHits: v.assignable_hits_count,
 			blocked: false,
 			included: false,
 			current: true,
 			ignored: false,
 			qualified: v.caller_meets_requirements,
-			viable: !~v.project_requirements.findIndex(q => q.caller_meets_requirement === false && q.qualification_type.is_requestable === false),
+			viable: !~v.project_requirements.findIndex((q) => {
+				return q.caller_meets_requirement === false && q.qualification_type.is_requestable === false;
+			}),
 			shine: false,
 			isNew: true,
 		};
