@@ -39,3 +39,38 @@
 button#settings {
 	margin-right: 5px;
 }
+
+.plugin-modal {
+	position: fixed;
+	z-index: 20;
+	top: 15%;
+	left: 50%;
+	width: 450px;
+	transform: translate(-50%);
+	background: #000;
+	color: #fff;
+	box-shadow: 0px 0px 6px 1px #fff;
+	padding: 15px;
+	padding-top: 2px;
+	padding-right: 0;
+
+	.close-container {
+		top: 0;
+		left: 0;
+		margin: 0;
+		text-align: right;
+		padding: 0px;
+		border: none;
+		width: 100%;
+
+		label.close {
+			color: black;
+			background: white;
+		}
+	}
+
+	.plugin-content {
+		overflow-y: auto;
+		max-height: 55vh;
+	}
+}

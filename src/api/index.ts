@@ -8,7 +8,7 @@ const api: ifc.HIT_Scraper_API = {
 	search,
 	settings,
 	ui,
-	version: '1.1.0',
+	version: '1.1.1',
 };
 
 // @ts-ignore

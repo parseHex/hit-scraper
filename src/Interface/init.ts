@@ -42,4 +42,16 @@ export default function (this: Interface) {
 			moveSortdirs(this.panel[k]);
 		}
 	}
+
+	const curtain = <HTMLElement>document.body.querySelector('#curtain');
+	curtain.addEventListener('click', () => {
+		for (let i = 0; i < this.curtainListeners.length; i++) {
+			if (!this.curtainListeners[i]) {
+				this.curtainListeners.splice(i, 1);
+				i--;
+			}
+
+			this.curtainListeners[i]();
+		}
+	});
 }

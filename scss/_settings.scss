@@ -21,7 +21,7 @@
 		line-height: initial;
 	}
 }
-.close {
+label.close {
 	position: relative;
 	font-weight: bold;
 	font-size: 1em;
@@ -120,9 +120,10 @@
 	left: 0;
 	margin: 0;
 	text-align: right;
-	padding: 0px;
 	border: none;
 	width: 100%;
+	padding: 0px;
+	padding-top:2px;
 }
 #panelContainer {
 	margin-left: 10px;

@@ -1,31 +1,57 @@
 import { HIT_Scraper_API } from '../src/ifc/api';
 
-export type EventListener = (event: MouseEvent) => void;
+type MouseEventListener = (event: MouseEvent) => void;
 
-export interface Text {
+interface Text {
 	element: HTMLSpanElement;
+
+	/** Reference to Text.element.style */
 	style: CSSStyleDeclaration;
+
+	/** Getter/Setter for `Text.element.textContent` */
 	text: string;
 }
 
-export interface Button {
+interface Button {
 	element: HTMLButtonElement;
-	style: CSSStyleDeclaration;
-	text: string;
 	disable: () => void;
 	enable: () => void;
-	onClick: (handler: EventListener) => void;
+	onClick: (handler: MouseEventListener) => void;
+
+	/** Reference to Button.element.style */
+	style: CSSStyleDeclaration;
+
+	/** Getter/Setter for `Button.element.textContent` */
+	text: string;
 }
 
-export interface Section {
+interface Section {
 	type: 'block' | 'inline';
 	title: string;
 	addButton: () => Button;
 	addText: () => Text;
 }
 
+interface Modal {
+	element: HTMLDivElement;
+	show: () => void;
+	hide: () => void;
+
+	/**
+	 * Get a callback when the modal is hidden.
+	 *
+	 * Modal can be hidden by clicking the Modal's X, pressing Escape,
+	 * or by calling `Modal.hide`.
+	 */
+	onHide: (callback: () => void) => void;
+
+	/** Reference to Modal.element.style */
+	style: CSSStyleDeclaration;
+}
+
 export interface HS_API extends HIT_Scraper_API {
 	ui: {
 		createSection: (type: 'block' | 'inline') => Section;
+		createModal: () => Modal;
 	};
 }

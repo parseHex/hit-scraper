@@ -16,6 +16,7 @@ export class Interface {
 	panel: ifc.BasicObject;
 	buttons: ifc.InterfaceButtons;
 	Status: StatusManager;
+	curtainListeners: (() => void)[] = [];
 
 	draw: (this: Interface) => void;
 	init: (this: Interface) => void;
@@ -47,6 +48,10 @@ export class Interface {
 		const curtain = <HTMLElement>document.body.querySelector('#curtain');
 		curtain.style.display = state === 'on' ? 'block' : 'none';
 		document.body.style.overflow = state === 'on' ? 'hidden' : 'auto';
+	}
+
+	onCurtainClick(listener: () => void) {
+		this.curtainListeners.push(listener);
 	}
 }
 export default new Interface();
