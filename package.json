@@ -4,22 +4,22 @@
 	"description": "Fork of HIT Scraper",
 	"scripts": {
 		"watch-src": "rollup --config --watch",
-		"watch-sass": "npm run build-sass-pretty && sass --watch scss/base.scss assets/style.css",
+		"watch-sass": "npm run build-sass-pretty && sass --watch scss/base.scss docs/assets/style.css",
 		"build": "npm run build-sass && npm run build-src",
 		"build-src": "rollup --config",
-		"build-sass": "sass --style=compressed scss/base.scss assets/style.css",
-		"build-sass-pretty": "sass scss/base.scss assets/style.css",
-		"server": "http-server . -c-1 -g --cors"
+		"build-sass": "sass --style=compressed scss/base.scss docs/assets/style.css",
+		"build-sass-pretty": "sass scss/base.scss docs/assets/style.css",
+		"server": "http-server ./docs -c-1 -g --cors"
 	},
 	"author": "Thomas Mays",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/greasemonkey": "^0.0.28",
-		"node-sass": "^4.9.3",
 		"rollup": "^0.64.0",
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-string": "^2.0.2",
 		"rollup-plugin-typescript2": "^0.16.0",
+		"sass": "^1.14.3",
 		"typescript": "^3.0.0"
 	},
 	"dependencies": {
