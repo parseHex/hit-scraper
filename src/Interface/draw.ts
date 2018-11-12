@@ -3,21 +3,19 @@ import {
 	DOC_TITLE, res,
 } from 'lib/constants';
 
+import css from '../../build/style.css';
+
 import body from './html/index';
 import { Interface } from '.';
 import { cleanTemplate } from 'lib/util';
 
 export default function (this: Interface) {
 	this.user = Settings.user; // TODO this shouldn't be necessary
-	document.head.innerHTML = cleanTemplate(`
-		<title>${DOC_TITLE}</title>
-	`);
+	document.head.innerHTML = `<title>${DOC_TITLE}</title>`;
 
 	loadCSS();
 
 	document.body.innerHTML = body.call(this);
-
-	// will grab and apply css async
 }
 
 function loadCSS() {
@@ -44,7 +42,7 @@ function loadCSS() {
 	const mainStyle = document.createElement('link');
 	mainStyle.type = 'text/css';
 	mainStyle.rel = 'stylesheet';
-	mainStyle.href = res.css;
+	mainStyle.textContent = css;
 
 	document.head.appendChild(fontStyle);
 	document.head.appendChild(icoLink);

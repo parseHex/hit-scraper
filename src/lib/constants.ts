@@ -17,7 +17,7 @@ export * from './constants-defaults';
 export const kb = { ESC: 27, ENTER: 13 };
 
 const local = location.hostname === 'localhost';
-const prefix = local ? 'http://localhost:8080' : 'https://parsehex.gitlab.io/hit-scraper';
+const prefix = local ? 'http://localhost:8080' : 'https://parsehex.github.io/hit-scraper';
 
 export const res = {
 	css: prefix + '/assets/style.css',
