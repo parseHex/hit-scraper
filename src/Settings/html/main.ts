@@ -28,7 +28,6 @@ export default function (user: SettingsConfig) {
 			<span data-target="blocklist">Blocklist</span>
 			<span data-target="notify">Notifications</span>
 			<span data-target="utils">Utilities</span>
-			<span data-target="advanced">Advanced</span>
 		</div>
 		<div id="panelContainer">
 			<div id="settings-general" class="settingsPanel">
