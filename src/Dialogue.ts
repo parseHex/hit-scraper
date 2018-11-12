@@ -81,7 +81,9 @@ export default class Dialogue {
 			state.scraperHistory.get(gid).blocked = true;
 
 			v.cells[0].firstElementChild.remove();
-			return v.classList.add('blocklisted') || Settings.user.hideBlock && v.classList.add('hidden');
+
+			v.classList.add('blocklisted');
+			if (Settings.user.hideBlock) v.classList.add('hidden');
 		});
 		this.die();
 	}
