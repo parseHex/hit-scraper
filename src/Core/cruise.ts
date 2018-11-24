@@ -26,7 +26,7 @@ export default function (this: Core, firstTick: boolean, tryAgain?: boolean) {
 		Interface.Status.edit('scraping-again', this.cooldown + '');
 		Interface.Status.show('scraping-again');
 
-		this.timer = setTimeout(this.cruise.bind(this), 1000);
+		this.timer = window.setTimeout(this.cruise.bind(this), 1000);
 	}
 }
 
