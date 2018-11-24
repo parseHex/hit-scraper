@@ -4,11 +4,11 @@
 	"description": "Fork of HIT Scraper",
 	"scripts": {
 		"watch-src": "rollup --config --watch",
-		"watch-sass": "npm run build-sass-pretty && sass --watch scss/base.scss docs/assets/style.css",
+		"watch-sass": "npm run build-sass-pretty && sass --watch scss/base.scss build/style.css",
 		"build": "npm run build-sass && npm run build-src",
 		"build-src": "rollup --config",
-		"build-sass": "sass --style=compressed scss/base.scss docs/assets/style.css",
-		"build-sass-pretty": "sass scss/base.scss docs/assets/style.css",
+		"build-sass": "sass --style=compressed scss/base.scss build/style.css",
+		"build-sass-pretty": "sass scss/base.scss build/style.css",
 		"server": "http-server ./docs -c-1 -g --cors"
 	},
 	"author": "Thomas Mays",
